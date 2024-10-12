@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm bài viết từ thiện</title>
+    <!-- CDN bootstrap MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        body, html {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        form {
+            width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+<form method="post" th:action="@{/insert/program}">
+    <div class="form-group">
+        <label for="inputtitle">Tiêu đề bài viết</label>
+        <input name="inputtitle"  type="text" class="form-control" id="inputtitle" placeholder="Nhập tiêu đề bài viết">
+    </div>
+    <div class="form-group">
+        <label for="inputimg">Hình ảnh Thumbnail</label>
+        <input name="inputimg" type="text" class="form-control" id="inputimg" placeholder="URL hình ảnh">
+    </div>
+    <div class="form-group">
+        <label for="content1">Nội dung chi tiết 1</label>
+        <input name="content1" type="text" class="form-control" id="content1" placeholder="Nhập nội dung 1">
+    </div>
+    <div class="form-group">
+        <label for="imgContent">Hình ảnh chi tiết</label>
+        <input name="imgContent" type="text" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết">
+    </div>
+    <div class="form-group">
+        <label for="content2">Nội dung chi tiết 2</label>
+        <input name="content2" type="text" class="form-control" id="content2" placeholder="Nhập nội dung 2">
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm bài viết</button>
+</form>
+</body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+</html>

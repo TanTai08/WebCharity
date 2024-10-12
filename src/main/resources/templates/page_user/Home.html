@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet"/>
+    <!-- Intro settings -->
+    <style>
+        /* Default height for small devices */
+        #intro-example {
+            height: 400px;
+        }
+
+        /* Height for devices larger than 992px */
+        @media (min-width: 992px) {
+            #intro-example {
+                height: 800px;
+            }
+        }
+        /* Điều chỉnh kích thước chữ và cho phép xuống dòng */
+        .badge {
+            font-size: 1.0rem; /* Tăng kích thước chữ */
+            white-space: normal; /* Cho phép xuống dòng */
+            word-wrap: break-word; /* Tự động xuống dòng nếu từ quá dài */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
+       }
+       .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
+       }
+    </style>
+</head>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" style="display: flex">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+                <!-- Left links -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="trang-chu">Trang chủ</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="gioi-thieu">Giới thiệu</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="chuong-trinh">Hoàn cảnh quyên góp</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2" role="button" aria-expanded="false">
+                            Chiến dịch gây quỹ
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">Bệnh hiểm nghèo</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Chấp cánh sinh viên đến trường</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Bữa ăn sinh viên</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Sinh viên giỏi có hoàn cảnh</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button" aria-expanded="false">
+                            Đóng góp
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">Cập nhật đóng góp</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Hướng dẫn đóng góp</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong">Tin tức cộng đồng</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collapsible wrapper -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Background image -->
+    <div id="intro-example" class="p-5 text-center bg-image" style="background-image: url('https://afamilycdn.com/2020/1/11/anh-chup-man-hinh-2020-01-11-luc-160555-15787335700281344013822-1578737257738-15787372577411254919924.png');">
+        <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-white">
+
+                    <h1 class="mb-3">"Lòng tốt luôn mang lại những điều kỳ diệu."</h1>
+                    <h5 class="mb-4">A place where dreams are ignited.</h5>
+                    <div data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" href="#" id="scroll-to-products" role="button" rel="nofollow" target="_blank">Quyên Góp</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Background image -->
+</header>
+
+
+<!-- content -->
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự án quan trọng</strong></h4>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '1' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+       <!-- Mục dự án mới -->
+        <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự mới được công bố</strong></h4>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '2' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Mục dự án đang thực hiện -->
+        <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự án đang thực hiện</strong></h4>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '3' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section style="background-color: #f8f9fa; padding: 40px 0;margin-top: 100px">
+    <div class="container">
+        <h4 class="text-center mb-5"><strong>Thống kê</strong></h4>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Dự án thành công</h5>
+                        <p class="card-text display-4 text-primary">120</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Người tham gia</h5>
+                        <p class="card-text display-4 text-primary">2,500</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Số tiền quyên góp</h5>
+                        <p class="card-text display-4 text-primary">$150,000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Sự kiện tổ chức</h5>
+                        <p class="card-text display-4 text-primary">30</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Statistics Section -->
+
+<!-- Carousel wrapper -->
+<div id="carouselDarkVariant" class="carousel slide carousel-fade carousel-dark" data-mdb-ride="carousel" data-mdb-carousel-init style="margin-top: 100px">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="1" aria-label="Slide 1"></button>
+        <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="2" aria-label="Slide 1"></button>
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <img src="https://special.vietnamplus.vn/wp-content/uploads/2021/03/vnplaodong-1525760471-98.jpg" class="d-block w-100" alt="Motorbike Smoke"/>
+            <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
+                <h5>Những mãnh đời cơ cực</h5>
+                <p>The difficult lives</p>
+            </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+            <img src="https://thanhnien.mediacdn.vn/Uploaded/minhnguyet/2022_07_22/trao-qua-8932.jpg" class="d-block w-100" alt="Mountaintop"/>
+            <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
+                <h5>Chung tay góp sức</h5>
+                <p>Join hands and contribute</p>
+            </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+            <img src="https://media.vov.vn/sites/default/files/styles/large_watermark/public/2021-01/tuan_1.jpg" class="d-block w-100" alt="Woman Reading a Book"/>
+            <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
+                <h5>Trao đi yêu thương, nhận lại niềm vui</h5>
+                <p>Give love, receive joy</p>
+            </div>
+        </div>
+    </div>
+    <!-- Inner -->
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-mdb-target="#carouselDarkVariant" data-mdb-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-mdb-target="#carouselDarkVariant" data-mdb-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<!-- Carousel wrapper -->
+
+<!-- Section: Hoạt động dịch vụ chương trình -->
+<section class="text-center my-5" style="background-color: #f8f9fa;">
+    <div class="container py-5">
+        <h4 class="text-center mb-5"><strong>Hoạt động dịch vụ chương trình</strong></h4>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow">
+                    <img src="https://example.com/image1.jpg" class="card-img-top" alt="Chương trình 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Chương trình 1</h5>
+                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
+                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow">
+                    <img src="https://example.com/image2.jpg" class="card-img-top" alt="Chương trình 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Chương trình 2</h5>
+                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
+                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow">
+                    <img src="https://example.com/image3.jpg" class="card-img-top" alt="Chương trình 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Chương trình 3</h5>
+                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
+                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="margin-top:100px">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Kết nối với chúng tôi qua mạng xã hội:</span>
+        </div>
+        <!-- Left -->
+
+        <!-- Right -->
+        <div>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
+                    <p>
+                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt đẹp hơn.
+                        Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Hướng dẫn
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Hướng dẫn đóng góp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Giới thiệu</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Tổ chức</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Lịch sử</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Chương trình
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Cứu trợ khẩn cấp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Trợ giúp y tế</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Bữa ăn giá thấp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Phương tiện mưu sinh</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                    <p><i class="fas fa-home me-3"></i> An Dương Vương, Quận 5, TP.Hồ Chí Minh</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        quytuthienmattroi@gmail.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+</body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+</html>
+<!-- JavaScript -->
+<script>
+    document.getElementById("scroll-to-products").addEventListener("click", function(e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+        document.getElementById("content-syphon").scrollIntoView({ behavior: 'smooth' });
+    });
+</script>

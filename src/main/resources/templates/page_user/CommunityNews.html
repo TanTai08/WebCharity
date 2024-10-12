@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css">
+    <title>Tin Tức Cộng Đồng</title>
+    <style>
+        .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    header {
+        padding-top: 120px; /* Bù lại chiều cao của navbar */
+    }
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
+    }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+            <!-- Left links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="trang-chu">Trang chủ</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="gioi-thieu">Giới thiệu</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="chuong-trinh">Hoàn cảnh quyên góp</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2" role="button" aria-expanded="false">
+                        Chiến dịch gây quỹ
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Bệnh hiểm nghèo</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Chấp cánh sinh viên đến trường</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Bữa ăn sinh viên</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Sinh viên giỏi có hoàn cảnh</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button" aria-expanded="false">
+                        Đóng góp
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Cập nhật đóng góp</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Hướng dẫn đóng góp</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong">Tin tức cộng đồng</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+<!-- Header Section -->
+<header class="text-center my-5" style="margin-top: 100px">
+    <div class="container">
+        <h1 class="font-weight-bold">Tin Tức và Cập Nhật Cộng Đồng</h1>
+        <p class="lead">Hãy theo dõi các tin tức và sự kiện mới nhất trong cộng đồng của chúng ta.</p>
+    </div>
+</header>
+
+<!-- News Section -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/400" class="card-img-top" alt="Tin Tức 1">
+                <div class="card-body">
+                    <h5 class="card-title">Sự Kiện Cộng Đồng 1</h5>
+                    <p class="card-text">Tham gia một ngày vui vẻ với nhiều hoạt động và giải trí.</p>
+                    <a href="#" class="btn btn-primary">Đọc Thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/400" class="card-img-top" alt="Tin Tức 2">
+                <div class="card-body">
+                    <h5 class="card-title">Sự Kiện Cộng Đồng 2</h5>
+                    <p class="card-text">Giúp chúng tôi dọn dẹp công viên và làm cho cộng đồng xanh hơn!</p>
+                    <a href="#" class="btn btn-primary">Đọc Thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/400" class="card-img-top" alt="Tin Tức 3">
+                <div class="card-body">
+                    <h5 class="card-title">Sự Kiện Cộng Đồng 3</h5>
+                    <p class="card-text">Tham gia chạy từ thiện hàng năm vì một lý do tốt đẹp.</p>
+                    <a href="#" class="btn btn-primary">Đọc Thêm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="margin-top:100px">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Kết nối với chúng tôi qua mạng xã hội:</span>
+        </div>
+        <!-- Left -->
+
+        <!-- Right -->
+        <div>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="" class="me-4 text-reset">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
+                    <p>
+                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt đẹp hơn.
+                        Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Hướng dẫn
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Hướng dẫn đóng góp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Giới thiệu</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Tổ chức</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Lịch sử</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Chương trình
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Cứu trợ khẩn cấp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Trợ giúp y tế</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Bữa ăn giá thấp</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Phương tiện mưu sinh</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                    <p><i class="fas fa-home me-3"></i> An Dương Vương, Quận 5, TP.Hồ Chí Minh</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        quytuthienmattroi@gmail.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+</body>
+</html>

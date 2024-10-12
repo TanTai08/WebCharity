@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CDN bootstrap MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        .sidebar {
+            height: 170vh;
+            background-color: #111111;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        iframe {
+            width: 100%;
+            height: 80vh;
+            border: none;
+        }
+        .nav-item a {
+            margin-bottom: 15px;
+        }
+        .nav-decor {
+            color: #CCFFFF !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block sidebar">
+            <div class="sidebar-sticky">
+                <h5 class="text-white mt-3 mb-3 text-center"><a href="homepage">Bảng điều khiển</a></h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
+                            Quản lý nội dung<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
+                        </a>
+                        <div class="collapse" id="homeMenu">
+                            <ul class="nav flex-column ml-3">
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('dashboard_programmanagement')" class="nav-link nav-decor">Quản lý chương trình</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('dashboard_articlemanagement')" class="nav-link nav-decor">Quản lý chiến dịch</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('dashboard_articlemanagement')" class="nav-link nav-decor">Quản lý tin tức cộng đồng</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('dashboard_articlemanagement')" class="nav-link nav-decor">Quản lý hoạt động dịch vụ</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="homeMenu_1">
+                            <ul class="nav flex-column ml-3">
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('dashboard_programmanagement')" class="nav-link nav-decor">Quản lý danh mục</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#analyticsMenu" aria-expanded="false" aria-controls="analyticsMenu">
+                            Quản lý chức năng<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
+                        </a>
+                        <div class="collapse" id="analyticsMenu">
+                            <ul class="nav flex-column ml-3">
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('sendmessage_dashboard')" class="nav-link nav-decor">Thông tin tài khoản</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('plan_dashboard')" class="nav-link nav-decor">Quản lý doanh thu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('note_dashboard')" class="nav-link nav-decor">Quản lý hoạt động từ thiện</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('feedback_dashboard')" class="nav-link nav-decor">Xem phản hồi người dùng</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="loadIframe('statistical_dashboard')"  data-toggle="collapse" data-target="#ordersMenu" aria-expanded="false" aria-controls="ordersMenu">
+                            Thống kê<i style="margin-left: 4px" class="fa-solid"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#productsMenu" aria-expanded="false" aria-controls="productsMenu">
+                            Cài đặt<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
+                        </a>
+                        <div class="collapse" id="productsMenu">
+                            <ul class="nav flex-column ml-3">
+                                <li class="nav-item">
+                                    <a href="#" onclick="loadIframe('print_dashboard')" class="nav-link nav-decor">Máy in</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Hệ Thống Quyên Góp Qũy Mặt Trời</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                        Đổi màu
+                    </button>
+                </div>
+            </div>
+            <iframe name="content-frame" src="account_dashboard"></iframe>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap JS và các dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JS để thay đổi nội dung iframe -->
+<script>
+    function loadIframe(url) {
+        document.querySelector('iframe[name="content-frame"]').src = url;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        loadIframe('dashboard_programmanagement');
+
+        // Tự động mở rộng phần "Quản lý tài khoản"
+        var homeMenu = document.getElementById('homeMenu');
+        homeMenu.classList.add('show');
+        var homeMenuLink = document.querySelector('a[data-target="#homeMenu"]');
+        homeMenuLink.setAttribute('aria-expanded', 'true');
+    });
+</script>
+</body>
+</html>
