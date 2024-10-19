@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class Login_admin_controller {
+
     @GetMapping("/login")
     public String logout() {
-        return "account_admin/Signln";
+        return "account_admin/SignIn";
     }
 }

@@ -102,4 +102,9 @@ public class Dashboard_controller {
         }
         return "redirect:/dashboard_programmanagement";
     }
+
+    @GetMapping("test")
+    public String test() {
+        return "account_admin/test";
+    }
 }
