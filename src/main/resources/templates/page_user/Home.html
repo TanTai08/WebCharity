@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+
 <head>
     <meta charset="UTF-8">
     <title>Trang chủ</title>
@@ -8,6 +11,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <!-- MDB -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/main/resources/templates/css/style.css">
+    <!-- Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet"/>
     <!-- Intro settings -->
     <style>
@@ -33,21 +39,24 @@
             top: 0;
             width: 100%;
             z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
-       }
-       .nav-item.dropdown:hover .dropdown-menu {
+        }
+        .nav-item.dropdown:hover .dropdown-menu {
             display: block;
             margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
-       }
+        }
+
+
     </style>
 </head>
-</head>
+
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" style="display: flex">
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Toggle button -->
-            <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+            <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample"
+                    aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -68,7 +77,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2" role="button" aria-expanded="false">
+                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2"
+                           role="button" aria-expanded="false">
                             Chiến dịch gây quỹ
                         </a>
                         <!-- Dropdown menu -->
@@ -89,7 +99,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button" aria-expanded="false">
+                        <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button"
+                           aria-expanded="false">
                             Đóng góp
                         </a>
                         <!-- Dropdown menu -->
@@ -113,14 +124,17 @@
         <!-- Container wrapper -->
     </nav>
     <!-- Background image -->
-    <div id="intro-example" class="p-5 text-center bg-image" style="background-image: url('https://afamilycdn.com/2020/1/11/anh-chup-man-hinh-2020-01-11-luc-160555-15787335700281344013822-1578737257738-15787372577411254919924.png');">
+    <div id="intro-example" class="p-5 text-center bg-image"
+         style="background-image: url('https://home.cdn.papaya.services/tu_thien_la_gi_2118f1e818.jpg');">
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-white">
 
                     <h1 class="mb-3">"Lòng tốt luôn mang lại những điều kỳ diệu."</h1>
                     <h5 class="mb-4">A place where dreams are ignited.</h5>
-                    <div data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" href="#" id="scroll-to-products" role="button" rel="nofollow" target="_blank">Quyên Góp</div>
+                    <div data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" href="#" id="scroll-to-products"
+                         role="button" rel="nofollow" target="_blank">Quyên Góp
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,11 +152,14 @@
                  th:each="charitycontent : ${charitycontent}"
                  th:if="${charitycontent.displaycategory == '1' && charitycontent.status == '0'}">
                 <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
-                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
                     <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
                         <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
                             <div class="d-flex justify-content-start align-items-start h-100">
-                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
                             </div>
                         </div>
                         <div class="hover-overlay">
@@ -151,19 +168,18 @@
                     </a>
                 </div>
             </div>
-        </div>
-       <!-- Mục dự án mới -->
-        <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự mới được công bố</strong></h4>
-        <div class="row">
             <div class="col-lg-4 col-md-12 mb-4"
                  th:each="charitycontent : ${charitycontent}"
                  th:if="${charitycontent.displaycategory == '2' && charitycontent.status == '0'}">
                 <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
-                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
                     <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
                         <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
                             <div class="d-flex justify-content-start align-items-start h-100">
-                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
                             </div>
                         </div>
                         <div class="hover-overlay">
@@ -172,19 +188,113 @@
                     </a>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '3' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
         </div>
+
+
+        <!-- Mục dự án mới -->
+        <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự mới được công bố</strong></h4>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '4' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '5' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '6' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+
         <!-- Mục dự án đang thực hiện -->
         <h4 class="text-center mb-5" style="color: #8b2323"><strong>Các dự án đang thực hiện</strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-12 mb-4"
                  th:each="charitycontent : ${charitycontent}"
-                 th:if="${charitycontent.displaycategory == '3' && charitycontent.status == '0'}">
+                 th:if="${charitycontent.displaycategory == '7' && charitycontent.status == '0'}">
                 <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
-                    <img class="w-100" th:src="${charitycontent.img}"/>
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
                     <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
                         <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
                             <div class="d-flex justify-content-start align-items-start h-100">
-                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark" th:text="${charitycontent.title}"></span>
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
                             </div>
                         </div>
                         <div class="hover-overlay">
@@ -193,7 +303,48 @@
                     </a>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '8' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 mb-4"
+                 th:each="charitycontent : ${charitycontent}"
+                 th:if="${charitycontent.displaycategory == '9' && charitycontent.status == '0'}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                    <img class="w-100" th:src="${charitycontent.img}" src="" style="
+                    height: 250px;
+                    ">
+                    <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}">
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-start align-items-start h-100">
+                                <span class="badge bg-body-tertiary pt-2 ms-3 mt-3 text-dark"
+                                      th:text="${charitycontent.title}"></span>
+                            </div>
+                        </div>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </section>
@@ -241,10 +392,12 @@
 <!-- End Statistics Section -->
 
 <!-- Carousel wrapper -->
-<div id="carouselDarkVariant" class="carousel slide carousel-fade carousel-dark" data-mdb-ride="carousel" data-mdb-carousel-init style="margin-top: 100px">
+<div id="carouselDarkVariant" class="carousel slide carousel-fade carousel-dark" data-mdb-ride="carousel"
+     data-mdb-carousel-init style="margin-top: 100px">
     <!-- Indicators -->
     <div class="carousel-indicators">
-        <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
         <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="1" aria-label="Slide 1"></button>
         <button data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="2" aria-label="Slide 1"></button>
     </div>
@@ -253,7 +406,8 @@
     <div class="carousel-inner">
         <!-- Single item -->
         <div class="carousel-item active">
-            <img src="https://special.vietnamplus.vn/wp-content/uploads/2021/03/vnplaodong-1525760471-98.jpg" class="d-block w-100" alt="Motorbike Smoke"/>
+            <img src="https://special.vietnamplus.vn/wp-content/uploads/2021/03/vnplaodong-1525760471-98.jpg"
+                 class="d-block w-100" alt="Motorbike Smoke"/>
             <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
                 <h5>Những mãnh đời cơ cực</h5>
                 <p>The difficult lives</p>
@@ -262,7 +416,8 @@
 
         <!-- Single item -->
         <div class="carousel-item">
-            <img src="https://thanhnien.mediacdn.vn/Uploaded/minhnguyet/2022_07_22/trao-qua-8932.jpg" class="d-block w-100" alt="Mountaintop"/>
+            <img src="https://thanhnien.mediacdn.vn/Uploaded/minhnguyet/2022_07_22/trao-qua-8932.jpg"
+                 class="d-block w-100" alt="Mountaintop"/>
             <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
                 <h5>Chung tay góp sức</h5>
                 <p>Join hands and contribute</p>
@@ -271,7 +426,8 @@
 
         <!-- Single item -->
         <div class="carousel-item">
-            <img src="https://media.vov.vn/sites/default/files/styles/large_watermark/public/2021-01/tuan_1.jpg" class="d-block w-100" alt="Woman Reading a Book"/>
+            <img src="https://media.vov.vn/sites/default/files/styles/large_watermark/public/2021-01/tuan_1.jpg"
+                 class="d-block w-100" alt="Woman Reading a Book"/>
             <div class="carousel-caption d-none d-md-block" style="color: #f8f8ff">
                 <h5>Trao đi yêu thương, nhận lại niềm vui</h5>
                 <p>Give love, receive joy</p>
@@ -300,33 +456,33 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card shadow">
-                    <img src="https://example.com/image1.jpg" class="card-img-top" alt="Chương trình 1">
+                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017133725-638647690457206481.jpg" class="card-img-top" alt="Chương trình 1">
                     <div class="card-body">
-                        <h5 class="card-title">Chương trình 1</h5>
-                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                        <h5 class="card-title">Chung tay xây dựng sân chơi, nhà vệ sinh và sách thư viện cho trường Tiểu học và THCS Quý Hoà, xã Quý Hòa, huyện Lạc Sơn, tỉnh Hoà Bình</h5>
+                        <p class="card-text">Tại điểm trường THCS Quý Hòa, cơ sở hạ tầng bị xuống cấp nghiêm trọng dẫn đến sự thiếu hụt phòng học của các em. Vì vậy nhà trường phải chia các em ra và phân bổ thêm vào các lớp học hiện có, điều đó đã dẫn đến số lượng học sinh trên mỗi lớp vượt quá quy định cho các lớp học tại miền núi.</p>
+                        <a href="https://www.momo.vn/cong-dong/chung-tay-xay-dung-san-choi-nha-ve-sinh-va-sach-thu-vien-tinh-hoa-binh" class="btn btn-primary">Xem thêm</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card shadow">
-                    <img src="https://example.com/image2.jpg" class="card-img-top" alt="Chương trình 2">
+                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017132841-638647685214561068.jpg" class="card-img-top" alt="Chương trình 2">
                     <div class="card-body">
-                        <h5 class="card-title">Chương trình 2</h5>
-                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                        <h5 class="card-title">Gây quỹ cải thiện cơ sở vật chất cho 572 em học sinh bán trú tại Trường PTDTBT Tiểu học Sơn Vĩ, Huyện Mèo Vạc, Tỉnh Hà Giang</h5>
+                        <p class="card-text">Cơ sở vật chất của nhà trường đang dần xuống cấp, đác biệt là khu vực nhà ăn dành cho các em học sinh bán trú. Hiện nay số lượng học sinh bán trú đông đúc nhưng khu vực nhà ăn không đảm bảo đủ cho nhu cầu vệ sinh và an toàn thực phẩm.</p>
+                        <a href="https://www.momo.vn/cong-dong/gay-quy-cai-thien-co-so-vat-chat-cho-572-em-hoc-sinh-tinh-ha-giang" class="btn btn-primary">Xem thêm</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card shadow">
-                    <img src="https://example.com/image3.jpg" class="card-img-top" alt="Chương trình 3">
+                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017130602-638647671626466433.jpg" class="card-img-top" alt="Chương trình 3">
                     <div class="card-body">
-                        <h5 class="card-title">Chương trình 3</h5>
-                        <p class="card-text">Mô tả ngắn gọn về chương trình.</p>
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                        <h5 class="card-title">Chung tay gây quỹ hỗ trợ học bổng đến trường cho 100 em học sinh có hoàn cảnh khó khăn tại Thành phố Hồ Chí Minh (Đợt 1)</h5>
+                        <p class="card-text">Trong khuôn khổ dự án “Trang mới cuộc đời”, sáng kiến “cùng em đến trường” sẽ cung cấp những gói hỗ trợ phù hợp với hoàn cảnh của từng trẻ em khó khăn, đặc biệt đảm bảo các em có thể duy trì được việc học tập.</p>
+                        <a href="https://www.momo.vn/cong-dong/chung-tay-gay-quy-ho-tro-hoc-bong-den-truong-cho-100-em" class="btn btn-primary">Xem thêm</a>
                     </div>
                 </div>
             </div>
@@ -380,7 +536,8 @@
                     <h6 class="text-uppercase fw-bold mb-4">
                         <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
                     <p>
-                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt đẹp hơn.
+                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt
+                        đẹp hơn.
                         Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
                     </p>
                 </div>
@@ -460,9 +617,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
 </html>
 <!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.getElementById("scroll-to-products").addEventListener("click", function(e) {
         e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
         document.getElementById("content-syphon").scrollIntoView({ behavior: 'smooth' });
     });
+
+
 </script>

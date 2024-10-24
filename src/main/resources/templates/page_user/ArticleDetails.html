@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
     <title>Chi tiết bài viết</title>
@@ -116,10 +117,16 @@
             <h1 class="post-title" th:text="${charitycontent.title}"></h1>
             <div th:each="detail : ${articalDetails}">
                 <p th:text="${detail.content_1}"></p>
-                <img class="post-img img-fluid" th:src="${detail.img_content}" alt="Hình ảnh bài viết">
-                <p th:text="${detail.content_2}"class="post-content"></p>
+                <img class="post-img img-fluid" th:src="${detail.img_content}" alt="Hình ảnh bài viết" src="">
+                <p th:text="${detail.content_2 + ' ' + detail.content_3}" class="post-content"></p>
+
+
+                <img class="post-img img-fluid" th:src="${detail.img_content2}" alt="Hình ảnh bài viết" src="">
+                <p th:text="${detail.content_4 + ' ' + detail.content_5}" class="post-content"></p>
+
+
             </div>
-            <a href="/" class="btn btn-primary back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+            <a th:href="@{/trang-chu}" class="btn btn-primary back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
         </div>
     </div>
 </div>
