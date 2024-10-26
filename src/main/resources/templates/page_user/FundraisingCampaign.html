@@ -16,78 +16,168 @@
             display: block;
             margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
        }
+        .project {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .card {
+            margin-bottom: 30px; /* Khoảng cách giữa các card */
+            border: none; /* Bỏ viền card */
+            border-radius: 10px; /* Bo góc card */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+            transition: transform 0.2s; /* Hiệu ứng khi hover */
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Hiệu ứng nhấc card lên khi hover */
+        }
+
+        .card-title {
+            font-size: 1.5rem; /* Kích thước tiêu đề lớn hơn */
+            font-weight: bold; /* Đậm tiêu đề */
+        }
+
+        .card-text {
+            margin-bottom: 15px; /* Khoảng cách dưới của text */
+        }
+
+        .btn {
+            background-color: #007bff; /* Màu nền của nút */
+            color: white; /* Màu chữ trên nút */
+            border-radius: 5px; /* Bo góc nút */
+            padding: 10px 20px; /* Padding cho nút */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap; /* Cho phép các card xuống dòng */
+        }
+
+        .col-md-4 {
+            display: flex; /* Thiết lập flexbox cho cột */
+            justify-content: center; /* Căn giữa nội dung */
+        }
+
+        .card {
+            flex: 1; /* Chiếm đều không gian */
+            display: flex;
+            flex-direction: column; /* Để các phần tử bên trong sắp xếp theo chiều dọc */
+            justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+            margin-bottom: 30px; /* Khoảng cách giữa các card */
+            border: none; /* Bỏ viền card */
+            border-radius: 10px; /* Bo góc card */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+            transition: transform 0.2s; /* Hiệu ứng khi hover */
+        }
+
+        .card-body {
+            flex-grow: 1; /* Để card-body chiếm hết không gian còn lại */
+        }
+
     </style>
+
+
+
 </head>
 <body>
 <!-- Thanh điều hướng -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary"
+     style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
-        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+        <button data-mdb-collapse-init class="navbar-toggler" type="button"
+                data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample"
+                aria-expanded="false" aria-label="Toggle navigation"
+                style="border: none; outline: none; font-size: 24px;">
             <i class="fas fa-bars"></i>
         </button>
 
         <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample"
+             style="transition: opacity 0.5s ease, visibility 0.5s; opacity: 1;">
             <!-- Left links -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="trang-chu">Trang chủ</a>
+                    <a class="nav-link active" aria-current="page" href="trang-chu"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Trang chủ
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="gioi-thieu">Giới thiệu</a>
+                    <a class="nav-link active" aria-current="page" href="gioi-thieu"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Giới thiệu
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="chuong-trinh">Hoàn cảnh quyên góp</a>
+                    <a class="nav-link active" aria-current="page" href="chuong-trinh"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Hoàn cảnh quyên góp
+                    </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2" role="button" aria-expanded="false">
+                <li class="nav-item dropdown"
+                    style="position: relative;">
+                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+                       id="navbarDropdown_2" role="button" aria-expanded="false"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Chiến dịch gây quỹ
                     </a>
-                    <!-- Dropdown menu -->
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">Bệnh hiểm nghèo</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Chấp cánh sinh viên đến trường</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Bữa ăn sinh viên</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Sinh viên giỏi có hoàn cảnh</a>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;" data-filter="bệnh hiểm nghèo">Bệnh hiểm nghèo</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;" data-filter="chấp cánh sinh viên">Chấp cánh sinh viên đến trường</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;" data-filter="bữa ăn sinh viên">Bữa ăn sinh viên</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;" data-filter="sinh viên giỏi có hoàn cảnh">Sinh viên giỏi có hoàn cảnh</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button" aria-expanded="false">
+                <li class="nav-item dropdown"
+                    style="position: relative;">
+                    <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3"
+                       role="button" aria-expanded="false"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Đóng góp
                     </a>
-                    <!-- Dropdown menu -->
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">Cập nhật đóng góp</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Hướng dẫn đóng góp</a>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong">Tin tức cộng đồng</a>
+                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Tin tức cộng đồng
+                    </a>
                 </li>
             </ul>
         </div>
-        <!-- Collapsible wrapper -->
     </div>
-    <!-- Container wrapper -->
 </nav>
 
 <!-- Phần Chiến Dịch -->
@@ -97,50 +187,121 @@
         <p class="lead">Chúng tôi đang gây quỹ để hỗ trợ trẻ mồ côi trong khu vực của chúng ta. Hãy tham gia và đóng góp để cải thiện cuộc sống cho các em.</p>
         <div class="row">
             <div class="col-md-4">
-                <div class="card">
-                    <img src="https://www.uit.edu.vn/sites/vi/files/image_from_word/anh_chup_man_hinh_2024-09-07_174814.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="
-                    height: 250px;
-                    ">
+                <div class="card project" data-category="bệnh hiểm nghèo" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://image.tienphong.vn/w890/Uploaded/2024/cq-fkxdsoz/2021_10_04/b937ddb6a4b26dec34a3-1067.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
                     <div class="card-body">
-                        <h5 class="card-title">Chiến dịch tình nguyện Mùa Đông yêu thương 2024.</h5>
+                        <h5 class="card-title">Chàng sinh viên mắc bệnh hiểm nghèo và ước mơ trở thành giáo viên</h5>
                         <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
-                        <a href="https://www.uit.edu.vn/thong-bao-chuoi-hoat-dong-gay-quy-chien-dich-mua-dong-yeu-thuong" class="btn btn-primary">Xêm thêm về thông tin chi tiết</a>
+                        <a href="https://svvn.tienphong.vn/chang-sinh-vien-mac-benh-hiem-ngheo-va-uoc-mo-tro-thanh-giao-vien-tieng-anh-post1382075.tpo" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 50.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="bữa ăn sinh viên" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://dainam.edu.vn/uploads/images/xn27teelm37oxjmd0ios20230214104807_thump.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">2</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://dainam.edu.vn/vi/khoa-dao-tao-va-phat-trien-ky-nang-mem/tin-tuc/lam-the-nao-tu-xu-duoc-bua-com-sinh-vien-sieu-tiet-kiem" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
                         <p class="card-text">Mục tiêu: 10.000.000 VND</p>
                         <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <img src="https://hoisinhvientphcm.com/wp-content/uploads/2024/05/1-4-819x1024-1.png" class="card-img-top w-100" alt="Chiến dịch 2" style="
-                    height: 250px;
-                    ">
+                <div class="card project" data-category="chấp cánh sinh viên" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://www.sgu.edu.vn/wp-content/uploads/2019/10/image001-1200x799.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
                     <div class="card-body">
-                        <h5 class="card-title">Chiến dịch “Lá Mạ Mãi Xanh”</h5>
-                        <p class="card-text">Thời gian: Ngày 21/03 - 26/5/2024</p>
-                        <a href="https://hoisinhvientphcm.com/dhkt-chuoi-hoat-dong-gay-quy-soi-chi-xanh-thang-3-chien-dich-la-ma-mai-xanh-huong-toi-mau-xanh-ben-vung/" class="btn btn-primary">Xem thêm thông tin chi tiết</a>
-                        <p class="card-text">Mục tiêu: 20.000.000 VND</p>
+                        <h5 class="card-title">3</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://www.sgu.edu.vn/ban-chap-hanh-hoi-sinh-vien-truong-dh-sai-gon-kien-toan-nhan-su/" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
                         <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <img src="https://laodongthudo.vn/stores/news_dataimages/2024/062024/07/15/kv1-donation20240607151050.png?rt=20240607151052" class="card-img-top w-100" alt="Chiến dịch 3" style="
-                    height: 250px;
-                    ">
+                <div class="card project" data-category="bữa ăn sinh viên" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://images2.thanhnien.vn/thumb_w/640/528068263637045248/2023/9/17/edit-anh-1-2-16949658721142131560147.png" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
                     <div class="card-body">
-                        <h5 class="card-title">Chiến dịch gây quỹ xây trường</h5>
-                        <p class="card-text">Thời gian: Ngày 2586 đến 30/12/2024.</p>
-                        <a href="https://laodongthudo.vn/trien-khai-chien-dich-thu-thach-toan-cau-2024-chung-tay-gay-quy-xay-truong-cho-em-171871.html" class="btn btn-primary">Xem thêm thông tin chi tiết</a>
-                        <p class="card-text">Mục tiêu: 15.000.000 VND</p>
+                        <h5 class="card-title">4</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://thanhnien.vn/com-sinh-vien-an-qua-loa-roi-vui-dau-hoc-hanh-lam-them-la-sai-lam-185230917222057004.htm" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
                         <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="chấp cánh sinh viên" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://www.sgu.edu.vn/wp-content/uploads/2023/06/image003.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">5</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://www.sgu.edu.vn/dai-hoi-dai-bieu-hoi-sinh-vien-viet-nam-truong-dai-hoc-sai-gon-lan-thu-viii-nhiem-ky-2023-2025/" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="sinh viên giỏi có hoàn cảnh" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://hoptacdoanhnghiep.sgu.edu.vn/storage/public/news/10/16932000340.png" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">6</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://hoptacdoanhnghiep.sgu.edu.vn/tin-tuc/10-hoc-bong-quy-dong-hanh-trao-hoc-bong-cho-sinh-vien-co-hoan-canh-kho-khan-vuon-len-hoc-gioi-nam-hoc-2022-2023" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="bệnh hiểm nghèo" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://image.congan.com.vn/thumbnail/CATP-480-2020-10-11/121382158-2295212433957751-2776112266452586720-n.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Xin giúp nam sinh bị bệnh hiểm nghèo, vừa đỗ đại học được đến trường</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://congan.com.vn/tu-thien/xin-giup-mam-sinh-bi-ung-thu-khi-vua-do-dai-hoc_101105.html" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="sinh viên giỏi có hoàn cảnh" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://hoptacdoanhnghiep.sgu.edu.vn/upload/news/37/anh_tieu_de_6540c3beb4a30_z4835376163564_605d583c8f10bae4729950eff19983f1.jpg" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">8</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://hoptacdoanhnghiep.sgu.edu.vn/tin-tuc/35-hoc-bong-quy-dong-hanh-dong-hanh-cung-sinh-vien-truong-dai-hoc-sai-gon" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 10.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card project" data-category="bệnh hiểm nghèo" style="opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <img src="https://cdnphoto.dantri.com.vn/_yhtMpjaOJhbcGSiAKrEXJUK1us=/2024/07/16/be-nguyen-van-khang-tung-nguyen-4-1721101890361.jpg?watermark=v1,v2" class="card-img-top w-100" alt="Chiến dịch 1" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Cậu bé 13 tuổi mắc bệnh hiểm nghèo: "Con muốn được sống, được đi học"</h5>
+                        <p class="card-text">Thời gian: Ngày 03/09 - 22/12/2024</p>
+                        <a href="https://dantri.com.vn/tam-long-nhan-ai/cau-be-13-tuoi-mac-benh-hiem-ngheo-con-muon-duoc-song-duoc-di-hoc-20240716105318173.htm" class="btn btn-primary">Xem thêm về thông tin chi tiết</a>
+                        <p class="card-text">Mục tiêu: 20.000.000 VND</p>
+                        <a href="#" class="btn btn-primary">Đóng Góp Ngay</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thêm các dự án khác ở đây với cấu trúc tương tự -->
         </div>
+
+
     </div>
 </section>
+
 
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-body-tertiary text-muted" style="margin-top:100px">
@@ -265,5 +426,98 @@
 <!-- Footer -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script>
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const filter = this.getAttribute('data-filter');
+            const container = document.querySelector('.row');
+            const allProjects = document.querySelectorAll('.project');
+
+            // Hide all projects initially
+            allProjects.forEach(project => {
+                project.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                project.style.opacity = '0';
+                project.style.transform = 'translateY(-10px)';
+                project.style.pointerEvents = 'none';
+            });
+
+            // Wait for the hide animation to finish before filtering
+            setTimeout(() => {
+                // Clear the container
+                container.innerHTML = '';
+
+                // Filter the projects based on selected category
+                const filteredProjects = Array.from(allProjects).filter(
+                    project => project.getAttribute('data-category') === filter
+                );
+
+                // Loop through the filtered projects and append them in a column layout
+                filteredProjects.forEach((project) => {
+                    // Create a new column element for each project
+                    const columnDiv = document.createElement('div');
+                    columnDiv.classList.add('col-md-4');
+                    columnDiv.appendChild(project);
+
+                    // Append project to container
+                    container.appendChild(columnDiv);
+
+                    // Show project with a smooth animation
+                    project.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    project.style.opacity = '1';
+                    project.style.transform = 'translateY(0)';
+                    project.style.pointerEvents = 'auto';
+                });
+
+                // Optionally, add back the hidden non-filtered projects at the end
+                allProjects.forEach(project => {
+                    if (!filteredProjects.includes(project)) {
+                        const columnDiv = document.createElement('div');
+                        columnDiv.classList.add('col-md-4');
+                        columnDiv.style.display = 'none';  // Keep them hidden
+                        columnDiv.appendChild(project);
+                        container.appendChild(columnDiv);
+                    }
+                });
+            }, 500); // Match this with the transition duration for opacity
+        });
+    });
+</script>
+
+
+
+
+
+
+<script>
+    // Hiệu ứng mở menu thả xuống khi hover
+    document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
+        dropdown.addEventListener('mouseenter', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.display = 'block';
+            menu.style.opacity = '1';
+        });
+
+        dropdown.addEventListener('mouseleave', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.opacity = '0';
+            setTimeout(() => (menu.style.display = 'none'), 300);
+        });
+    });
+
+    // Thêm hiệu ứng hover cho các liên kết
+    document.querySelectorAll('.nav-link').forEach(function (link) {
+        link.addEventListener('mouseenter', function () {
+            this.style.backgroundColor = '#007bff'; // Màu nền hover
+            this.style.color = '#fff'; // Màu chữ khi hover
+        });
+        link.addEventListener('mouseleave', function () {
+            this.style.backgroundColor = ''; // Xóa màu nền hover
+            this.style.color = '#000'; // Màu chữ ban đầu
+        });
+    });
+</script>
+
 </body>
 </html>

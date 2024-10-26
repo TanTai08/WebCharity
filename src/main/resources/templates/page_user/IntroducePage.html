@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -23,99 +24,179 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary"
+     style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
-        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+        <button data-mdb-collapse-init class="navbar-toggler" type="button"
+                data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample"
+                aria-expanded="false" aria-label="Toggle navigation"
+                style="border: none; outline: none; font-size: 24px;">
             <i class="fas fa-bars"></i>
         </button>
 
         <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample"
+             style="transition: opacity 0.5s ease, visibility 0.5s; opacity: 1;">
             <!-- Left links -->
-            <ul class="navbar-nav mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="trang-chu">Trang chủ</a>
+                    <a class="nav-link active" aria-current="page" href="trang-chu"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Trang chủ
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="gioi-thieu">Giới thiệu</a>
+                    <a class="nav-link active" aria-current="page" href="gioi-thieu"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Giới thiệu
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="chuong-trinh">Hoàn cảnh quyên góp</a>
+                    <a class="nav-link active" aria-current="page" href="chuong-trinh"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Hoàn cảnh quyên góp
+                    </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2" role="button" aria-expanded="false">
+                <li class="nav-item dropdown"
+                    style="position: relative;">
+                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+                       id="navbarDropdown_2" role="button" aria-expanded="false"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Chiến dịch gây quỹ
                     </a>
-                    <!-- Dropdown menu -->
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">Bệnh hiểm nghèo</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Chấp cánh sinh viên đến trường</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Bữa ăn sinh viên</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Sinh viên giỏi có hoàn cảnh</a>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Bệnh hiểm nghèo</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Chấp cánh sinh viên đến trường</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Sinh viên giỏi có hoàn cảnh</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button" aria-expanded="false">
+                <li class="nav-item dropdown"
+                    style="position: relative;">
+                    <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3"
+                       role="button" aria-expanded="false"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Đóng góp
                     </a>
-                    <!-- Dropdown menu -->
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">Cập nhật đóng góp</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Hướng dẫn đóng góp</a>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
+                        <li><a class="dropdown-item" href="#"
+                               style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong">Tin tức cộng đồng</a>
+                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                        Tin tức cộng đồng
+                    </a>
                 </li>
             </ul>
         </div>
-        <!-- Collapsible wrapper -->
     </div>
-    <!-- Container wrapper -->
 </nav>
 
-<div class="container" style="margin-top: 100px">
-    <h1 class="section-title">GIỚI THIỆU</h1>
+<div class="container" style="margin-top: 100px; margin-bottom: 50px;">
+    <h1 class="section-title text-center mb-5">GIỚI THIỆU VỀ QUỸ TỪ THIỆN SINH VIÊN SGU</h1>
+
     <div class="content">
-        <p>Quỹ Từ thiện Sinh viên SGU** là một sáng kiến phi lợi nhuận, do cộng đồng sinh viên Trường Đại học Sài Gòn thành lập với mục tiêu hỗ trợ sinh viên gặp khó khăn và đóng góp cho các hoạt động thiện nguyện trong xã hội. Quỹ được thành lập vào năm 2023, nhằm tạo ra một mạng lưới đoàn kết và sẻ chia giữa các thế hệ sinh viên.</p>
 
-        <p>Trụ sở của Quỹ được đặt tại khuôn viên Trường Đại học Sài Gòn, số 273 An Dương Vương, Quận 5, TP. Hồ Chí Minh.</p>
+        <div class="text-center mb-4">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKHupCPdm1e3qjlSsbnHUjJzstE8NxVV13ow&s" class="img-fluid" alt="Banner Quỹ từ thiện SGU">
+        </div>
 
-        <h3 class="subheading">Các đặc điểm của Quỹ Sinh viên SGU</h3>
+        <p>Quỹ Từ thiện Sinh viên SGU là một tổ chức thiện nguyện do sinh viên và cựu sinh viên của Trường Đại học Sài Gòn (SGU) thành lập, với sứ mệnh hỗ trợ các bạn sinh viên gặp khó khăn trong học tập và cuộc sống, đồng thời đóng góp cho cộng đồng thông qua các dự án thiện nguyện. Ra đời vào năm 2023, Quỹ mang theo khát vọng xây dựng một cộng đồng sinh viên đoàn kết, sẻ chia và cùng nhau phát triển.</p>
+        <p>Trụ sở chính của Quỹ đặt tại khuôn viên Trường Đại học Sài Gòn, địa chỉ: 273 An Dương Vương, Quận 5, TP. Hồ Chí Minh. Quỹ hoạt động theo nguyên tắc tình nguyện, minh bạch và không vụ lợi, lấy sinh viên làm trung tâm của các hoạt động phát triển và lan tỏa lòng nhân ái.</p>
+
+
+        <div class="text-center mb-4">
+            <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/01/LRQ-XuanTinhNguyen_2024_004-1024x499.jpg" class="img-fluid" alt="Hoạt động thiện nguyện của Quỹ">
+        </div>
+
+        <h3 class="subheading mt-4">Sứ mệnh và Tầm nhìn</h3>
+        <p>Quỹ Từ thiện Sinh viên SGU không chỉ là nơi hỗ trợ các sinh viên gặp khó khăn mà còn hướng đến việc xây dựng một cộng đồng đoàn kết và phát triển bền vững. Chúng tôi mong muốn trở thành cầu nối giữa sinh viên và xã hội, mang đến những thay đổi tích cực thông qua các hoạt động thiện nguyện.</p>
+
+        <p>Tầm nhìn của Quỹ là tạo ra một nền tảng mà mọi cá nhân và tổ chức đều có thể đóng góp ý tưởng và nguồn lực, từ đó thúc đẩy các dự án thiện nguyện thiết thực và ý nghĩa. Sự tham gia của sinh viên không chỉ giúp họ phát triển kỹ năng mềm mà còn khơi dậy tinh thần trách nhiệm với xã hội.</p>
+
+
+        <div class="text-center mb-4">
+            <img src="https://image.talentnetwork.vn/dhsaigon///news/2022/12/14/1670992485_img43.jpg" style="width:50%" class="img-fluid" alt="Tầm nhìn của Quỹ">
+        </div>
+
+        <h3 class="subheading mt-4">Các Nguyên Tắc Hoạt Động</h3>
         <ul>
-            <li>Quỹ hoạt động theo nguyên tắc MINH BẠCH và TỰ NGUYỆN. Tất cả số tiền quyên góp sẽ được chuyển trực tiếp đến những sinh viên hoặc hoàn cảnh cần giúp đỡ.</li>
-            <li>Mọi khoản thu chi đều được công khai và cập nhật trên hệ thống thời gian thực thông qua phần mềm quản lý tài chính.</li>
-            <li>Quỹ hướng tới việc (xây dựng cộng đồng yêu thương và phát triển bền vững), không chỉ dừng lại ở hỗ trợ vật chất mà còn chăm sóc sức khỏe tinh thần cho sinh viên và cộng đồng.</li>
-            <li>Hoạt động thiện nguyện được tổ chức với quy trình xác minh minh bạch và đánh giá hiệu quả sau mỗi dự án.</li>
-            <li>Mỗi cá nhân hoặc tổ chức đều có thể trở thành <a href="#">đối tác đồng hành</a> cùng Quỹ để biến những ý tưởng thiện nguyện thành hiện thực.</li>
+            <li><b>Minh bạch tài chính:</b> Tất cả các khoản đóng góp và chi tiêu đều được cập nhật công khai theo thời gian thực trên hệ thống quản lý của Quỹ.</li>
+            <li><b>Chi phí quản lý bằng không:</b> Mọi chi phí quản lý được tối ưu hoặc tài trợ riêng, nhằm đảm bảo 100% số tiền quyên góp đến tay người thụ hưởng.</li>
+            <li><b>Tình nguyện và cộng đồng:</b> Sinh viên không chỉ là người thụ hưởng mà còn là người đóng góp tích cực trong mọi hoạt động.</li>
+            <li><b>Lan tỏa giá trị tinh thần:</b> Quỹ chú trọng không chỉ hỗ trợ vật chất mà còn chăm sóc sức khỏe tinh thần cho sinh viên và cộng đồng.</li>
+            <li><b>Xây dựng mạng lưới đối tác:</b> Quỹ khuyến khích các cá nhân và tổ chức cùng tham gia vào các dự án thiện nguyện, với mục tiêu mở rộng mạng lưới nhân ái.</li>
         </ul>
 
-        <h3 class="subheading">Số liệu hoạt động</h3>
-        <p>Dù mới được thành lập, Quỹ đã ghi nhận sự đóng góp từ hơn 500 sinh viên và giáo viên của SGU, với tổng số tiền hơn 200 triệu đồng được sử dụng để hỗ trợ hơn 50 sinh viên gặp khó khăn trong học tập và đời sống.</p>
 
-        <h3 class="subheading">Sứ mệnh và Tầm nhìn</h3>
-        <p>Quỹ Từ thiện Sinh viên SGU mong muốn trở thành **một biểu tượng của tinh thần sẻ chia**, không chỉ giới hạn trong phạm vi nhà trường mà còn lan tỏa ra cộng đồng xã hội. Chúng tôi tin rằng mỗi hành động nhỏ của hôm nay sẽ tạo nên một tương lai tốt đẹp hơn.</p>
+        <div class="text-center mb-4">
+            <img src="https://laodongcongdoan.vn/stores/news_dataimages/ha.hoang/112020/23/15/4739_Quy_TLVang.jpg?rt=20201123154745" style="width:50%" class="img-fluid" alt="Sinh viên SGU tham gia tình nguyện">
+        </div>
+
+        <h3 class="subheading mt-4">Những Kết Quả Đạt Được</h3>
+        <p>Mặc dù chỉ mới thành lập trong thời gian ngắn, Quỹ đã ghi nhận được những kết quả ấn tượng:</p>
+        <ul>
+            <li>Hơn 21.000 sinh viên và giảng viên đã tham gia đóng góp cho các hoạt động của Quỹ.</li>
+            <li>548.531.951 triệu đồng đã được quyên góp và sử dụng để hỗ trợ hơn 500 sinh viên gặp khó khăn.</li>
+            <li>Quỹ đã phối hợp với nhiều đối tác để tổ chức 5 dự án thiện nguyện lớn, mang lại tác động tích cực cho cộng đồng xung quanh.</li>
+        </ul>
+
+
+        <div class="text-center mb-4">
+            <img src="https://hoptacdoanhnghiep.sgu.edu.vn/upload/news/10/anh_tieu_de_6502d4573438b_BANNER%20QU%E1%BB%B8%20%C4%90%E1%BB%92NG%20H%C3%80NH%20(1480%20%C3%97%20830%20px)%20(1000%20%C3%97%20528%20px)%20(3).png" style="width:80%" class="img-fluid" alt="Kết quả hoạt động của Quỹ">
+        </div>
+
+        <h3 class="subheading mt-4">Các Dự Án Nổi Bật</h3>
+        <ul>
+            <li><b>Chương trình “Bữa cơm ấm áp”:</b> Cung cấp các suất ăn miễn phí cho sinh viên có hoàn cảnh khó khăn.</li>
+            <li><b>Chiến dịch “SGU Xanh”:</b> Tổ chức trồng cây và dọn dẹp khuôn viên trường, nâng cao ý thức bảo vệ môi trường.</li>
+            <li><b>Quỹ học bổng “Tiếp sức đến trường”:</b> Trao học bổng cho sinh viên nghèo vượt khó và có thành tích học tập tốt.</li>
+        </ul>
+
+
+        <div class="text-center mb-4">
+            <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/01/LRQ-XuanTinhNguyen_2024_006-1024x682.jpg" class="img-fluid" alt="Dự án của Quỹ">
+        </div>
+
+        <h3 class="subheading mt-4">Lời Cảm Ơn và Kêu Gọi</h3>
+        <p>Quỹ Từ thiện Sinh viên SGU chân thành cảm ơn tất cả những nhà hảo tâm, đối tác và các bạn sinh viên đã đồng hành cùng chúng tôi trong hành trình lan tỏa lòng nhân ái. Mỗi đóng góp, dù nhỏ hay lớn, đều là một viên gạch xây dựng tương lai tốt đẹp hơn.</p>
+
+        <p>Chúng tôi rất mong nhận được sự quan tâm và ủng hộ từ cộng đồng để tiếp tục thực hiện những dự án ý nghĩa trong tương lai. Hãy cùng chúng tôi biến những ý tưởng thiện nguyện thành hiện thực!</p>
+
+
+        <div class="text-center mt-5">
+            <a th:href="@{/trang-chu}" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left"></i> Quay lại Trang Chủ</a>
+        </div>
     </div>
 </div>
+
 
 
 
@@ -243,4 +324,32 @@
 </body>
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+<script>
+    // Hiệu ứng mở menu thả xuống khi hover
+    document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
+        dropdown.addEventListener('mouseenter', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.display = 'block';
+            menu.style.opacity = '1';
+        });
+
+        dropdown.addEventListener('mouseleave', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.opacity = '0';
+            setTimeout(() => (menu.style.display = 'none'), 300);
+        });
+    });
+
+    // Thêm hiệu ứng hover cho các liên kết
+    document.querySelectorAll('.nav-link').forEach(function (link) {
+        link.addEventListener('mouseenter', function () {
+            this.style.backgroundColor = '#007bff'; // Màu nền hover
+            this.style.color = '#fff'; // Màu chữ khi hover
+        });
+        link.addEventListener('mouseleave', function () {
+            this.style.backgroundColor = ''; // Xóa màu nền hover
+            this.style.color = '#000'; // Màu chữ ban đầu
+        });
+    });
+</script>
 </html>

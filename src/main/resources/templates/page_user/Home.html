@@ -51,77 +51,99 @@
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" style="display: flex">
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary"
+         style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;">
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Toggle button -->
-            <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarCenteredExample"
-                    aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+            <button data-mdb-collapse-init class="navbar-toggler" type="button"
+                    data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample"
+                    aria-expanded="false" aria-label="Toggle navigation"
+                    style="border: none; outline: none; font-size: 24px;">
                 <i class="fas fa-bars"></i>
             </button>
 
             <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample"
+                 style="transition: opacity 0.5s ease, visibility 0.5s; opacity: 1;">
                 <!-- Left links -->
-                <ul class="navbar-nav mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="trang-chu">Trang chủ</a>
+                        <a class="nav-link active" aria-current="page" href="trang-chu"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                            Trang chủ
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="gioi-thieu">Giới thiệu</a>
+                        <a class="nav-link active" aria-current="page" href="gioi-thieu"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                            Giới thiệu
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="chuong-trinh">Hoàn cảnh quyên góp</a>
+                        <a class="nav-link active" aria-current="page" href="chuong-trinh"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                            Hoàn cảnh quyên góp
+                        </a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" id="navbarDropdown_2"
-                           role="button" aria-expanded="false">
+                    <li class="nav-item dropdown"
+                        style="position: relative;">
+                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+                           id="navbarDropdown_2" role="button" aria-expanded="false"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                             Chiến dịch gây quỹ
                         </a>
-                        <!-- Dropdown menu -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="#">Bệnh hiểm nghèo</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Chấp cánh sinh viên đến trường</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Bữa ăn sinh viên</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Sinh viên giỏi có hoàn cảnh</a>
-                            </li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                            style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Bệnh hiểm nghèo</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Chấp cánh sinh viên đến trường</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Sinh viên giỏi có hoàn cảnh</a></li>
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3" role="button"
-                           aria-expanded="false">
+                    <li class="nav-item dropdown"
+                        style="position: relative;">
+                        <a class="nav-link active dropdown-toggle" href="dong-gop" id="navbarDropdown_3"
+                           role="button" aria-expanded="false"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                             Đóng góp
                         </a>
-                        <!-- Dropdown menu -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="#">Cập nhật đóng góp</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Hướng dẫn đóng góp</a>
-                            </li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                            style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                   style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong">Tin tức cộng đồng</a>
+                        <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
+                           style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                            Tin tức cộng đồng
+                        </a>
                     </li>
                 </ul>
             </div>
-            <!-- Collapsible wrapper -->
         </div>
-        <!-- Container wrapper -->
     </nav>
     <!-- Background image -->
     <div id="intro-example" class="p-5 text-center bg-image"
@@ -452,37 +474,60 @@
 <section class="text-center my-5" style="background-color: #f8f9fa;">
     <div class="container py-5">
         <h4 class="text-center mb-5"><strong>Hoạt động dịch vụ chương trình</strong></h4>
-
         <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card shadow">
-                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017133725-638647690457206481.jpg" class="card-img-top" alt="Chương trình 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Chung tay xây dựng sân chơi, nhà vệ sinh và sách thư viện cho trường Tiểu học và THCS Quý Hoà, xã Quý Hòa, huyện Lạc Sơn, tỉnh Hoà Bình</h5>
-                        <p class="card-text">Tại điểm trường THCS Quý Hòa, cơ sở hạ tầng bị xuống cấp nghiêm trọng dẫn đến sự thiếu hụt phòng học của các em. Vì vậy nhà trường phải chia các em ra và phân bổ thêm vào các lớp học hiện có, điều đó đã dẫn đến số lượng học sinh trên mỗi lớp vượt quá quy định cho các lớp học tại miền núi.</p>
-                        <a href="https://www.momo.vn/cong-dong/chung-tay-xay-dung-san-choi-nha-ve-sinh-va-sach-thu-vien-tinh-hoa-binh" class="btn btn-primary">Xem thêm</a>
+            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
+                <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="height: 200px; overflow: hidden;">
+                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/07/GLNTFountainValley_4-min-1200x800.jpg"
+                             alt="Chương trình 1"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
+                        <h5 class="card-title">Chương trình giao lưu nghệ thuật với Học viện âm nhạc Fountain Valley (Mỹ)</h5>
+                        <p class="card-text" style="flex-grow: 1;">
+                            CHƯƠNG TRÌNH GIAO LƯU NGHỆ THUẬT GIỮA TRƯỜNG ĐẠI HỌC SÀI GÒN VÀ HỌC VIỆN ÂM NHẠC FOUNTAIN VALLEY (MỸ) Chiều ngày 12/07/2024 [...]
+                        </p>
+                        <a href="https://www.sgu.edu.vn/chuong-trinh-giao-luu-nghe-thuat-voi-hoc-vien-am-nhac-fountain-valley-my/"
+                           class="btn btn-primary"
+                           style="margin-top: auto;">Xem thêm</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card shadow">
-                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017132841-638647685214561068.jpg" class="card-img-top" alt="Chương trình 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Gây quỹ cải thiện cơ sở vật chất cho 572 em học sinh bán trú tại Trường PTDTBT Tiểu học Sơn Vĩ, Huyện Mèo Vạc, Tỉnh Hà Giang</h5>
-                        <p class="card-text">Cơ sở vật chất của nhà trường đang dần xuống cấp, đác biệt là khu vực nhà ăn dành cho các em học sinh bán trú. Hiện nay số lượng học sinh bán trú đông đúc nhưng khu vực nhà ăn không đảm bảo đủ cho nhu cầu vệ sinh và an toàn thực phẩm.</p>
-                        <a href="https://www.momo.vn/cong-dong/gay-quy-cai-thien-co-so-vat-chat-cho-572-em-hoc-sinh-tinh-ha-giang" class="btn btn-primary">Xem thêm</a>
+            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
+                <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="height: 200px; overflow: hidden;">
+                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/07/HNT-06.7.2024_016-400x267.jpg"
+                             alt="Chương trình 2"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
+                        <h5 class="card-title">Trường Đại học Sài Gòn đăng cai tổ chức Hội nghị Toán học “Gặp gỡ mùa hè”</h5>
+                        <p class="card-text" style="flex-grow: 1;">
+                            Ngày 06/7/2024, Trường Đại học Sài Gòn đăng cai tổ chức Hội nghị Toán học “Gặp gỡ mùa hè” – Summer meeting 2024 [...]
+                        </p>
+                        <a href="https://www.sgu.edu.vn/truong-dai-hoc-sai-gon-dang-cai-to-chuc-hoi-nghi-toan-hoc-gap-go-mua-he-summer-meeting-2024/"
+                           class="btn btn-primary"
+                           style="margin-top: auto;">Xem thêm</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card shadow">
-                    <img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241017130602-638647671626466433.jpg" class="card-img-top" alt="Chương trình 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Chung tay gây quỹ hỗ trợ học bổng đến trường cho 100 em học sinh có hoàn cảnh khó khăn tại Thành phố Hồ Chí Minh (Đợt 1)</h5>
-                        <p class="card-text">Trong khuôn khổ dự án “Trang mới cuộc đời”, sáng kiến “cùng em đến trường” sẽ cung cấp những gói hỗ trợ phù hợp với hoàn cảnh của từng trẻ em khó khăn, đặc biệt đảm bảo các em có thể duy trì được việc học tập.</p>
-                        <a href="https://www.momo.vn/cong-dong/chung-tay-gay-quy-ho-tro-hoc-bong-den-truong-cho-100-em" class="btn btn-primary">Xem thêm</a>
+            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
+                <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="height: 200px; overflow: hidden;">
+                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/05/2024_05_HTTTCD_001-400x240.jpg"
+                             alt="Chương trình 3"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
+                        <h5 class="card-title">Công đoàn Trường Đại học Sài Gòn tổ chức Hội thao truyền thống</h5>
+                        <p class="card-text" style="flex-grow: 1;">
+                            Nằm trong chuỗi hoạt động chào mừng các ngày lễ lớn, Công đoàn Trường Đại học Sài Gòn tổ chức Hội thao truyền thống [...]
+                        </p>
+                        <a href="https://www.sgu.edu.vn/cong-doan-truong-dai-hoc-sai-gon-to-chuc-hoi-thao-truyen-thong-cong-doan-nam-hoc-2023-2024/"
+                           class="btn btn-primary"
+                           style="margin-top: auto;">Xem thêm</a>
                     </div>
                 </div>
             </div>
@@ -623,6 +668,32 @@
         e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
         document.getElementById("content-syphon").scrollIntoView({ behavior: 'smooth' });
     });
+</script>
+<script>
+    // Hiệu ứng mở menu thả xuống khi hover
+    document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
+        dropdown.addEventListener('mouseenter', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.display = 'block';
+            menu.style.opacity = '1';
+        });
 
+        dropdown.addEventListener('mouseleave', function () {
+            const menu = this.querySelector('.dropdown-menu');
+            menu.style.opacity = '0';
+            setTimeout(() => (menu.style.display = 'none'), 300);
+        });
+    });
 
+    // Thêm hiệu ứng hover cho các liên kết
+    document.querySelectorAll('.nav-link').forEach(function (link) {
+        link.addEventListener('mouseenter', function () {
+            this.style.backgroundColor = '#007bff'; // Màu nền hover
+            this.style.color = '#fff'; // Màu chữ khi hover
+        });
+        link.addEventListener('mouseleave', function () {
+            this.style.backgroundColor = ''; // Xóa màu nền hover
+            this.style.color = '#000'; // Màu chữ ban đầu
+        });
+    });
 </script>
