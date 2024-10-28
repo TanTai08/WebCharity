@@ -33,6 +33,7 @@
             top: 0;
             width: 100%;
             z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
+            background-color: #ffefdb !important;
        }
        .nav-item.dropdown:hover .dropdown-menu {
             display: block;
@@ -59,15 +60,14 @@
             <!-- Left links -->
             <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="trang-chu"
-                       style="padding: 10px 15px; color: #000; font-weight: 500;
-                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                    <a class="nav-link active" aria-current="page" th:href="@{/trang-chu}"
+                       style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Trang chủ
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="gioi-thieu"
+                    <a class="nav-link active" aria-current="page" th:href="@{/gioi-thieu}"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Giới thiệu
@@ -75,7 +75,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="chuong-trinh"
+                    <a class="nav-link active" aria-current="page" th:href="@{/chuong-trinh}"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Hoàn cảnh quyên góp
@@ -84,7 +84,7 @@
 
                 <li class="nav-item dropdown"
                     style="position: relative;">
-                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+                    <a class="nav-link active dropdown-toggle" th:href="@{/chien-dich-gay-quy}"
                        id="navbarDropdown_2" role="button" aria-expanded="false"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
@@ -107,7 +107,7 @@
 
                 <li class="nav-item dropdown"
                     style="position: relative;">
-                    <a class="nav-link active dropdown-toggle" href="huong-dan-dong-gop" id="navbarDropdown_3"
+                    <a class="nav-link active dropdown-toggle" th:href="@{/huong-dan-dong-gop}" id="navbarDropdown_3"
                        role="button" aria-expanded="false"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
@@ -117,15 +117,15 @@
                         style="position: absolute; top: 100%; left: 0; display: none;
                                background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
                                transition: opacity 0.3s;">
-                        <li><a class="dropdown-item" href="cap-nhat-dong-gop"
+                        <li><a class="dropdown-item" th:href="@{/cap-nhat-dong-gop}"
                                style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
-                        <li><a class="dropdown-item" href="huong-dan-dong-gop"
+                        <li><a class="dropdown-item" th:href="@{/huong-dan-dong-gop}"
                                style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
+                    <a class="nav-link active" aria-current="page" th:href="@{/tin-tuc-cong-dong}"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Tin tức cộng đồng
