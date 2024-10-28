@@ -5,8 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class Contribute_controller {
-    @GetMapping("/dong-gop")
+    @GetMapping("/huong-dan-dong-gop")
     public String contribute() {
         return "page_user/Contribute";
+    }
+
+    @GetMapping("/cap-nhat-dong-gop")
+    public String contributionupdate() {
+        return "page_user/ContributionUpdate";
     }
 }
