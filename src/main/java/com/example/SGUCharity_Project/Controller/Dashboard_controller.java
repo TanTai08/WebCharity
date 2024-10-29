@@ -103,10 +103,8 @@ public class Dashboard_controller {
         return "redirect:/dashboard_programmanagement";
     }
 
-    @GetMapping("test")
-    public String test() {
-        return "account_admin/test";
+    @GetMapping("dashboard_revenuemanagement")
+    public String revenue() {
+        return "page_admin/RevenueManagement_admin";
     }
-
-
 }
