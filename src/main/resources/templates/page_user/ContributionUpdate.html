@@ -151,30 +151,18 @@
             <thead class="table-primary">
             <tr>
                 <th scope="col">STT</th>
-                <th scope="col">Tên người đóng góp</th>
                 <th scope="col">Số tiền đóng góp (VNĐ)</th>
+                <th scope="col">Nội dung chuyển khoản</th>
                 <th scope="col">Ngày đóng góp</th>
             </tr>
             </thead>
             <tbody>
             <!-- Example data - Replace with dynamic data -->
-            <tr>
-                <td>1</td>
-                <td>Nguyễn Văn A</td>
-                <td>1,000,000</td>
-                <td>28/10/2024</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Trần Thị B</td>
-                <td>500,000</td>
-                <td>27/10/2024</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Lê Văn C</td>
-                <td>200,000</td>
-                <td>26/10/2024</td>
+            <tr th:each="paymentModelUpdate, iterStat : ${paymentModelUpdate}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td th:text="${paymentModelUpdate.totalPrice}"></td>
+                <td th:text="${paymentModelUpdate.orderId}"></td>
+                <td th:text="${paymentModelUpdate.paymentTime}"></td>
             </tr>
             <!-- End of example data -->
             </tbody>

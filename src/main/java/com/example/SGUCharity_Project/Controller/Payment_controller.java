@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @org.springframework.stereotype.Controller
 public class Payment_controller {
@@ -44,19 +45,28 @@ public class Payment_controller {
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
 
+        // Định dạng lại paymentTime
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        LocalDateTime parsedPaymentTime = LocalDateTime.parse(paymentTime, inputFormatter);
+        String formattedPaymentTime = parsedPaymentTime.format(outputFormatter);
+
         // Lưu thông tin thanh toán vào cơ sở dữ liệu
         Payment_model payment = new Payment_model();
         payment.setOrderId(orderInfo);
         payment.setTotalPrice(totalPrice);
         payment.setTransactionId(transactionId);
-        payment.setPaymentTime(LocalDateTime.now()); // Chuyển paymentTime từ String sang LocalDateTime nếu cần
+        payment.setPaymentTime(parsedPaymentTime); // Lưu dưới dạng LocalDateTime
         payment.setPaymentStatus(paymentStatus);
+        payment.setDisplay(0);
 
         paymentRepo.save(payment);
 
+        // Truyền thông tin đã định dạng vào model để hiển thị
         model.addAttribute("orderId", orderInfo);
         model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("paymentTime", paymentTime);
+        model.addAttribute("paymentTime", formattedPaymentTime);
         model.addAttribute("transactionId", transactionId);
 
         return paymentStatus == 1 ? "payment/ordersuccess" : "payment/orderfail";

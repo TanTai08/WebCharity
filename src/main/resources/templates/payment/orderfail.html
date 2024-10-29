@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Thanh toán thất bại</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* CSS cho hiệu ứng vòng tròn màu đỏ và dấu X */
+        .failure-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ff4d4d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .failure-circle i {
+            font-size: 36px;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,41 +31,44 @@
 <!-- start body -->
 <div class="body py-5">
     <div class="container">
-        <div class="w-50 m-auto">
-            <!-- Thêm lớp "my-4" để tạo ra khoảng cách trên và dưới tiêu đề trang -->
-            <h1 class="my-3 text-danger text-center">Thanh toán thất bại</h1>
-            <!-- Sử dụng lớp "alert" và "alert-danger" để tạo ra thông báo lỗi -->
-            <h2 class="my-2">Chi tiết đơn hàng</h2>
-            <!-- Sử dụng lớp "table" và "table-bordered" để tạo ra bảng hiển thị thông tin chi tiết đơn hàng -->
-            <table class="table table-bordered">
+        <div class="w-50 m-auto text-center">
+            <!-- Hiệu ứng dấu X trong vòng tròn màu đỏ -->
+            <div class="failure-circle">
+                <i class="fas fa-times"></i> <!-- Dấu X hiển thị trong vòng tròn -->
+            </div>
+            <!-- Tiêu đề trang thông báo thất bại -->
+            <h1 class="my-3 text-danger">Thanh toán thất bại</h1>
+            <h2 class="my-2">Chi tiết giao dịch</h2>
+            <!-- Bảng hiển thị thông tin chi tiết đơn hàng -->
+            <table class="table table-bordered text-left">
                 <tbody>
                 <tr>
-                    <td>Thông tin đơn hàng:</td>
+                    <td class="font-weight-bold">Thông tin giao dịch:</td>
                     <td><span th:text="${orderId}">[order ID]</span></td>
                 </tr>
                 <tr>
-                    <td>Tổng tiền:</td>
+                    <td class="font-weight-bold">Tổng tiền:</td>
                     <td><span th:text="${totalPrice}">[total price]</span></td>
                 </tr>
                 <tr>
-                    <td>Thời gian thanh toán:</td>
+                    <td class="font-weight-bold">Thời gian thanh toán:</td>
                     <td><span th:text="${paymentTime}">[payment time]</span></td>
                 </tr>
                 <tr>
-                    <td>Mã giao dịch:</td>
+                    <td class="font-weight-bold">Mã giao dịch:</td>
                     <td><span th:text="${transactionId}">[transaction ID]</span></td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/" class="btn btn-primary">Về trang chủ</a>
+            <!-- Nút trở về trang chủ -->
+            <a href="/trang-chu" class="btn btn-primary mt-3">Về trang chủ</a>
         </div>
     </div>
 </div>
 <!-- end body -->
 
-
-<!-- start footer -->
-
+<!-- Thêm font-awesome cho dấu X -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

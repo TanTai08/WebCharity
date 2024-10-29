@@ -2,12 +2,15 @@ package com.example.SGUCharity_Project.Controller;
 
 import com.example.SGUCharity_Project.Model.Artical_model;
 import com.example.SGUCharity_Project.Model.Articaldetail_model;
+import com.example.SGUCharity_Project.Model.Payment_model;
 import com.example.SGUCharity_Project.Repository.ArticalDetail_Repo;
 import com.example.SGUCharity_Project.Repository.Charitycontent_Repo;
+import com.example.SGUCharity_Project.Repository.Payment_Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +24,9 @@ public class Dashboard_controller {
 
     @Autowired
     ArticalDetail_Repo articalDetailRepo;
+
+    @Autowired
+    Payment_Repo paymentRepo;
 
     // Render ra trang dashboard
     @GetMapping("/manager")
@@ -104,7 +110,29 @@ public class Dashboard_controller {
     }
 
     @GetMapping("dashboard_revenuemanagement")
-    public String revenue() {
+    public String revenue(Model model) {
+        List<Payment_model> paymentModels = paymentRepo.findAll();
+        model.addAttribute("paymentModel",paymentModels);
         return "page_admin/RevenueManagement_admin";
+    }
+
+    @PostMapping("/displayrevenue")
+    public String displayrevenue(@RequestParam("id") Long id, @RequestParam("display") int display, Model model) {
+        // Tìm đối tượng Payment_model theo ID
+        Optional<Payment_model> paymentModelOp = paymentRepo.findById(id);
+
+        if (paymentModelOp.isPresent()) {
+            Payment_model paymentModel = paymentModelOp.get();
+            paymentModel.setDisplay(display);
+            paymentRepo.save(paymentModel);
+        }
+        return "redirect:/dashboard_revenuemanagement";
+    }
+
+    // Handle chuc nang delete revenue
+    @PostMapping("revenue/delete/{id_delete}")
+    public String revenue_delete(@PathVariable("id_delete") Long id) {
+        paymentRepo.deleteById(id);
+        return "redirect:/dashboard_revenuemanagement";
     }
 }

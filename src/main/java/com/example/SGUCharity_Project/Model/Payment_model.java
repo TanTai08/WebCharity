@@ -23,4 +23,5 @@ public class Payment_model {
     private String totalPrice;
     private LocalDateTime paymentTime;
     private int paymentStatus;
+    private int display;
 }

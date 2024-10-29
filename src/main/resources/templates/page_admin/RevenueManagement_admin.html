@@ -26,34 +26,34 @@
     </tr>
     </thead>
     <tbody>
-    <tr >
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
+    <tr th:each="paymentModel : ${paymentModel}">
+        <th scope="row" th:text="${paymentModel.id}"></th>
+        <td th:text="${paymentModel.paymentTime}"></td>
+        <td th:text="${paymentModel.totalPrice}"></td>
+        <td th:text="${paymentModel.orderId}"></td>
+        <td th:text="${paymentModel.paymentStatus == 1 ? 'Thành công' : 'Thất bại'}"></td>
         <td>
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">Hiển thị</button>
+                <button th:text="${paymentModel.display == 1 ? 'Hiển thị' : 'Đóng hiển thị'}" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false"></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li>
-                        <form th:action="@{/updateStatus}" method="post">
-                            <input type="hidden"/>
-                            <input type="hidden"/>
+                        <form th:action="@{/displayrevenue}" method="post">
+                            <input type="hidden" name="id" th:value="${paymentModel.id}"/>
+                            <input type="hidden" name="display" value="1"/>
                             <button class="dropdown-item" type="submit">Hiển thị</button>
                         </form>
                     </li>
                     <li>
-                        <form th:action="@{/updateStatus}" method="post">
-                            <input type="hidden"/>
-                            <input type="hidden"/>
+                        <form th:action="@{/displayrevenue}" method="post">
+                            <input type="hidden" name="id" th:value="${paymentModel.id}"/>
+                            <input type="hidden" name="display" value="0"/>
                             <button class="dropdown-item" type="submit">Đóng hiển thị</button>
                         </form>
                     </li>
                 </ul>
             </div>
         </td>
-        <td><a href="" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
-        <form action="" method="post" onsubmit="">
+        <form th:action="@{/revenue/delete/{id_delete}(id_delete=${paymentModel.id})}" method="post" onsubmit="">
             <td><button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button></td>
         </form>
     </tr>
@@ -64,7 +64,6 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><a href="insert/program" type="submit" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm</a></td>
     </tr>
     </tbody>
 </table>
