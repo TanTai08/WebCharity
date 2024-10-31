@@ -130,36 +130,14 @@
 <!-- News Section -->
 <section class="container my-5">
     <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-4" th:each="communityNewsModel : ${communityNewsModels}">
             <div class="card">
-                <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/03/Thailand-FieldTrip-1-1200x900.jpg" class="card-img-top" alt="Tin Tức 1">
+                <img th:src="${communityNewsModel.img_news}" class="card-img-top" alt="Tin Tức">
                 <div class="card-body">
-                    <h5 class="card-title">Hành trình học tập, khám phá, trải nghiệm văn hóa tại Thái Lan của SV Trường ĐH Sài Gòn</h5>
-                    <p class="card-text">28/03/2024</p>
-                    <p class="card-text">HÀNH TRÌNH HỌC TẬP, KHÁM PHÁ, TRẢI NGHIỆM VĂN HOÁ TẠI THÁI LAN CỦA SINH VIÊN TRƯỜNG ĐẠI HỌC SÀI GÒN   Với mục tiêu tạo điều kiện cho các bạn sinh viên được trải nghiệm, giao lưu và học hỏi tại nước ngoài, Trung tâm Đào tạo và Hợp tác Quốc tế và Khoa Ngoại [...]</p>
-                    <a href="https://www.sgu.edu.vn/27514-2/" class="btn btn-primary">Đọc Thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/07/GLNTFountainValley_4-min-1200x800.jpg" class="card-img-top" alt="Tin Tức 2">
-                <div class="card-body">
-                    <h5 class="card-title">Chương trình giao lưu nghệ thuật với Học viện âm nhạc Fountain Valley (Mỹ)</h5>
-                    <p class="card-text">29/07/2024</p>
-                    <p class="card-text">CHƯƠNG TRÌNH GIAO LƯU NGHỆ THUẬT GIỮA TRƯỜNG ĐẠI HỌC SÀI GÒN VÀ HỌC VIỆN ÂM NHẠC FOUNTAIN VALLEY (MỸ) Chiều ngày 12/07/2024, Trung tâm Đào tạo và Hợp tác Quốc tế, Trường Đại học Sài Gòn phối hợp với Công ty Cổ phần Dịch vụ Du lịch Bến Thành đã tổ chức thành công chương [...]</p>
-                    <a href="https://www.sgu.edu.vn/chuong-trinh-giao-luu-nghe-thuat-voi-hoc-vien-am-nhac-fountain-valley-my/" class="btn btn-primary">Đọc Thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/04/VeNguonNuiDinh2024_001-1200x800.jpg" class="card-img-top" alt="Tin Tức 3">
-                <div class="card-body">
-                    <h5 class="card-title">Về nguồn Căn cứ cách mạng núi Dinh Thành Đoàn Sài Gòn – Gia Định</h5>
-                    <p class="card-text">10/04/2024</p>
-                    <p class="card-text">VỀ NGUỒN CĂN CỨ CÁCH MẠNG NÚI DINH THÀNH ĐOÀN SÀI GÒN – GIA ĐỊNH Ngày 31/3/2024 vừa qua, Đoàn Thanh niên – Hội Sinh viên trường Đại học Sài Gòn đã phối hợp cùng Đoàn phòng Cảnh sát Giao thông Công an Thành phố Hồ Chí Minh tổ chức hành trình về nguồn đầy ý [...]</p>
-                    <a href="https://www.sgu.edu.vn/bai-viet-ve-nguon-can-cu-cach-mang-nui-dinh-thanh-doan-sai-gon-gia-dinh/" class="btn btn-primary">Đọc Thêm</a>
+                    <h5 class="card-title" th:text="${communityNewsModel.title_news}"></h5>
+                    <p class="card-text" th:text="${communityNewsModel.date_update}"></p>
+                    <p class="card-text" th:text="${communityNewsModel.sub_titlenews}"></p>
+                    <a th:href="${communityNewsModel.url_artical}" class="btn btn-primary">Đọc Thêm</a>
                 </div>
             </div>
         </div>

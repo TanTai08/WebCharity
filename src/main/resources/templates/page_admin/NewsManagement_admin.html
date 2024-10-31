@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý tin tức</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CDN bootstrap MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+</head>
+<body>
+<h4 style="margin-top: 20px; color: #ee3b3b">Danh sách bài viết tin tức</h4>
+
+<table class="table align-middle" style="margin-top: 70px">
+    <thead>
+    <tr>
+        <th scope="col">Mã</th>
+        <th scope="col">Tiêu đề</th>
+        <th scope="col">Ảnh bài viết</th>
+        <th scope="col">Tiêu đề phụ</th>
+        <th scope="col">Ngày</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="communityNewsModel : ${communityNewsModels}">
+        <th th:text="${communityNewsModel.id}" scope="row"></th>
+        <td th:text="${communityNewsModel.title_news}"></td>
+        <td>
+            <img th:src="${communityNewsModel.img_news}" alt="Hình ảnh tiêu đề" width="100">
+        </td>
+        <td th:text="${communityNewsModel.sub_titlenews}"></td>
+        <td th:text="${communityNewsModel.date_update}"></td>
+        <td></td>
+        <td><a th:href="@{'/newsmanagement/' + ${communityNewsModel.id}}" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
+        <form th:action="@{'/newsmanagement/delete/' + ${communityNewsModel.id}}" method="post">
+            <td><button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button></td>
+        </form>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a href="/insert/news" type="submit" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+</html>

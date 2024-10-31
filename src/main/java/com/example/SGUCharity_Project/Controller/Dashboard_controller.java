@@ -2,9 +2,11 @@ package com.example.SGUCharity_Project.Controller;
 
 import com.example.SGUCharity_Project.Model.Artical_model;
 import com.example.SGUCharity_Project.Model.Articaldetail_model;
+import com.example.SGUCharity_Project.Model.Communitynews_model;
 import com.example.SGUCharity_Project.Model.Payment_model;
 import com.example.SGUCharity_Project.Repository.ArticalDetail_Repo;
 import com.example.SGUCharity_Project.Repository.Charitycontent_Repo;
+import com.example.SGUCharity_Project.Repository.CommunityNews_Repo;
 import com.example.SGUCharity_Project.Repository.Payment_Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,9 @@ public class Dashboard_controller {
 
     @Autowired
     Payment_Repo paymentRepo;
+
+    @Autowired
+    CommunityNews_Repo communityNewsRepo;
 
     // Render ra trang dashboard
     @GetMapping("/manager")
@@ -51,7 +57,7 @@ public class Dashboard_controller {
     }
 
     @GetMapping("/insert/program")
-    public String orders() {
+    public String insert_program() {
         return "page_admin/CRUD_ProgramManagement/insertProgram";
     }
 
@@ -134,5 +140,61 @@ public class Dashboard_controller {
     public String revenue_delete(@PathVariable("id_delete") Long id) {
         paymentRepo.deleteById(id);
         return "redirect:/dashboard_revenuemanagement";
+    }
+
+    @GetMapping("dashboard_newsmanagement")
+    public String newsmanagement(Model model) {
+        List<Communitynews_model> communityNewsModels = communityNewsRepo.findAll();
+        model.addAttribute("communityNewsModels", communityNewsModels);
+        return "page_admin/NewsManagement_admin";
+    }
+
+    @GetMapping("newsmanagement/{id_update}")
+    public String newsmanagement_update(@PathVariable("id_update") Long id, Model model) {
+        Communitynews_model communitynewsModel = communityNewsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        model.addAttribute("communitynewsModel", communitynewsModel);
+        return "page_admin/CRUD_NewsManagement/updateNews";
+    }
+
+    @PostMapping("newsmanagement/{id_update}")
+    public String handle_newsmanagement_update(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
+                                 @RequestParam("inputurlartical") String inputurlartical, @PathVariable("id_update") Long id) {
+        Communitynews_model communitynewsModel = communityNewsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        communitynewsModel.setTitle_news(inputtitlenews);
+        communitynewsModel.setImg_news(inputimgnews);
+        communitynewsModel.setSub_titlenews(inputsubtitlenews);
+        communitynewsModel.setDate_update(LocalDate.now());
+        communitynewsModel.setUrl_artical(inputurlartical);
+
+        communityNewsRepo.save(communitynewsModel);
+
+        return "redirect:/dashboard_newsmanagement";
+    }
+
+    @PostMapping("newsmanagement/delete/{id_delete}")
+    public String newsmanagement_delete(@PathVariable("id_delete") Long id) {
+        communityNewsRepo.deleteById(id);
+        return "redirect:/dashboard_newsmanagement";
+    }
+
+    @GetMapping("/insert/news")
+    public String insertnews() {
+        return "page_admin/CRUD_NewsManagement/insertNews";
+    }
+
+    @PostMapping("/insert/news")
+    public String insertnews(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
+                                @RequestParam("inputurlartical") String inputurlartical) {
+
+        Communitynews_model communitynewsModel = new Communitynews_model();
+        communitynewsModel.setTitle_news(inputtitlenews);
+        communitynewsModel.setImg_news(inputimgnews);
+        communitynewsModel.setSub_titlenews(inputsubtitlenews);
+        communitynewsModel.setDate_update(LocalDate.now());
+        communitynewsModel.setUrl_artical(inputurlartical);
+
+        communityNewsRepo.save(communitynewsModel);
+
+        return "redirect:/dashboard_newsmanagement";
     }
 }
