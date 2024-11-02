@@ -143,11 +143,11 @@
             <div th:each="detail : ${articalDetails}">
                 <p th:text="${detail.content_1}"></p>
                 <img class="post-img img-fluid" th:src="${detail.img_content}" alt="Hình ảnh bài viết" src="">
-                <p th:text="${detail.content_2 + ' ' + detail.content_3}" class="post-content"></p>
+                <p th:text="${detail.content_2}" class="post-content"></p>
 
 
                 <img class="post-img img-fluid" th:src="${detail.img_content2}" alt="Hình ảnh bài viết" src="">
-                <p th:text="${detail.content_4 + ' ' + detail.content_5}" class="post-content"></p>
+                <p th:text="${detail.content_3}" class="post-content"></p>
 
 
             </div>

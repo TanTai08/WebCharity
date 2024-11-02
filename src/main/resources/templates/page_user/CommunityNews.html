@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -131,13 +131,16 @@
 <section class="container my-5">
     <div class="row">
         <div class="col-md-4 mb-4" th:each="communityNewsModel : ${communityNewsModels}">
-            <div class="card">
-                <img th:src="${communityNewsModel.img_news}" class="card-img-top" alt="Tin Tức">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${communityNewsModel.title_news}"></h5>
-                    <p class="card-text" th:text="${communityNewsModel.date_update}"></p>
-                    <p class="card-text" th:text="${communityNewsModel.sub_titlenews}"></p>
-                    <a th:href="${communityNewsModel.url_artical}" class="btn btn-primary">Đọc Thêm</a>
+            <div class="card h-100 shadow" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="height: 200px; overflow: hidden;">
+                    <img th:src="${communityNewsModel.img_news}" class="card-img-top" alt="Tin Tức"
+                         style="width: 100%; height: 100%; object-fit: cover;" src="">
+                </div>
+                <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
+                    <h5 class="card-title" th:text="${communityNewsModel.title_news}" style="font-size: 1.2em; font-weight: bold;"></h5>
+                    <p class="card-text" th:text="${communityNewsModel.date_update}" style="font-size: 0.9em; color: #888;"></p>
+                    <p class="card-text" th:text="${communityNewsModel.sub_titlenews}" style="font-size: 1em; flex: 1;"></p>
+                    <a th:href="${communityNewsModel.url_artical}" class="btn btn-primary" style="background-color: #8b2323; border-color: #8b2323; color: white;">Đọc Thêm</a>
                 </div>
             </div>
         </div>
