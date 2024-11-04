@@ -1,47 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org ">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Chi tiết bài viết</title>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet"/>
-    <!-- Custom CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .post-title {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .post-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .post-content {
-            line-height: 1.6;
-        }
-        .back-btn {
-            margin-top: 20px;
-        }
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
-            background-color: #ffefdb !important;
-       }
-       .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
-       }
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: #ffefdb !important;
+    }
+    header {
+        padding-top: 120px; /* Bù lại chiều cao của navbar */
+    }
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
+    }
     </style>
 </head>
 <body>
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary"
      style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;">
     <!-- Container wrapper -->
@@ -60,14 +42,15 @@
             <!-- Left links -->
             <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/trang-chu}"
-                       style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                    <a class="nav-link active" aria-current="page" href="trang-chu"
+                       style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Trang chủ
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/gioi-thieu}"
+                    <a class="nav-link active" aria-current="page" href="gioi-thieu"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Giới thiệu
@@ -75,7 +58,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/chuong-trinh}"
+                    <a class="nav-link active" aria-current="page" href="chuong-trinh"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Hoàn cảnh quyên góp
@@ -84,7 +67,7 @@
 
                 <li class="nav-item dropdown"
                     style="position: relative;">
-                    <a class="nav-link active dropdown-toggle" th:href="@{/chien-dich-gay-quy}"
+                    <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
                        id="navbarDropdown_2" role="button" aria-expanded="false"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
@@ -107,7 +90,7 @@
 
                 <li class="nav-item dropdown"
                     style="position: relative;">
-                    <a class="nav-link active dropdown-toggle" th:href="@{/huong-dan-dong-gop}" id="navbarDropdown_3"
+                    <a class="nav-link active dropdown-toggle" href="huong-dan-dong-gop" id="navbarDropdown_3"
                        role="button" aria-expanded="false"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
@@ -117,15 +100,15 @@
                         style="position: absolute; top: 100%; left: 0; display: none;
                                background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
                                transition: opacity 0.3s;">
-                        <li><a class="dropdown-item" th:href="@{/cap-nhat-dong-gop}"
+                        <li><a class="dropdown-item" href="cap-nhat-dong-gop"
                                style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
-                        <li><a class="dropdown-item" th:href="@{/huong-dan-dong-gop}"
+                        <li><a class="dropdown-item" href="huong-dan-dong-gop"
                                style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/tin-tuc-cong-dong}"
+                    <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Tin tức cộng đồng
@@ -133,7 +116,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/lien-he}"
+                    <a class="nav-link active" aria-current="page" href="lien-he"
                        style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Liên hệ
@@ -145,26 +128,26 @@
 </nav>
 
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8" style="margin-top: 100px">
-            <h1 class="post-title" th:text="${charitycontent.title}"></h1>
-            <div th:each="detail : ${articalDetails}">
-                <p th:text="${detail.content_1}"></p>
-                <img class="post-img img-fluid" th:src="${detail.img_content}" alt="Hình ảnh bài viết" src="">
-                <p th:text="${detail.content_2 + ' ' + detail.content_3}" class="post-content"></p>
-
-
-                <img class="post-img img-fluid" th:src="${detail.img_content2}" alt="Hình ảnh bài viết" src="">
-                <p th:text="${detail.content_4 + ' ' + detail.content_5}" class="post-content"></p>
-
-
-            </div>
-            <div class="d-flex justify-content-between">
-                <a th:href="@{/trang-chu}" class="btn btn-primary back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
-                <a th:href="@{/thanh-toan}" class="btn btn-warning back-btn">Đóng góp</a>
-            </div>
+    <h2 class="text-center mb-4" style="margin-top: 100px">Liên Hệ Chúng Tôi</h2>
+    <form method="post" th:action="@{/insert/contact}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ và Tên</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
         </div>
-    </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" required>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Chủ Đề</label>
+            <input type="text" class="form-control" id="subject" name="subject" placeholder="Chủ đề" required>
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Nội Dung</label>
+            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Viết nội dung tại đây" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Gửi Tin Nhắn</button>
+    </form>
 </div>
 
 <!-- Footer -->
@@ -288,35 +271,7 @@
     <!-- Copyright -->
 </footer>
 <!-- Footer -->
+
 </body>
-<!-- MDB -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
-<script>
-    // Hiệu ứng mở menu thả xuống khi hover
-    document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
-        dropdown.addEventListener('mouseenter', function () {
-            const menu = this.querySelector('.dropdown-menu');
-            menu.style.display = 'block';
-            menu.style.opacity = '1';
-        });
-
-        dropdown.addEventListener('mouseleave', function () {
-            const menu = this.querySelector('.dropdown-menu');
-            menu.style.opacity = '0';
-            setTimeout(() => (menu.style.display = 'none'), 300);
-        });
-    });
-
-    // Thêm hiệu ứng hover cho các liên kết
-    document.querySelectorAll('.nav-link').forEach(function (link) {
-        link.addEventListener('mouseenter', function () {
-            this.style.backgroundColor = '#007bff'; // Màu nền hover
-            this.style.color = '#fff'; // Màu chữ khi hover
-        });
-        link.addEventListener('mouseleave', function () {
-            this.style.backgroundColor = ''; // Xóa màu nền hover
-            this.style.color = '#000'; // Màu chữ ban đầu
-        });
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </html>
