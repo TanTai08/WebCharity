@@ -55,7 +55,11 @@ public class Dashboard_controller {
         model.addAttribute("articaldetailModelLists", articaldetailModelList);
         return "page_admin/ArticleManagement_admin";
     }
-
+    @PostMapping("program/delete/{id_delete}")
+    public String program_delete(@PathVariable("id_delete") Long id) {
+        charitycontentRepo.deleteById(id);
+        return "redirect:/dashboard_programmanagement";
+    }
     @GetMapping("/insert/program")
     public String insert_program() {
         return "page_admin/CRUD_ProgramManagement/insertProgram";
@@ -63,9 +67,10 @@ public class Dashboard_controller {
 
     // Handle chuc nang insert account
     @PostMapping("/insert/program")
-    public String insertProgram(@RequestParam("inputimg") String inputimg, @RequestParam("inputtitle") String inputtitle, @RequestParam("content1") String content1,  // Nội dung chi tiết 1
-                                @RequestParam("imgContent") String imgContent,  // Ảnh chi tiết
-                                @RequestParam("content2") String content2) {  // Nội dung chi tiết 2
+    public String insertProgram(@RequestParam("inputimg") String inputimg, @RequestParam("inputtitle") String inputtitle, @RequestParam("content1") String content1, @RequestParam("content2") String content2,@RequestParam("content3") String content3,  // Nội dung chi tiết 1
+                                @RequestParam("imgContent") String imgContent, @RequestParam("imgContent2") String imgContent2  // Ảnh chi tiết
+
+                                ) {  // Nội dung chi tiết 2
 
         // Tạo một Artical_model mới và lưu nó
         Artical_model artical = new Artical_model();
@@ -80,8 +85,10 @@ public class Dashboard_controller {
         // Tạo một Articaldetail_model mới và liên kết với Artical_model đã lưu
         Articaldetail_model articalDetail = new Articaldetail_model();
         articalDetail.setContent_1(content1);
-        articalDetail.setImg_content(imgContent);
         articalDetail.setContent_2(content2);
+        articalDetail.setContent_3(content3);
+        articalDetail.setImg_content(imgContent);
+        articalDetail.setImg_content2(imgContent2);
 
         // Liên kết với bài viết chính
         articalDetail.setArtical(savedArtical);
@@ -89,8 +96,49 @@ public class Dashboard_controller {
         // Lưu Articaldetail_model vào database
         articalDetailRepo.save(articalDetail);
 
-        return "redirect:/insert/program";
+        return "redirect:/dashboard_programmanagement";
     }
+
+    @GetMapping("programmanagement/{id_update}")
+    public String programmanagement_update(@PathVariable("id_update") Long id, Model model) {
+        Artical_model articalModel = charitycontentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        model.addAttribute("articalModel", articalModel);
+        return "page_admin/CRUD_ProgramManagement/updateProgram";
+    }
+
+
+    @PostMapping("programmanagement/{id_update}")
+    public String handle_programmanagement_update(@RequestParam("inputimg") String inputimg, @RequestParam("inputtitle") String inputtitle, @RequestParam("content1") String content1, @RequestParam("content2") String content2,@RequestParam("content3") String content3,  // Nội dung chi tiết 1
+                                @RequestParam("imgContent") String imgContent, @RequestParam("imgContent2") String imgContent2, @PathVariable("id_update") Long id  // Ảnh chi tiết
+
+    ) {  // Nội dung chi tiết 2
+        Artical_model artical = charitycontentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        // Tạo một Artical_model mới và lưu nó
+        artical.setImg(inputimg);
+        artical.setTitle(inputtitle);
+        artical.setStatus("Đang vận động");
+        artical.setDisplaycategory("Mặc định");
+
+        // Lưu Artical_model vào database để có ID
+        Artical_model savedArtical = charitycontentRepo.save(artical);
+
+        // Tạo một Articaldetail_model mới và liên kết với Artical_model đã lưu
+        Articaldetail_model articalDetail = articalDetailRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        articalDetail.setContent_1(content1);
+        articalDetail.setContent_2(content2);
+        articalDetail.setContent_3(content3);
+        articalDetail.setImg_content(imgContent);
+        articalDetail.setImg_content2(imgContent2);
+
+        // Liên kết với bài viết chính
+        articalDetail.setArtical(savedArtical);
+
+        // Lưu Articaldetail_model vào database
+        articalDetailRepo.save(articalDetail);
+
+        return "redirect:/dashboard_programmanagement";
+    }
+
 
     @PostMapping("/updateStatus")
     public String updateStatus(@RequestParam("id") Long id, @RequestParam("status") String status) {
@@ -103,6 +151,8 @@ public class Dashboard_controller {
         }
         return "redirect:/dashboard_programmanagement"; // Chuyển hướng về trang mà bạn muốn
     }
+
+
 
     @PostMapping("/updateDisplayCategory")
     public String updateDisplayCategory(@RequestParam("id") Long id, @RequestParam("display") String display) {
