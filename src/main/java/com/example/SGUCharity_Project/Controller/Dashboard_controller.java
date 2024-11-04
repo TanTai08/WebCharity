@@ -1,20 +1,12 @@
 package com.example.SGUCharity_Project.Controller;
 
-import com.example.SGUCharity_Project.Model.Artical_model;
-import com.example.SGUCharity_Project.Model.Articaldetail_model;
-import com.example.SGUCharity_Project.Model.Communitynews_model;
-import com.example.SGUCharity_Project.Model.Payment_model;
-import com.example.SGUCharity_Project.Repository.ArticalDetail_Repo;
-import com.example.SGUCharity_Project.Repository.Charitycontent_Repo;
-import com.example.SGUCharity_Project.Repository.CommunityNews_Repo;
-import com.example.SGUCharity_Project.Repository.Payment_Repo;
+import com.example.SGUCharity_Project.Model.*;
+import com.example.SGUCharity_Project.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +25,12 @@ public class Dashboard_controller {
 
     @Autowired
     CommunityNews_Repo communityNewsRepo;
+
+    @Autowired
+    Contact_Repo contactRepo;
+
+    @Autowired
+    Note_Repo noteRepo;
 
     // Render ra trang dashboard
     @GetMapping("/manager")
@@ -246,5 +244,51 @@ public class Dashboard_controller {
         communityNewsRepo.save(communitynewsModel);
 
         return "redirect:/dashboard_newsmanagement";
+    }
+
+    @GetMapping("dashboard_contact")
+    public String contact(Model model) {
+        List<Contact_model> contactModels = contactRepo.findAll();
+        model.addAttribute("contactModels",contactModels);
+        return "page_admin/ContactManagement_admin";
+    }
+
+    @PostMapping("contact/delete/{id_delete}")
+    public String contact_delete(@PathVariable("id_delete") Long id) {
+        contactRepo.deleteById(id);
+        return "redirect:/dashboard_contact";
+    }
+
+    @GetMapping("dashboard_note")
+    public String note(Model model) {
+        List<Note_model> notes = noteRepo.findAll();
+        model.addAttribute("notes", notes);
+        return "page_admin/NoteManagement_admin";
+    }
+
+    @PostMapping("/addNote")
+    public String addNote(@RequestParam String date, @RequestParam String content) {
+        Note_model note = new Note_model();
+        note.setDate(date);
+        note.setContent(content);
+        noteRepo.save(note);
+        return "redirect:/dashboard_note";
+    }
+
+    @GetMapping("/note")
+    public ResponseEntity<List<Note_model>> getNotesByDate(@RequestParam String date) {
+        List<Note_model> notes = noteRepo.findByDate(date);
+        return ResponseEntity.ok(notes);
+    }
+
+    @DeleteMapping("/deleteNote/{id}")
+    public ResponseEntity<Void> deleteNote(@PathVariable Long id) {
+        noteRepo.deleteById(id);
+        return ResponseEntity.noContent().build(); // Trả về mã 204 No Content
+    }
+
+    @GetMapping("dashboard_statistical")
+    public String statistical() {
+        return "page_admin/StatisticalManagement_admin";
     }
 }
