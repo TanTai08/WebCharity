@@ -32,6 +32,9 @@ public class Dashboard_controller {
     @Autowired
     Note_Repo noteRepo;
 
+    @Autowired
+    Statistical_Repo statisticalRepo;
+
     // Render ra trang dashboard
     @GetMapping("/manager")
     public String dashboard() {
@@ -293,5 +296,22 @@ public class Dashboard_controller {
     @GetMapping("dashboard_statistical")
     public String statistical() {
         return "page_admin/StatisticalManagement_admin";
+    }
+
+    @PostMapping("/insert/statistical")
+    public String insertstatistical(@RequestParam("successfulproject") String successfulproject, @RequestParam("participants") String participants,
+                                    @RequestParam("donationamount") String donationamount,
+                                    @RequestParam("eventsorganized") String eventsorganized) {
+
+        Statistical_model statisticalModel = new Statistical_model();
+        statisticalModel.setSuccessfulproject(successfulproject);
+        statisticalModel.setParticipants(participants);
+        statisticalModel.setDonationamount(donationamount);
+        statisticalModel.setEventsorganized(eventsorganized);
+        statisticalModel.setDateupdated(LocalDate.now());
+
+        statisticalRepo.save(statisticalModel);
+
+        return "redirect:/dashboard_statistical";
     }
 }

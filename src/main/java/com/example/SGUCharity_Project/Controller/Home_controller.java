@@ -2,8 +2,10 @@ package com.example.SGUCharity_Project.Controller;
 
 import com.example.SGUCharity_Project.Model.Artical_model;
 import com.example.SGUCharity_Project.Model.Articaldetail_model;
+import com.example.SGUCharity_Project.Model.Statistical_model;
 import com.example.SGUCharity_Project.Repository.ArticalDetail_Repo;
 import com.example.SGUCharity_Project.Repository.Charitycontent_Repo;
+import com.example.SGUCharity_Project.Repository.Statistical_Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +22,22 @@ public class Home_controller {
     @Autowired
     private ArticalDetail_Repo articalDetailRepo;
 
+    @Autowired
+    private Statistical_Repo statisticalRepo;
+
     // Render ra trang product
     @GetMapping("/trang-chu")
     public String list_content(Model model) {
         List<Artical_model> charitycontent = charitycontentRepo.findAll();
+        List<Statistical_model> statisticalModels = statisticalRepo.findAll();
+
+        // Kiểm tra nếu danh sách không rỗng
+        if (!statisticalModels.isEmpty()) {
+            model.addAttribute("statisticalModel", statisticalModels.get(statisticalModels.size() - 1)); // Lấy đối tượng cuối cùng
+        } else {
+            model.addAttribute("statisticalModel", new Statistical_model()); // Gán đối tượng mới nếu danh sách rỗng
+        }
+
         model.addAttribute("charitycontent", charitycontent);
         return "page_user/Home";  // Trả về trang Home.html
     }
