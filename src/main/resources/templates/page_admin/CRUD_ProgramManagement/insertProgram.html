@@ -34,25 +34,35 @@
 </head>
 <body>
 <form method="post" th:action="@{/insert/program}">
+    <h1>Phần tổng quát</h1>
     <div class="form-group">
         <label for="inputtitle">Tiêu đề bài viết</label>
-        <input name="inputtitle"  type="text" class="form-control" id="inputtitle" placeholder="Nhập tiêu đề bài viết">
+        <textarea name="inputtitle" row="4"  class="form-control" id="inputtitle" placeholder="Nhập tiêu đề bài viết"></textarea>
     </div>
     <div class="form-group">
         <label for="inputimg">Hình ảnh Thumbnail</label>
-        <input name="inputimg" type="text" class="form-control" id="inputimg" placeholder="URL hình ảnh">
+        <textarea name="inputimg" row="4" class="form-control" id="inputimg" placeholder="URL hình ảnh"></textarea>
     </div>
+    <h1>Phần chi tiết</h1>
     <div class="form-group">
         <label for="content1">Nội dung chi tiết 1</label>
-        <input name="content1" type="text" class="form-control" id="content1" placeholder="Nhập nội dung 1">
-    </div>
-    <div class="form-group">
-        <label for="imgContent">Hình ảnh chi tiết</label>
-        <input name="imgContent" type="text" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết">
+        <textarea name="content1" row="4" class="form-control" id="content1" placeholder="Nhập nội dung 1"></textarea>
     </div>
     <div class="form-group">
         <label for="content2">Nội dung chi tiết 2</label>
-        <input name="content2" type="text" class="form-control" id="content2" placeholder="Nhập nội dung 2">
+        <textarea name="content2" row="4" class="form-control" id="content2" placeholder="Nhập nội dung 2"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="content3">Nội dung chi tiết 3</label>
+        <textarea name="content3" row="4" class="form-control" id="content3" placeholder="Nhập nội dung 3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="imgContent">Hình ảnh chi tiết</label>
+        <textarea name="imgContent" row="4" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết 1" ></textarea>
+    </div>
+    <div class="form-group">
+        <label for="imgContent2">Hình ảnh chi tiết 2</label>
+        <textarea name="imgContent2" row="4" class="form-control" id="imgContent2" placeholder="Nhập link hình ảnh chi tiết 2"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Thêm bài viết</button>
 </form>

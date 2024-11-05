@@ -17,9 +17,7 @@ public class Articaldetail_model {
     private String img_content;
     private String content_2;
     private String content_3;
-    private String content_4;
-    private String img_content2;
-    private String content_5;
+    private String  img_content2;
 
     @ManyToOne
     @JoinColumn(name = "artical_id", referencedColumnName = "id")

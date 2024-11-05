@@ -100,7 +100,10 @@ public class Dashboard_controller {
     @GetMapping("programmanagement/{id_update}")
     public String programmanagement_update(@PathVariable("id_update") Long id, Model model) {
         Artical_model articalModel = charitycontentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        Articaldetail_model articaldetailModels = articalDetailRepo.findFirstByArtical_Id(id);
         model.addAttribute("articalModel", articalModel);
+        model.addAttribute("articaldetailModels", articaldetailModels);
+
         return "page_admin/CRUD_ProgramManagement/updateProgram";
     }
 

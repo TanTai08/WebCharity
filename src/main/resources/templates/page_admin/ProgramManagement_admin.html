@@ -27,7 +27,7 @@
     </thead>
     <tbody>
     <tr th:each="charitycontentModelList : ${charitycontentModelLists}">
-        <th scope="row">1</th>
+        <th scope="row" th:text="${charitycontentModelList.id}"></th>
         <td th:text="${charitycontentModelList.title}"></td>
         <td>
             <img th:src="${charitycontentModelList.img}" alt="Hình ảnh tiêu đề" width="100">
@@ -90,8 +90,8 @@
             </ul>
         </td>
 
-        <td><a href="" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
-        <form action="" method="post" onsubmit="">
+        <td><a th:href="@{'/programmanagement/' + ${charitycontentModelList.id}}" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
+        <form th:action="@{/program/delete/{id_delete}(id_delete=${charitycontentModelList.id})}" method="post" onsubmit="">
             <td><button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button></td>
         </form>
     </tr>
