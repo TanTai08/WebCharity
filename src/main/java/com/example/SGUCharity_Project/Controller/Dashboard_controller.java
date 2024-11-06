@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,21 +44,37 @@ public class Dashboard_controller {
         return "page_admin/Dashboard";
     }
 
-    // Render ra trang quản lý chương trình
     @GetMapping("/dashboard_programmanagement")
-    public String programmanagement(Model model) {
-        List<Artical_model> charitycontentModelList = charitycontentRepo.findAll();
-        model.addAttribute("charitycontentModelLists", charitycontentModelList);
+    public String programmanagement(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "3") int size,
+                                    Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+        Page<Artical_model> pageResult = charitycontentRepo.findAll(pageable);
+
+        model.addAttribute("charitycontentModelLists", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        model.addAttribute("currentPage", page); // Trang hiện tại
+        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+
         return "page_admin/ProgramManagement_admin";
     }
 
     // Render ra trang quản lý nội dung bài viết
     @GetMapping("/dashboard_articlemanagement")
-    public String articlemanagemrnt(Model model) {
-        List<Articaldetail_model> articaldetailModelList = articalDetailRepo.findAll();
-        model.addAttribute("articaldetailModelLists", articaldetailModelList);
+    public String articlemanagement(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "3") int size,
+                                    Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+        Page<Articaldetail_model> pageResult = articalDetailRepo.findAll(pageable);
+
+        model.addAttribute("articaldetailModelLists", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        model.addAttribute("currentPage", page); // Trang hiện tại
+        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+
         return "page_admin/ArticleManagement_admin";
     }
+
     @PostMapping("program/delete/{id_delete}")
     public String program_delete(@PathVariable("id_delete") Long id) {
         charitycontentRepo.deleteById(id);
@@ -196,12 +215,21 @@ public class Dashboard_controller {
         return "redirect:/dashboard_revenuemanagement";
     }
 
-    @GetMapping("dashboard_newsmanagement")
-    public String newsmanagement(Model model) {
-        List<Communitynews_model> communityNewsModels = communityNewsRepo.findAll();
-        model.addAttribute("communityNewsModels", communityNewsModels);
+    @GetMapping("/dashboard_newsmanagement")
+    public String newsmanagement(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "3") int size,
+                                 Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+        Page<Communitynews_model> pageResult = communityNewsRepo.findAll(pageable);
+
+        model.addAttribute("communityNewsModels", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        model.addAttribute("currentPage", page); // Trang hiện tại
+        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+
         return "page_admin/NewsManagement_admin";
     }
+
 
     @GetMapping("newsmanagement/{id_update}")
     public String newsmanagement_update(@PathVariable("id_update") Long id, Model model) {
