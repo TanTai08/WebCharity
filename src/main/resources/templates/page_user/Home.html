@@ -357,59 +357,17 @@
     <div class="container py-5">
         <h4 class="text-center mb-5"><strong>Hoạt động dịch vụ chương trình</strong></h4>
         <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
+            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;" th:each="serviceModel : ${serviceModels}">
                 <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                     <div style="height: 200px; overflow: hidden;">
-                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/07/GLNTFountainValley_4-min-1200x800.jpg"
+                        <img th:src="${serviceModel.img_thumbnail}"
                              alt="Chương trình 1"
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
-                        <h5 class="card-title">Chương trình giao lưu nghệ thuật với Học viện âm nhạc Fountain Valley (Mỹ)</h5>
-                        <p class="card-text" style="flex-grow: 1;">
-                            CHƯƠNG TRÌNH GIAO LƯU NGHỆ THUẬT GIỮA TRƯỜNG ĐẠI HỌC SÀI GÒN VÀ HỌC VIỆN ÂM NHẠC FOUNTAIN VALLEY (MỸ) Chiều ngày 12/07/2024 [...]
-                        </p>
-                        <a href="https://www.sgu.edu.vn/chuong-trinh-giao-luu-nghe-thuat-voi-hoc-vien-am-nhac-fountain-valley-my/"
-                           class="btn btn-primary"
-                           style="margin-top: auto;">Xem thêm</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
-                <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div style="height: 200px; overflow: hidden;">
-                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/07/HNT-06.7.2024_016-400x267.jpg"
-                             alt="Chương trình 2"
-                             style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
-                        <h5 class="card-title">Trường Đại học Sài Gòn đăng cai tổ chức Hội nghị Toán học “Gặp gỡ mùa hè”</h5>
-                        <p class="card-text" style="flex-grow: 1;">
-                            Ngày 06/7/2024, Trường Đại học Sài Gòn đăng cai tổ chức Hội nghị Toán học “Gặp gỡ mùa hè” – Summer meeting 2024 [...]
-                        </p>
-                        <a href="https://www.sgu.edu.vn/truong-dai-hoc-sai-gon-dang-cai-to-chuc-hoi-nghi-toan-hoc-gap-go-mua-he-summer-meeting-2024/"
-                           class="btn btn-primary"
-                           style="margin-top: auto;">Xem thêm</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4" style="display: flex;">
-                <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div style="height: 200px; overflow: hidden;">
-                        <img src="https://www.sgu.edu.vn/wp-content/uploads/2024/05/2024_05_HTTTCD_001-400x240.jpg"
-                             alt="Chương trình 3"
-                             style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
-                        <h5 class="card-title">Công đoàn Trường Đại học Sài Gòn tổ chức Hội thao truyền thống</h5>
-                        <p class="card-text" style="flex-grow: 1;">
-                            Nằm trong chuỗi hoạt động chào mừng các ngày lễ lớn, Công đoàn Trường Đại học Sài Gòn tổ chức Hội thao truyền thống [...]
-                        </p>
-                        <a href="https://www.sgu.edu.vn/cong-doan-truong-dai-hoc-sai-gon-to-chuc-hoi-thao-truyen-thong-cong-doan-nam-hoc-2023-2024/"
-                           class="btn btn-primary"
-                           style="margin-top: auto;">Xem thêm</a>
+                        <h5 class="card-title" th:text="${serviceModel.title_service}"></h5>
+                        <p class="card-text" style="flex-grow: 1;" th:text="${serviceModel.subtitle_service}"></p>
+                        <a th:href="${serviceModel.urlartical_service}" class="btn btn-primary" style="margin-top: auto;">Xem thêm</a>
                     </div>
                 </div>
             </div>

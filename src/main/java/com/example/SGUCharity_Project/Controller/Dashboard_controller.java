@@ -35,6 +35,9 @@ public class Dashboard_controller {
     @Autowired
     Statistical_Repo statisticalRepo;
 
+    @Autowired
+    ServiceOperations_Repo serviceOperationsRepo;
+
     // Render ra trang dashboard
     @GetMapping("/manager")
     public String dashboard() {
@@ -197,6 +200,62 @@ public class Dashboard_controller {
         communityNewsRepo.save(communitynewsModel);
 
         return "redirect:/dashboard_newsmanagement";
+    }
+
+
+    @GetMapping("dashboard_servicemanagement")
+    public String servicemanagement(Model model) {
+        List<Service_model> serviceModels = serviceOperationsRepo.findAll();
+        model.addAttribute("serviceModels", serviceModels);
+        return "page_admin/ServiceManagement_admin";
+    }
+
+    @GetMapping("/insert/service")
+    public String insertservice() {
+        return "page_admin/CRUD_ServiceManagement/insertService";
+    }
+
+    @PostMapping("/insert/service")
+    public String insertservice(@RequestParam("inputtitleservice") String inputtitleservice, @RequestParam("inputimgservice") String inputimgservice, @RequestParam("inputsubtitleservice") String inputsubtitleservice,
+                             @RequestParam("inputurlarticalservice") String inputurlarticalservice) {
+
+        Service_model serviceModel = new Service_model();
+        serviceModel.setTitle_service(inputtitleservice);
+        serviceModel.setImg_thumbnail(inputimgservice);
+        serviceModel.setSubtitle_service(inputsubtitleservice);
+        serviceModel.setUrlartical_service(inputurlarticalservice);
+
+        serviceOperationsRepo.save(serviceModel);
+
+        return "redirect:/dashboard_servicemanagement";
+    }
+
+    @GetMapping("/servicemanagement/{id_update}")
+    public String servicemanagement_update(@PathVariable("id_update") Long id, Model model) {
+        Service_model serviceModel = serviceOperationsRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid service ID: " + id));
+        model.addAttribute("serviceModels", serviceModel);
+        return "page_admin/CRUD_ServiceManagement/updateService";
+    }
+
+    @PostMapping("/servicemanagement/{id_update}")
+    public String handle_servicemanagement_update(@RequestParam("inputtitleservice") String inputtitleservice, @RequestParam("inputimgservice") String inputimgservice, @RequestParam("inputsubtitleservice") String inputsubtitleservice,
+                                                  @RequestParam("inputurlarticalservice") String inputurlarticalservice, @PathVariable("id_update") Long id) {
+        Service_model serviceModel = serviceOperationsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        serviceModel.setTitle_service(inputtitleservice);
+        serviceModel.setImg_thumbnail(inputimgservice);
+        serviceModel.setSubtitle_service(inputsubtitleservice);
+        serviceModel.setUrlartical_service(inputurlarticalservice);
+
+        serviceOperationsRepo.save(serviceModel);
+
+        return "redirect:/dashboard_servicemanagement";
+    }
+
+    @PostMapping("servicemanagement/delete/{id_delete}")
+    public String servicemanagement_delete(@PathVariable("id_delete") Long id) {
+        serviceOperationsRepo.deleteById(id);
+        return "redirect:/dashboard_servicemanagement";
     }
 
     @GetMapping("dashboard_contact")

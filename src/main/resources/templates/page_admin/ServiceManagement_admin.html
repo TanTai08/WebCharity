@@ -26,17 +26,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="serviceOperationsModel : ${serviceOperationsModels}">
-        <th th:text="${serviceOperationsModel.id}" scope="row"></th>
+    <tr th:each="serviceModel : ${serviceModels}">
+        <th th:text="${serviceModel.id}" scope="row"></th>
+        <td th:text="${serviceModel.title_service}"></td>
         <td>
-            <img th:src="${serviceOperationsModel.img_thumbnail}" alt="Hình ảnh tiêu đề" width="100">
+            <img th:src="${serviceModel.img_thumbnail}" alt="Hình ảnh tiêu đề" width="100">
         </td>
-        <td th:text="${serviceOperationsModel.title_service}"></td>
-        <td th:text="${serviceOperationsModel.subtitle_service}"></td>
-        <td th:text="${serviceOperationsModel.urlartical_service}"></td>
+        <td th:text="${serviceModel.subtitle_service}"></td>
+        <td th:text="${serviceModel.urlartical_service}"></td>
         <td></td>
-        <td><a type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
-        <form method="post">
+        <td><a th:href="@{'/servicemanagement/' + ${serviceModel.id}}" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
+        <form th:action="@{'/servicemanagement/delete/' + ${serviceModel.id}}" method="post">
             <td><button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button></td>
         </form>
     </tr>
@@ -48,7 +48,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><a href="" type="submit" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm</a></td>
+        <td><a href="/insert/service" type="submit" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm</a></td>
     </tr>
     </tbody>
 </table>

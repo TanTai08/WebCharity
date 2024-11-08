@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật bài viết tin tức</title>
+    <!-- CDN bootstrap MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        body, html { height: 100%; }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        form {
+            width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group { margin-bottom: 25px; }
+    </style>
 </head>
 <body>
-$END$
+<form method="post" th:action="@{'/servicemanagement/' + ${serviceModels.id}}">
+    <div class="form-group">
+        <label>Tiêu đề bài viết</label>
+        <textarea name="inputtitleservice" th:text="${serviceModels.title_service}" class="form-control" id="inputtitlenews" rows="4" placeholder="Nhập tiêu đề bài viết"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Đường dẫn hình ảnh thumbnail</label>
+        <textarea name="inputimgservice" th:text="${serviceModels.img_thumbnail}" class="form-control" id="inputimgnews" rows="4" placeholder="Nhập đường dẫn hình ảnh thumbnail"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Tiêu đề phụ</label>
+        <textarea name="inputsubtitleservice" th:text="${serviceModels.subtitle_service}" class="form-control" rows="4" id="inputsubtitlenews" placeholder="Nhập tiêu đề phụ"></textarea>
+    </div>
+    <div class="form-group">
+        <label>URL đường dẫn liên kết bài viết</label>
+        <textarea name="inputurlarticalservice" th:text="${serviceModels.urlartical_service}" rows="4" class="form-control" id="inputurlartical" placeholder="Nhập đường dẫn liên kết bài viết"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+</form>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 </html>
