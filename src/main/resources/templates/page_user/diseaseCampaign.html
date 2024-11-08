@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org " >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css">
+  <title>Chiến dịch Gây Quỹ</title>
+  <style>
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
+      background-color: #ffefdb !important;
+    }
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
+    }
+    .project {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .card {
+      margin-bottom: 30px; /* Khoảng cách giữa các card */
+      border: none; /* Bỏ viền card */
+      border-radius: 10px; /* Bo góc card */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+      transition: transform 0.2s; /* Hiệu ứng khi hover */
+    }
+
+    .card:hover {
+      transform: translateY(-5px); /* Hiệu ứng nhấc card lên khi hover */
+    }
+
+    .card-title {
+      font-size: 1.5rem; /* Kích thước tiêu đề lớn hơn */
+      font-weight: bold; /* Đậm tiêu đề */
+    }
+
+    .card-text {
+      margin-bottom: 15px; /* Khoảng cách dưới của text */
+    }
+
+    .btn {
+      background-color: #007bff; /* Màu nền của nút */
+      color: white; /* Màu chữ trên nút */
+      border-radius: 5px; /* Bo góc nút */
+      padding: 10px 20px; /* Padding cho nút */
+      transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+    }
+
+    .btn:hover {
+      background-color: #0056b3; /* Màu nền khi hover */
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap; /* Cho phép các card xuống dòng */
+    }
+
+    .col-md-4 {
+      display: flex; /* Thiết lập flexbox cho cột */
+      justify-content: center; /* Căn giữa nội dung */
+    }
+
+    .card {
+      flex: 1; /* Chiếm đều không gian */
+      display: flex;
+      flex-direction: column; /* Để các phần tử bên trong sắp xếp theo chiều dọc */
+      justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+      margin-bottom: 30px; /* Khoảng cách giữa các card */
+      border: none; /* Bỏ viền card */
+      border-radius: 10px; /* Bo góc card */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+      transition: transform 0.2s; /* Hiệu ứng khi hover */
+    }
+
+    .card-body {
+      flex-grow: 1; /* Để card-body chiếm hết không gian còn lại */
+    }
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+      opacity: 1;
+    }
+
+  </style>
+
+</head>
+<body>
+<!-- Thanh điều hướng -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary"
+     style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); padding: 10px;">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button data-mdb-collapse-init class="navbar-toggler" type="button"
+            data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample"
+            aria-expanded="false" aria-label="Toggle navigation"
+            style="border: none; outline: none; font-size: 24px;">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample"
+         style="transition: opacity 0.5s ease, visibility 0.5s; opacity: 1;">
+      <!-- Left links -->
+      <ul class="navbar-nav mb-2 mb-lg-0" style="align-items: center;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="trang-chu"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Trang chủ
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="gioi-thieu"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Giới thiệu
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="chuong-trinh"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Hoàn cảnh quyên góp
+          </a>
+        </li>
+
+        <li class="nav-item dropdown" style="position: relative;">
+          <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+             id="navbarDropdown_2" role="button" aria-expanded="false"
+             style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Chiến dịch gây quỹ
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+              style="position: absolute; top: 100%; left: 0; display: none; background-color: #f1f1f1; border-radius: 5px; min-width: 200px; transition: opacity 0.3s;">
+            <li><a class="dropdown-item" href="/benh-hiem-ngheo" style="padding: 10px 15px; color: #000;">Bệnh hiểm nghèo</a></li>
+            <li><a class="dropdown-item" href="/chap-canh-sinh-vien" style="padding: 10px 15px; color: #000;">Chấp cánh sinh viên đến trường</a></li>
+            <li><a class="dropdown-item" href="/bua-an-sinh-vien" style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
+            <li><a class="dropdown-item" href="/sinh-vien-gioi-co-hoan-canh" style="padding: 10px 15px; color: #000;">Sinh viên giỏi có hoàn cảnh</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item dropdown"
+            style="position: relative;">
+          <a class="nav-link active dropdown-toggle" href="huong-dan-dong-gop" id="navbarDropdown_3"
+             role="button" aria-expanded="false"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Đóng góp
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+              style="position: absolute; top: 100%; left: 0; display: none;
+                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
+                               transition: opacity 0.3s;">
+            <li><a class="dropdown-item" href="cap-nhat-dong-gop"
+                   style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
+            <li><a class="dropdown-item" href="huong-dan-dong-gop"
+                   style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Tin tức cộng đồng
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="lien-he"
+             style="padding: 10px 15px; color: #000; font-weight: 500;
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+            Liên hệ
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Phần Chiến Dịch -->
+
+<section class="text-center my-5">
+  <div class="container" style="margin-top: 100px;">
+    <h2 class="font-weight-bold">Chiến dịch Gây Quỹ cho Trẻ Mồ Côi - Bệnh hiểm nghèo</h2>
+    <p class="lead">Chúng tôi đang gây quỹ để hỗ trợ trẻ mồ côi mắc bệnh hiểm nghèo. Hãy tham gia và đóng góp để giúp đỡ các em.</p>
+
+    <div class="row">
+      <div class="col-md-4 mb-4" th:each="campaign : ${campaigns}">
+        <div class="card project shadow h-100" th:data-category="${campaign.category}"
+             style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; transition: transform 0.3s;">
+       
+          <div style="height: 250px; overflow: hidden;">
+            <img th:src="${campaign.imgUrl}" class="card-img-top w-100" alt="Chiến dịch"
+                 style="width: 100%; height: 100%; object-fit: cover;" src="">
+          </div>
+
+          <div class="card-body d-flex flex-column" style="padding: 15px;">
+            <h5 class="card-title" th:text="${campaign.title}"
+                style="font-size: 1.1em; font-weight: bold; color: #333; text-align: center; margin: 10px 0;">
+            </h5>
+
+            <p class="card-text" th:text="${campaign.startDate + ' - ' + campaign.endDate}"
+               style="font-size: 0.9em; color: #666; text-align: center;"></p>
+
+            <p class="card-text" th:text="${campaign.isActive() ? 'Còn hạn' : 'Hết hạn'}"
+               style="font-size: 0.9em; font-weight: bold; text-align: center; color: #8b2323;">
+            </p>
+
+            <div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 10px 0;">
+              <div th:attr="style='height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${campaign.progressPercentage} + '%;'">
+              </div>
+            </div>
+
+            <a th:href="${campaign.detailUrl}" class="btn btn-primary"
+               style="background-color: #0056b3; color: white; margin-top: auto; margin-bottom: 10px; border-radius: 5px; border: none;">
+              Xem thêm về thông tin chi tiết
+            </a>
+
+            <a href="huong-dan-dong-gop" class="btn btn-primary"
+               style="background-color: #8b2323; border-color: #8b2323; color: white; border-radius: 5px; border: none;">Đóng Góp Ngay
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="margin-top:100px">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Kết nối với chúng tôi qua mạng xã hội:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
+          <p>
+            Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt đẹp hơn.
+            Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Hướng dẫn
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Hướng dẫn đóng góp</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Giới thiệu</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Tổ chức</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Lịch sử</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Chương trình
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Cứu trợ khẩn cấp</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Trợ giúp y tế</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Bữa ăn giá thấp</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Phương tiện mưu sinh</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+          <p><i class="fas fa-home me-3"></i> An Dương Vương, Quận 5, TP.Hồ Chí Minh</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            quytuthienmattroi@gmail.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2024 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script>
+  // Hiệu ứng mở menu thả xuống khi hover
+  document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {
+    dropdown.addEventListener('mouseenter', function () {
+      const menu = this.querySelector('.dropdown-menu');
+      menu.style.display = 'block';
+      menu.style.opacity = '1';
+    });
+
+    dropdown.addEventListener('mouseleave', function () {
+      const menu = this.querySelector('.dropdown-menu');
+      menu.style.opacity = '0';
+      setTimeout(() => (menu.style.display = 'none'), 300);
+    });
+  });
+
+  // Thêm hiệu ứng hover cho các liên kết
+  document.querySelectorAll('.nav-link').forEach(function (link) {
+    link.addEventListener('mouseenter', function () {
+      this.style.backgroundColor = '#007bff'; // Màu nền hover
+      this.style.color = '#fff'; // Màu chữ khi hover
+    });
+    link.addEventListener('mouseleave', function () {
+      this.style.backgroundColor = ''; // Xóa màu nền hover
+      this.style.color = '#000'; // Màu chữ ban đầu
+    });
+  });
+</script>
+
+</body>
+</html>

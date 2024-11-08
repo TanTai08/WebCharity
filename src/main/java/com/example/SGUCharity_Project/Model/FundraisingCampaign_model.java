@@ -22,10 +22,11 @@ public class FundraisingCampaign_model {
     private String title;
 
     @Column(name = "start_date")
-    private String startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private String endDate;
+    private LocalDate endDate;
+
 
     @Column(name = "goal_amount")
     private double goalAmount;
@@ -52,9 +53,7 @@ public class FundraisingCampaign_model {
 
     @Transient
     public boolean isActive() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate today = LocalDate.now();
-        LocalDate end = LocalDate.parse(endDate, formatter);
-        return !today.isAfter(end);
+        return !LocalDate.now().isAfter(endDate);
     }
+
 }

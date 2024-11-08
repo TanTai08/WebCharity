@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Quản lý tin tức</title>
@@ -11,48 +12,70 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        /* Thêm khoảng cách giữa các nút trong cột "Tùy chọn" */
+        .btn-group {
+            display: flex;
+            gap: 10px; /* Tạo khoảng cách 10px giữa các nút */
+        }
+    </style>
 </head>
 <body>
-<h4 style="margin-top: 20px; color: #ee3b3b">Danh sách bài viết tin tức</h4>
+<div class="container mt-4">
+    <h4 class="text-danger">Danh sách bài viết tin tức</h4>
 
-<table class="table align-middle" style="margin-top: 70px">
-    <thead>
-    <tr>
-        <th scope="col">Mã</th>
-        <th scope="col">Tiêu đề</th>
-        <th scope="col">Ảnh bài viết</th>
-        <th scope="col">Tiêu đề phụ</th>
-        <th scope="col">Ngày</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="communityNewsModel : ${communityNewsModels}">
-        <th th:text="${communityNewsModel.id}" scope="row"></th>
-        <td th:text="${communityNewsModel.title_news}"></td>
-        <td>
-            <img th:src="${communityNewsModel.img_news}" alt="Hình ảnh tiêu đề" width="100">
-        </td>
-        <td th:text="${communityNewsModel.sub_titlenews}"></td>
-        <td th:text="${communityNewsModel.date_update}"></td>
-        <td></td>
-        <td><a th:href="@{'/newsmanagement/' + ${communityNewsModel.id}}" type="submit" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a></td>
-        <form th:action="@{'/newsmanagement/delete/' + ${communityNewsModel.id}}" method="post">
-            <td><button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button></td>
-        </form>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><a href="/insert/news" type="submit" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm</a></td>
-    </tr>
-    </tbody>
-</table>
-</body>
+    <table class="table align-middle table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tiêu đề</th>
+            <th scope="col">Ảnh bài viết</th>
+            <th scope="col">Tiêu đề phụ</th>
+            <th scope="col">Ngày</th>
+            <th scope="col">Tùy chọn</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="communityNewsModel : ${communityNewsModels}">
+            <th th:text="${communityNewsModel.id}" scope="row"></th>
+            <td th:text="${communityNewsModel.title_news}"></td>
+            <td>
+                <img th:src="${communityNewsModel.img_news}" alt="Hình ảnh tiêu đề" width="100" src="">
+            </td>
+            <td th:text="${communityNewsModel.sub_titlenews}"></td>
+            <td th:text="${communityNewsModel.date_update}"></td>
+            <td>
+                <div class="btn-group">
+                    <a th:href="@{'/newsmanagement/' + ${communityNewsModel.id}}" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Sửa</a>
+                    <form th:action="@{'/newsmanagement/delete/' + ${communityNewsModel.id}}" method="post">
+                        <button type="submit" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Xóa</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Thêm mới -->
+    <div class="d-flex justify-content-end mt-3">
+        <a href="/insert/news" class="btn btn-outline-success" data-mdb-ripple-init data-mdb-ripple-color="dark">Thêm mới</a>
+    </div>
+</div>
+<div class="pagination">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:if="${currentPage > 0}">
+            <a class="page-link" th:href="@{/dashboard_newsmanagement(page=${currentPage - 1}, size=${3})}">Previous</a>
+        </li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a class="page-link" th:href="@{/dashboard_newsmanagement(page=${i}, size=${3})}" th:text="${i + 1}"></a>
+        </li>
+        <li class="page-item" th:if="${currentPage < totalPages - 1}">
+            <a class="page-link" th:href="@{/dashboard_newsmanagement(page=${currentPage + 1}, size=${3})}">Next</a>
+        </li>
+    </ul>
+</div>
+
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+</body>
 </html>

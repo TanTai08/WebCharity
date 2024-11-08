@@ -79,6 +79,11 @@
         .card-body {
             flex-grow: 1; /* Để card-body chiếm hết không gian còn lại */
         }
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+        }
+
     </style>
 
 </head>
@@ -125,26 +130,18 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown"
-                    style="position: relative;">
+                <li class="nav-item dropdown" style="position: relative;">
                     <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
                        id="navbarDropdown_2" role="button" aria-expanded="false"
-                       style="padding: 10px 15px; color: #000; font-weight: 500;
-                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                       style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
                         Chiến dịch gây quỹ
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
-                        style="position: absolute; top: 100%; left: 0; display: none;
-                               background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
-                               transition: opacity 0.3s;">
-                        <li><a class="dropdown-item" href="#"
-                               style="padding: 10px 15px; color: #000;" data-filter="bệnh hiểm nghèo">Bệnh hiểm nghèo</a></li>
-                        <li><a class="dropdown-item" href="#"
-                               style="padding: 10px 15px; color: #000;" data-filter="chấp cánh sinh viên">Chấp cánh sinh viên đến trường</a></li>
-                        <li><a class="dropdown-item" href="#"
-                               style="padding: 10px 15px; color: #000;" data-filter="bữa ăn sinh viên">Bữa ăn sinh viên</a></li>
-                        <li><a class="dropdown-item" href="#"
-                               style="padding: 10px 15px; color: #000;" data-filter="sinh viên giỏi có hoàn cảnh">Sinh viên giỏi có hoàn cảnh</a></li>
+                        style="position: absolute; top: 100%; left: 0; display: none; background-color: #f1f1f1; border-radius: 5px; min-width: 200px; transition: opacity 0.3s;">
+                        <li><a class="dropdown-item" href="/benh-hiem-ngheo" style="padding: 10px 15px; color: #000;">Bệnh hiểm nghèo</a></li>
+                        <li><a class="dropdown-item" href="/chap-canh-sinh-vien" style="padding: 10px 15px; color: #000;">Chấp cánh sinh viên đến trường</a></li>
+                        <li><a class="dropdown-item" href="/bua-an-sinh-vien" style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
+                        <li><a class="dropdown-item" href="/sinh-vien-gioi-co-hoan-canh" style="padding: 10px 15px; color: #000;">Sinh viên giỏi có hoàn cảnh</a></li>
                     </ul>
                 </li>
 
@@ -218,15 +215,17 @@
                             <div th:attr="style='height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${campaign.progressPercentage} + '%;'">
                             </div>
                         </div>
-                        <p style="font-size: 0.9em; color: #8b2323; font-weight: bold; text-align: center;">
-                        <p class="card-text" th:text="${'#' + campaign.amountRaised.toString() + ' / ' + campaign.goalAmount.toString()}"></p>
+
+                        <div th:attr="style='width:' + ${#numbers.formatDecimal((campaign.amountRaised / campaign.goalAmount) * 100, 0, 0)} + '%;'">
+                        </div>
+
 
                         <a th:href="${campaign.detailUrl}" class="btn btn-primary"
                            style="background-color: #0056b3; color: white; margin-top: auto; margin-bottom: 10px; border-radius: 5px; border: none;">
                             Xem thêm về thông tin chi tiết
                         </a>
 
-                        <a href="#" class="btn btn-primary"
+                        <a href="huong-dan-dong-gop" class="btn btn-primary"
                            style="background-color: #8b2323; border-color: #8b2323; color: white; border-radius: 5px; border: none;">Đóng Góp Ngay
                         </a>
                     </div>
@@ -235,23 +234,6 @@
         </div>
     </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-body-tertiary text-muted" style="margin-top:100px">
     <!-- Section: Social media -->
@@ -375,70 +357,6 @@
 <!-- Footer -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
-<script>
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const filter = this.getAttribute('data-filter');
-            const container = document.querySelector('.row');
-            const allProjects = document.querySelectorAll('.project');
-
-            // Hide all projects initially
-            allProjects.forEach(project => {
-                project.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                project.style.opacity = '0';
-                project.style.transform = 'translateY(-10px)';
-                project.style.pointerEvents = 'none';
-            });
-
-            // Wait for the hide animation to finish before filtering
-            setTimeout(() => {
-                // Clear the container
-                container.innerHTML = '';
-
-                // Filter the projects based on selected category
-                const filteredProjects = Array.from(allProjects).filter(
-                    project => project.getAttribute('data-category') === filter
-                );
-
-                // Loop through the filtered projects and append them in a column layout
-                filteredProjects.forEach((project) => {
-                    // Create a new column element for each project
-                    const columnDiv = document.createElement('div');
-                    columnDiv.classList.add('col-md-4');
-                    columnDiv.appendChild(project);
-
-                    // Append project to container
-                    container.appendChild(columnDiv);
-
-                    // Show project with a smooth animation
-                    project.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    project.style.opacity = '1';
-                    project.style.transform = 'translateY(0)';
-                    project.style.pointerEvents = 'auto';
-                });
-
-                // Optionally, add back the hidden non-filtered projects at the end
-                allProjects.forEach(project => {
-                    if (!filteredProjects.includes(project)) {
-                        const columnDiv = document.createElement('div');
-                        columnDiv.classList.add('col-md-4');
-                        columnDiv.style.display = 'none';  // Keep them hidden
-                        columnDiv.appendChild(project);
-                        container.appendChild(columnDiv);
-                    }
-                });
-            }, 500); // Match this with the transition duration for opacity
-        });
-    });
-</script>
-
-
-
-
-
-
 <script>
     // Hiệu ứng mở menu thả xuống khi hover
     document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {

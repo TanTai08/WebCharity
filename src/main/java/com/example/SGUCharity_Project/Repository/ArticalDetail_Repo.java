@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ArticalDetail_Repo extends JpaRepository<Articaldetail_model, Long> {
     List<Articaldetail_model> findByartical_id(Long artical_id);
+    Articaldetail_model findFirstByArtical_Id(Long artical_id);
 }
