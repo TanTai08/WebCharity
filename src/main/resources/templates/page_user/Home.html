@@ -254,15 +254,15 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Dự án thành công</h5>
-                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.successfulproject}"></p>
+                        <p class="card-text display-4 text-primary" th:text="${successfulproject}">0</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Người tham gia</h5>
-                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.participants}"></p>
+                        <h5 class="card-title">Số người đang truy cập</h5>
+                        <p class="card-text display-4 text-primary" th:text="${currentVisitors}">0</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +270,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Số tiền quyên góp</h5>
-                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.donationamount}"></p>
+                        <p class="card-text display-4 text-primary" th:text="${donationamount}">0</p>
                     </div>
                 </div>
             </div>
@@ -278,13 +278,14 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Sự kiện tổ chức</h5>
-                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.eventsorganized}"></p>
+                        <p class="card-text display-4 text-primary" th:text="${eventsorganized}">0</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <!-- End Statistics Section -->
 
 <!-- Carousel wrapper -->
@@ -354,7 +355,7 @@
                     <div style="height: 200px; overflow: hidden;">
                         <img th:src="${serviceModel.img_thumbnail}"
                              alt="Chương trình 1"
-                             style="width: 100%; height: 100%; object-fit: cover;">
+                             style="width: 100%; height: 100%; object-fit: cover;" src="">
                     </div>
                     <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
                         <h5 class="card-title" th:text="${serviceModel.title_service}"></h5>

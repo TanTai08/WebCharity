@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -47,18 +49,32 @@ public class Dashboard_controller {
         return "page_admin/Dashboard";
     }
 
+
     @GetMapping("/dashboard_programmanagement")
-    public String programmanagement(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "3") int size,
-                                    Model model) {
-        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
-        Page<Artical_model> pageResult = charitycontentRepo.findAll(pageable);
+    public String getDashboard(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+                               @RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "size", defaultValue = "3") int size,
+                               Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Artical_model> resultPage;
 
-        model.addAttribute("charitycontentModelLists", pageResult.getContent()); // Danh sách các mục của trang hiện tại
-        model.addAttribute("currentPage", page); // Trang hiện tại
-        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
-        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            try {
+                // Thử chuyển searchTerm thành Long nếu có thể (dùng cho tìm kiếm theo ID)
+                Long id = Long.valueOf(searchTerm);
+                resultPage = charitycontentRepo.searchById(id, pageable); // Tìm kiếm theo ID
+            } catch (NumberFormatException e) {
+                // Nếu không chuyển được, thực hiện tìm kiếm theo tiêu đề
+                resultPage = charitycontentRepo.searchByTitle(searchTerm, pageable);
+            }
+        } else {
+            resultPage = charitycontentRepo.findAll(pageable);
+        }
 
+        model.addAttribute("charitycontentModelLists", resultPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", resultPage.getTotalPages());
+        model.addAttribute("searchTerm", searchTerm);
         return "page_admin/ProgramManagement_admin";
     }
 
@@ -95,6 +111,7 @@ public class Dashboard_controller {
 
                                 ) {  // Nội dung chi tiết 2
 
+
         // Tạo một Artical_model mới và lưu nó
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
@@ -121,6 +138,7 @@ public class Dashboard_controller {
 
         return "redirect:/dashboard_programmanagement";
     }
+
 
     @GetMapping("programmanagement/{id_update}")
     public String programmanagement_update(@PathVariable("id_update") Long id, Model model) {

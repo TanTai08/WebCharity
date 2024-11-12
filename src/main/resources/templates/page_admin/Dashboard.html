@@ -6,161 +6,251 @@
     <title>Quản Lý</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- CDN bootstrap MDB -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
     <style>
+        /* Sidebar Styles */
         .sidebar {
-            height: 170vh;
-            background-color: #111111;
+            height: 100vh;
+            background-color: #222831;
+            transition: transform 0.3s ease;
+            color: #EEEEEE;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            z-index: 1040;
         }
+
         .sidebar a {
-            color: white;
+            color: #EEEEEE;
             display: block;
-            padding: 15px;
+            padding: 12px 20px;
             text-decoration: none;
+            font-weight: 500;
         }
+
         .sidebar a:hover {
-            background-color: #495057;
+            background-color: #393E46;
+            color: #FFD369;
         }
+
+        .sidebar .nav-item {
+            border-bottom: 1px solid #393E46;
+        }
+
+        .sidebar .nav-decor {
+            color: #00ADB5 !important;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Toggle Button */
+        .btn-toggle-sidebar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1050;
+            background-color: #00ADB5;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-toggle-sidebar:hover {
+            background-color: #FFD369;
+            color: #222831;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 30px;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-left: 250px; /* Ensure there is space for sidebar */
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        /* Khi sidebar bị ẩn, căn giữa nội dung */
+        .main-centered {
+            height: 100vh;
+            margin-left: 0; /* Đảm bảo nội dung chiếm toàn bộ chiều rộng */
+            padding-top: 30px; /* Cung cấp khoảng cách từ trên xuống */
+            padding-bottom: 30px; /* Cung cấp khoảng cách từ dưới lên */
+        }
+
+        .main-title {
+            font-size: 2.5rem; /* Kích thước chữ lớn hơn */
+            font-weight: 700; /* Đậm chữ */
+            color: #222831; /* Màu chữ */
+            text-align: center; /* Căn giữa chữ */
+            animation: moveTitle 10s linear infinite; /* Thêm hiệu ứng chạy tự động */
+        }
+
+        /* Hiệu ứng chạy tự động */
+        @keyframes moveTitle {
+            0% {
+                transform: translateX(-100%); /* Bắt đầu từ trái */
+            }
+            50% {
+                transform: translateX(0); /* Đến giữa */
+            }
+            100% {
+                transform: translateX(100%); /* Di chuyển qua phải */
+            }
+        }
+
+
+        /* Iframe */
         iframe {
             width: 100%;
             height: 80vh;
             border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .nav-item a {
-            margin-bottom: 15px;
+
+        /* Điều chỉnh cho khi sidebar bị ẩn */
+        .no-sidebar main {
+            margin-left: 0; /* Bỏ không gian bên trái */
+            width: 100%; /* Nội dung chiếm toàn bộ chiều rộng */
         }
-        .nav-decor {
-            color: #CCFFFF !important;
+
+        /* Điều chỉnh cho body khi ẩn sidebar */
+        body.no-sidebar {
+            overflow-x: hidden; /* Ngăn cuộn ngang */
         }
+
     </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
+        <!-- Toggle Button for Sidebar -->
+        <button type="button" class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Ẩn/Hiện Sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block sidebar">
-            <div class="sidebar-sticky">
-                <h5 class="text-white mt-3 mb-3 text-center"><a href="">Dashboard</a></h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
-                            Quản lý nội dung<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
-                        </a>
-                        <div class="collapse" id="homeMenu">
-                            <ul class="nav flex-column ml-3">
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_programmanagement')" class="nav-link nav-decor">Quản lý chương trình</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_articlemanagement')" class="nav-link nav-decor">Quản lý chiến dịch</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_newsmanagement')" class="nav-link nav-decor">Quản lý tin tức cộng đồng</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_servicemanagement')" class="nav-link nav-decor">Quản lý hoạt động dịch vụ</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="collapse" id="homeMenu_1">
-                            <ul class="nav flex-column ml-3">
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_programmanagement')" class="nav-link nav-decor">Quản lý danh mục</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#analyticsMenu" aria-expanded="false" aria-controls="analyticsMenu">
-                            Quản lý chức năng<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
-                        </a>
-                        <div class="collapse" id="analyticsMenu">
-                            <ul class="nav flex-column ml-3">
-                                <li class="nav-item">
-                                    <a href="/accountManagement" onclick="loadIframe('sendmessage_dashboard')" class="nav-link nav-decor">Thông tin tài khoản</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_revenuemanagement')" class="nav-link nav-decor">Quản lý doanh thu</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_note')" class="nav-link nav-decor">Quản lý ghi chú</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" onclick="loadIframe('dashboard_contact')" class="nav-link nav-decor">Xem phản hồi người dùng</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="loadIframe('dashboard_statistical')"  data-toggle="collapse" data-target="#ordersMenu" aria-expanded="false" aria-controls="ordersMenu">
-                            Thống kê<i style="margin-left: 4px" class="fa-solid"></i>
-                        </a>
-                    </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#productsMenu" aria-expanded="false" aria-controls="productsMenu">-->
-<!--                            Cài đặt<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>-->
-<!--                        </a>-->
-<!--                        <div class="collapse" id="productsMenu">-->
-<!--                            <ul class="nav flex-column ml-3">-->
-<!--                                <li class="nav-item">-->
-<!--                                    <a href="#" onclick="loadIframe('print_dashboard')" class="nav-link nav-decor">Máy in</a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login"  >
-                            Đăng xuất<i style="margin-left: 4px" class="fa-solid"></i>
-                        </a>
-                    </li>
-                </ul>
+        <nav class="col-md-2 d-none d-md-block sidebar" id="sidebar">
+            <div class="text-center mb-4">
+                <h5 class="text-white mt-3 mb-3">Dashboard</h5>
             </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" data-toggle="collapse" data-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
+                        Quản lý nội dung<i class="fas fa-caret-down ml-2"></i>
+                    </a>
+                    <div class="collapse" id="homeMenu">
+                        <ul class="nav flex-column ml-3">
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_programmanagement')" class="nav-link nav-decor">Quản lý chương trình</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_articlemanagement')" class="nav-link nav-decor">Quản lý chiến dịch</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_newsmanagement')" class="nav-link nav-decor">Quản lý tin tức cộng đồng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_servicemanagement')" class="nav-link nav-decor">Quản lý hoạt động dịch vụ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#analyticsMenu" aria-expanded="false" aria-controls="analyticsMenu">
+                        Quản lý chức năng<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
+                    </a>
+                    <div class="collapse" id="analyticsMenu">
+                        <ul class="nav flex-column ml-3">
+                            <li class="nav-item">
+                                <a href="/accountManagement" onclick="loadIframe('sendmessage_dashboard')" class="nav-link nav-decor">Thông tin tài khoản</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_revenuemanagement')" class="nav-link nav-decor">Quản lý doanh thu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_note')" class="nav-link nav-decor">Quản lý ghi chú</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="loadIframe('dashboard_contact')" class="nav-link nav-decor">Xem phản hồi người dùng</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadIframe('dashboard_statistical')"  data-toggle="collapse" data-target="#ordersMenu" aria-expanded="false" aria-controls="ordersMenu">
+                        Thống kê<i style="margin-left: 4px" class="fa-solid"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"  >
+                        Đăng xuất<i style="margin-left: 4px" class="fa-solid"></i>
+                    </a>
+                </li>
+            </ul>
         </nav>
 
-        <!-- Main content -->
+        <!-- Main Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Hệ Thống Quyên Góp Qũy Sinh Viên SGU</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">
-                        Đổi màu
-                    </button>
-                </div>
+                <h1 class="h2 main-title">Hệ Thống Quyên Góp Qũy Sinh Viên SGU</h1>
             </div>
             <iframe name="content-frame" src="account_dashboard"></iframe>
         </main>
     </div>
 </div>
 
-<!-- Bootstrap JS và các dependencies -->
+<!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- Custom JS để thay đổi nội dung iframe -->
 <script>
     function loadIframe(url) {
         document.querySelector('iframe[name="content-frame"]').src = url;
     }
-
     document.addEventListener("DOMContentLoaded", function() {
         loadIframe('dashboard_programmanagement');
-
-        // Tự động mở rộng phần "Quản lý tài khoản"
-        var homeMenu = document.getElementById('homeMenu');
-        homeMenu.classList.add('show');
-        var homeMenuLink = document.querySelector('a[data-target="#homeMenu"]');
-        homeMenuLink.setAttribute('aria-expanded', 'true');
+        document.getElementById('homeMenu').classList.add('show');
     });
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        var mainContent = document.querySelector("main");
+
+        // Toggle sidebar visibility
+        sidebar.classList.toggle("sidebar-hidden");
+
+        // Toggle main content centering and layout
+        if (sidebar.classList.contains("sidebar-hidden")) {
+            document.body.classList.add("no-sidebar");
+            mainContent.classList.add("main-centered");
+        } else {
+            document.body.classList.remove("no-sidebar");
+            mainContent.classList.remove("main-centered");
+        }
+    }
+
+
 </script>
 </body>
 </html>

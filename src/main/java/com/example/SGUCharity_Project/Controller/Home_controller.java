@@ -63,4 +63,5 @@ public class Home_controller {
 
         return "page_user/ArticleDetails"; // Trang HTML chứa nội dung chi tiết bài viết
     }
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,22 +13,97 @@
     <style>
         body, html {
             height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
         }
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #f8f9fa;
+            padding: 20px;
         }
+
         form {
-            width: 600px;
+            width: 100%;
+            max-width: 700px; /* Giới hạn chiều rộng của form */
+            height: 100%; /* Đảm bảo form chiếm hết chiều cao của vùng cha */
+            max-height: 85vh; /* Giới hạn chiều cao của form */
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+            overflow-y: auto; /* Nếu form quá dài, sẽ có thanh cuộn dọc */
         }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #222831;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #00ADB5;
+            box-shadow: 0 0 5px rgba(0, 173, 181, 0.5);
+        }
+
+        button[type="submit"] {
+            background-color: #00ADB5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #393E46;
+        }
+
+        button[type="submit"]:focus {
+            outline: none;
+        }
+
+        /* Media Query cho màn hình nhỏ */
+        @media (max-width: 768px) {
+            form {
+                max-width: 100%; /* Form chiếm hết chiều rộng màn hình */
+                padding: 15px; /* Giảm padding để vừa vặn hơn */
+            }
+
+            h1 {
+                font-size: 1.6rem; /* Giảm kích thước font cho tiêu đề */
+            }
         }
     </style>
 </head>
@@ -37,32 +112,32 @@
     <h1>Phần tổng quát</h1>
     <div class="form-group">
         <label for="inputtitle">Tiêu đề bài viết</label>
-        <textarea name="inputtitle" row="4"  class="form-control" id="inputtitle" placeholder="Nhập tiêu đề bài viết"></textarea>
+        <textarea name="inputtitle" rows="4" class="form-control" id="inputtitle" placeholder="Nhập tiêu đề bài viết"></textarea>
     </div>
     <div class="form-group">
         <label for="inputimg">Hình ảnh Thumbnail</label>
-        <textarea name="inputimg" row="4" class="form-control" id="inputimg" placeholder="URL hình ảnh"></textarea>
+        <textarea name="inputimg" rows="4" class="form-control" id="inputimg" placeholder="URL hình ảnh"></textarea>
     </div>
     <h1>Phần chi tiết</h1>
     <div class="form-group">
         <label for="content1">Nội dung chi tiết 1</label>
-        <textarea name="content1" row="4" class="form-control" id="content1" placeholder="Nhập nội dung 1"></textarea>
+        <textarea name="content1" rows="4" class="form-control" id="content1" placeholder="Nhập nội dung 1"></textarea>
     </div>
     <div class="form-group">
         <label for="content2">Nội dung chi tiết 2</label>
-        <textarea name="content2" row="4" class="form-control" id="content2" placeholder="Nhập nội dung 2"></textarea>
+        <textarea name="content2" rows="4" class="form-control" id="content2" placeholder="Nhập nội dung 2"></textarea>
     </div>
     <div class="form-group">
         <label for="content3">Nội dung chi tiết 3</label>
-        <textarea name="content3" row="4" class="form-control" id="content3" placeholder="Nhập nội dung 3"></textarea>
+        <textarea name="content3" rows="4" class="form-control" id="content3" placeholder="Nhập nội dung 3"></textarea>
     </div>
     <div class="form-group">
         <label for="imgContent">Hình ảnh chi tiết</label>
-        <textarea name="imgContent" row="4" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết 1" ></textarea>
+        <textarea name="imgContent" rows="4" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết 1" ></textarea>
     </div>
     <div class="form-group">
         <label for="imgContent2">Hình ảnh chi tiết 2</label>
-        <textarea name="imgContent2" row="4" class="form-control" id="imgContent2" placeholder="Nhập link hình ảnh chi tiết 2"></textarea>
+        <textarea name="imgContent2" rows="4" class="form-control" id="imgContent2" placeholder="Nhập link hình ảnh chi tiết 2"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Thêm bài viết</button>
 </form>
