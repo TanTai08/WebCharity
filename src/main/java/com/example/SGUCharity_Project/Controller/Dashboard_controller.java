@@ -422,7 +422,7 @@ public class Dashboard_controller {
         return "redirect:/dashboard_statistical";
     }
 
-    // render ra trang chiến dịch dashboard
+//     render ra trang chiến dịch dashboard
     @GetMapping("/dashboard_campaignmanagement")
     public String campaignmanagement(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "3") int size,
@@ -461,13 +461,16 @@ public class Dashboard_controller {
         }
         return "redirect:/dashboard_campaignanagement";
     }
-
+    @GetMapping("/insert/campaign")
+    public String insertcampaign() {
+        return "page_admin/CRUD_CampaignManagement/insertCampaign";
+    }
     @PostMapping("/insert/campaign")
     public String insertCampaign(@RequestParam("title") String title,
                                  @RequestParam("imgUrl") String imgUrl,
 //                                 @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
-                                 @RequestParam("amountRaised") String amountRaised,
+//                                 @RequestParam("amountRaised") String amountRaised,
                                  @RequestParam("goalAmount") String goalAmount,
                                  @RequestParam("detailUrl") String detailUrl
 
@@ -479,7 +482,7 @@ public class Dashboard_controller {
         fundraisingCampaignModel.setImgUrl(imgUrl);
         fundraisingCampaignModel.setStartDate(LocalDate.now());
         fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
-        fundraisingCampaignModel.setAmountRaised(Double.parseDouble(amountRaised));
+        fundraisingCampaignModel.setAmountRaised(0);
         fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
         fundraisingCampaignModel.setStatus("Đang vận động");
         fundraisingCampaignModel.setDetailUrl(detailUrl);
@@ -489,6 +492,38 @@ public class Dashboard_controller {
         FundraisingCampaign_model savedFundraisingCampaign = fundraisingCampaignRepo.save(fundraisingCampaignModel);
         return "redirect:/dashboard_campaignmanagement";
 
+    }
+
+    @GetMapping("campaignmanagement/{id_update}")
+    public String campaignmanagement_update(@PathVariable("id_update") Long id, Model model) {
+        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        model.addAttribute("fundraisingCampaignModel", fundraisingCampaignModel);
+        return "page_admin/CRUD_CampaignManagement/updateCampaign";
+    }
+
+    @PostMapping("campaignmanagement/{id_update}")
+    public String handle_campaignmanagement_update(@RequestParam("title") String title,
+                                                   @RequestParam("imgUrl") String imgUrl,
+                                                   @RequestParam("endDate") String endDate,
+                                                   @RequestParam("goalAmount") String goalAmount,
+                                                   @PathVariable("detailUrl") String detailUrl,
+                                                   @PathVariable("id_update") Long id) {
+        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        fundraisingCampaignModel.setTitle(title);
+        fundraisingCampaignModel.setImgUrl(imgUrl);
+        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
+        fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
+        fundraisingCampaignModel.setDetailUrl(detailUrl);
+
+        fundraisingCampaignRepo.save(fundraisingCampaignModel);
+
+        return "redirect:/dashboard_campaignmanagement";
+    }
+
+    @PostMapping("campaign/delete/{id_delete}")
+    public String campaign_delete(@PathVariable("id_delete") Long id) {
+        fundraisingCampaignRepo.deleteById(id);
+        return "redirect:/dashboard_campaignmanagement";
     }
 
 }
