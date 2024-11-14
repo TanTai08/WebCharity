@@ -24,6 +24,9 @@ public class Dashboard_controller {
     ArticalDetail_Repo articalDetailRepo;
 
     @Autowired
+    FundraisingCampaign_Repo fundraisingCampaignRepo;
+
+    @Autowired
     Payment_Repo paymentRepo;
 
     @Autowired
@@ -177,7 +180,6 @@ public class Dashboard_controller {
         }
         return "redirect:/dashboard_programmanagement"; // Chuyển hướng về trang mà bạn muốn
     }
-
 
 
     @PostMapping("/updateDisplayCategory")
@@ -401,4 +403,74 @@ public class Dashboard_controller {
 
         return "redirect:/dashboard_statistical";
     }
+
+    // render ra trang chiến dịch dashboard
+    @GetMapping("/dashboard_campaignmanagement")
+    public String campaignmanagement(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "3") int size,
+                                    Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+        Page<FundraisingCampaign_model> pageResult = fundraisingCampaignRepo.findAll(pageable);
+
+        model.addAttribute("fundraisingCampaignModel", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        model.addAttribute("currentPage", page); // Trang hiện tại
+        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+
+        return "page_admin/CampaignManagement_admin";
+    }
+
+    @PostMapping("/updateStatusCampaign")
+    public String updateStatusCampaign(@RequestParam("id") Long id, @RequestParam("status") String status) {
+        // Tìm đối tượng charitycontentModelList bằng id
+        Optional<FundraisingCampaign_model> fundraisingCampaignOptional = fundraisingCampaignRepo.findById(id);
+        if (fundraisingCampaignOptional.isPresent()) {
+            FundraisingCampaign_model fundraisingCampaign = fundraisingCampaignOptional.get();
+            fundraisingCampaign.setStatus(status); // Cập nhật status
+            fundraisingCampaignRepo.save(fundraisingCampaign); // Lưu lại thay đổi
+        }
+        return "redirect:/dashboard_campaignanagement"; // Chuyển hướng về trang mà bạn muốn
+    }
+
+
+    @PostMapping("/updateCategoryCampaign")
+    public String updateCategoryCampaign(@RequestParam("id") Long id, @RequestParam("display") String display) {
+        Optional<FundraisingCampaign_model> fundraisingCampaignOptional = fundraisingCampaignRepo.findById(id);
+        if (fundraisingCampaignOptional.isPresent()) {
+            FundraisingCampaign_model fundraisingCampaign = fundraisingCampaignOptional.get();
+            fundraisingCampaign.setCategory(display);
+            fundraisingCampaignRepo.save(fundraisingCampaign);
+        }
+        return "redirect:/dashboard_campaignanagement";
+    }
+
+    @PostMapping("/insert/campaign")
+    public String insertCampaign(@RequestParam("title") String title,
+                                 @RequestParam("imgUrl") String imgUrl,
+//                                 @RequestParam("startDate") String startDate,
+                                 @RequestParam("endDate") String endDate,
+                                 @RequestParam("amountRaised") String amountRaised,
+                                 @RequestParam("goalAmount") String goalAmount,
+                                 @RequestParam("detailUrl") String detailUrl
+
+    ) {
+
+
+        FundraisingCampaign_model fundraisingCampaignModel = new FundraisingCampaign_model();
+        fundraisingCampaignModel.setTitle(title);
+        fundraisingCampaignModel.setImgUrl(imgUrl);
+        fundraisingCampaignModel.setStartDate(LocalDate.now());
+        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
+        fundraisingCampaignModel.setAmountRaised(Double.parseDouble(amountRaised));
+        fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
+        fundraisingCampaignModel.setStatus("Đang vận động");
+        fundraisingCampaignModel.setDetailUrl(detailUrl);
+        fundraisingCampaignModel.setCategory("Bệnh hiểm nghèo");
+
+        // Lưu Artical_model vào database để có ID
+        FundraisingCampaign_model savedFundraisingCampaign = fundraisingCampaignRepo.save(fundraisingCampaignModel);
+        return "redirect:/dashboard_campaignmanagement";
+
+    }
+
 }

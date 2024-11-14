@@ -42,6 +42,8 @@ public class FundraisingCampaign_model {
     @Column(name = "detail_url")
     private String detailUrl;
 
+    private String status;
+
     @Transient
     public int getProgressPercentage() {
         if (goalAmount > 0) {
