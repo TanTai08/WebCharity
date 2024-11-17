@@ -2,6 +2,8 @@ package com.example.SGUCharity_Project.Controller;
 
 import com.example.SGUCharity_Project.Model.*;
 import com.example.SGUCharity_Project.Repository.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,9 @@ public class Dashboard_controller {
 
     @Autowired
     FundraisingCampaign_Repo fundraisingCampaignRepo;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     Payment_Repo paymentRepo;
@@ -423,20 +428,38 @@ public class Dashboard_controller {
     }
 
 //     render ra trang chiến dịch dashboard
-    @GetMapping("/dashboard_campaignmanagement")
-    public String campaignmanagement(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "3") int size,
-                                    Model model) {
-        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
-        Page<FundraisingCampaign_model> pageResult = fundraisingCampaignRepo.findAll(pageable);
+@GetMapping("/dashboard_campaignmanagement")
+public String campaignmanagement(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+                                 @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "3") int size,
+                                 Model model) {
+    Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+    Page<FundraisingCampaign_model> pageResult;
 
-        model.addAttribute("fundraisingCampaignModel", pageResult.getContent()); // Danh sách các mục của trang hiện tại
-        model.addAttribute("currentPage", page); // Trang hiện tại
-        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
-        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
-
-        return "page_admin/CampaignManagement_admin";
+    // Nếu có searchTerm, thực hiện tìm kiếm theo id hoặc title
+    if (searchTerm != null && !searchTerm.isEmpty()) {
+        try {
+            // Thử chuyển searchTerm thành Long nếu có thể (dùng cho tìm kiếm theo ID)
+            Long id = Long.valueOf(searchTerm);
+            pageResult = fundraisingCampaignRepo.searchById(id, pageable); // Tìm kiếm theo ID
+        } catch (NumberFormatException e) {
+            // Nếu không thể chuyển được, tìm kiếm theo tiêu đề
+            pageResult = fundraisingCampaignRepo.searchByTitle(searchTerm, pageable);
+        }
+    } else {
+        pageResult = fundraisingCampaignRepo.findAll(pageable); // Nếu không có searchTerm, lấy tất cả
     }
+
+    // Thêm các thuộc tính vào model để sử dụng trong view
+    model.addAttribute("fundraisingCampaignModel", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+    model.addAttribute("currentPage", page); // Trang hiện tại
+    model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+    model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+    model.addAttribute("searchTerm", searchTerm); // Từ khóa tìm kiếm
+
+    return "page_admin/CampaignManagement_admin";
+}
+
 
     @PostMapping("/updateStatusCampaign")
     public String updateStatusCampaign(@RequestParam("id") Long id, @RequestParam("status") String status) {
@@ -447,7 +470,7 @@ public class Dashboard_controller {
             fundraisingCampaign.setStatus(status); // Cập nhật status
             fundraisingCampaignRepo.save(fundraisingCampaign); // Lưu lại thay đổi
         }
-        return "redirect:/dashboard_campaignanagement"; // Chuyển hướng về trang mà bạn muốn
+        return "redirect:/dashboard_campaignmanagement"; // Chuyển hướng về trang mà bạn muốn
     }
 
 
@@ -459,7 +482,7 @@ public class Dashboard_controller {
             fundraisingCampaign.setCategory(display);
             fundraisingCampaignRepo.save(fundraisingCampaign);
         }
-        return "redirect:/dashboard_campaignanagement";
+        return "redirect:/dashboard_campaignmanagement";
     }
     @GetMapping("/insert/campaign")
     public String insertcampaign() {
@@ -468,19 +491,16 @@ public class Dashboard_controller {
     @PostMapping("/insert/campaign")
     public String insertCampaign(@RequestParam("title") String title,
                                  @RequestParam("imgUrl") String imgUrl,
-//                                 @RequestParam("startDate") String startDate,
+                                 @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
-//                                 @RequestParam("amountRaised") String amountRaised,
                                  @RequestParam("goalAmount") String goalAmount,
-                                 @RequestParam("detailUrl") String detailUrl
+                                 @RequestParam("detailUrl") String detailUrl) {
 
-    ) {
-
-
+        // Tạo một đối tượng mới và thiết lập các thuộc tính
         FundraisingCampaign_model fundraisingCampaignModel = new FundraisingCampaign_model();
         fundraisingCampaignModel.setTitle(title);
         fundraisingCampaignModel.setImgUrl(imgUrl);
-        fundraisingCampaignModel.setStartDate(LocalDate.now());
+        fundraisingCampaignModel.setStartDate(LocalDate.parse(startDate));
         fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
         fundraisingCampaignModel.setAmountRaised(0);
         fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
@@ -488,15 +508,23 @@ public class Dashboard_controller {
         fundraisingCampaignModel.setDetailUrl(detailUrl);
         fundraisingCampaignModel.setCategory("Bệnh hiểm nghèo");
 
-        // Lưu Artical_model vào database để có ID
-        FundraisingCampaign_model savedFundraisingCampaign = fundraisingCampaignRepo.save(fundraisingCampaignModel);
-        return "redirect:/dashboard_campaignmanagement";
+        // Lưu vào database mà không thay đổi ID
+        fundraisingCampaignRepo.save(fundraisingCampaignModel);
 
+        return "redirect:/dashboard_campaignmanagement";
     }
+
+
+
+
+
+
+
 
     @GetMapping("campaignmanagement/{id_update}")
     public String campaignmanagement_update(@PathVariable("id_update") Long id, Model model) {
-        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID " + id));
         model.addAttribute("fundraisingCampaignModel", fundraisingCampaignModel);
         return "page_admin/CRUD_CampaignManagement/updateCampaign";
     }
@@ -504,25 +532,33 @@ public class Dashboard_controller {
     @PostMapping("campaignmanagement/{id_update}")
     public String handle_campaignmanagement_update(@RequestParam("title") String title,
                                                    @RequestParam("imgUrl") String imgUrl,
-                                                   @RequestParam("endDate") String endDate,
+                                                   @RequestParam("startDate") String startDate, // Correct name for startDate
+                                                   @RequestParam("endDate") String endDate, // Correct name for endDate
                                                    @RequestParam("goalAmount") String goalAmount,
-                                                   @PathVariable("detailUrl") String detailUrl,
+                                                   @RequestParam("detailUrl") String detailUrl, // detailUrl is a request parameter, not a path variable
                                                    @PathVariable("id_update") Long id) {
-        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID " + id));
+
+        // Update fields
         fundraisingCampaignModel.setTitle(title);
         fundraisingCampaignModel.setImgUrl(imgUrl);
-        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
+        fundraisingCampaignModel.setStartDate(LocalDate.parse(startDate)); // Set startDate
+        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate)); // Set endDate
         fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
         fundraisingCampaignModel.setDetailUrl(detailUrl);
 
+        // Save updated campaign
         fundraisingCampaignRepo.save(fundraisingCampaignModel);
 
         return "redirect:/dashboard_campaignmanagement";
     }
 
+
     @PostMapping("campaign/delete/{id_delete}")
     public String campaign_delete(@PathVariable("id_delete") Long id) {
         fundraisingCampaignRepo.deleteById(id);
+
         return "redirect:/dashboard_campaignmanagement";
     }
 

@@ -70,9 +70,15 @@
             text-decoration: none;
         }
 
+        .pagination .page-link {
+            color: #007bff;
+            border-color: #ddd;
+        }
+
         .pagination .page-item.active .page-link {
             background-color: #007bff;
             border-color: #007bff;
+            color: #fff;
         }
 
         .btn-outline-primary,
@@ -286,28 +292,6 @@
                     </button>
                 </td>
             </form>
-
-            <!-- Modal Confirm Delete -->
-            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Bạn có chắc chắn muốn xóa mục này không?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete()">Có</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </tr>
         <tr>
             <td colspan="5">
@@ -336,19 +320,38 @@
     </ul>
 </div>
 
+<!-- Modal Confirm Delete -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa mục này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Có</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- MDB -->
 
 <script>
     function openDeleteModal(action) {
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = action;
+        document.getElementById('deleteForm').action = action;
         $('#confirmDeleteModal').modal('show');
     }
-
     function confirmDelete() {
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.submit();
+        document.getElementById('deleteForm').submit();
     }
+
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Ensure jQuery is loaded first -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
