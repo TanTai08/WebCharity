@@ -244,19 +244,35 @@ public class Dashboard_controller {
     }
 
     @GetMapping("/dashboard_newsmanagement")
-    public String newsmanagement(@RequestParam(defaultValue = "0") int page,
+    public String newsManagement(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+                                 @RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "3") int size,
                                  Model model) {
         Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
-        Page<Communitynews_model> pageResult = communityNewsRepo.findAll(pageable);
+        Page<Communitynews_model> pageResult;
 
-        model.addAttribute("communityNewsModels", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            try {
+                // Thử chuyển searchTerm thành Long để tìm kiếm theo ID
+                Long id = Long.valueOf(searchTerm);
+                pageResult = communityNewsRepo.searchById(id, pageable); // Tìm kiếm theo ID
+            } catch (NumberFormatException e) {
+                // Nếu không chuyển được, tìm kiếm theo tiêu đề
+                pageResult = communityNewsRepo.searchByTitle(searchTerm, pageable);
+            }
+        } else {
+            pageResult = communityNewsRepo.findAll(pageable); // Nếu không có từ khóa, lấy tất cả
+        }
+
+        // Thêm dữ liệu vào model
+        model.addAttribute("communityNewsModels", pageResult.getContent()); // Danh sách bài viết
         model.addAttribute("currentPage", page); // Trang hiện tại
         model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
-        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+        model.addAttribute("searchTerm", searchTerm); // Từ khóa tìm kiếm
 
         return "page_admin/NewsManagement_admin";
     }
+
 
 
     @GetMapping("newsmanagement/{id_update}")
