@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tài Khoản</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Quản Lý Tài Khoản</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Mã</th>
+            <th>Tài khoản</th>
+            <th>Mật khẩu</th>
+            <th>Chức vụ</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Dòng mẫu cho dữ liệu -->
+        <tr th:each="authorizationModel : ${authorizationModels}">
+            <td th:text="${authorizationModel.id}"></td>
+            <td th:text="${authorizationModel.username}"></td>
+            <!-- Hiển thị mật khẩu là **** -->
+            <td>*****</td>
+            <!-- Kiểm tra vai trò và hiển thị tương ứng -->
+            <td th:text="${authorizationModel.roles == 'admin' ? 'Quản trị viên' : 'Nhân viên'}"></td>
+            <td>
+                <a th:href="@{'/authorizaton/' + ${authorizationModel.id}}" class="btn btn-info btn-rounded">
+                    Sửa
+                </a>
+            </td>
+            <form th:action="@{/authorizaton/delete/{id_delete}(id_delete=${authorizationModel.id})}" method="post">
+                <td><button type="submit" class="btn btn-danger btn-sm">Xóa</button></td>
+            </form>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="6">
+                <a class="btn btn-outline-success" href="/insert/authorizaton">Thêm</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

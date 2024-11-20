@@ -13,11 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class Dashboard_controller {
@@ -51,9 +50,27 @@ public class Dashboard_controller {
     @Autowired
     ServiceOperations_Repo serviceOperationsRepo;
 
+    @Autowired
+    Authorization_Repo authorizationRepo;
+
     // Render ra trang dashboard
     @GetMapping("/manager")
-    public String dashboard() {
+    public String dashboard(HttpSession session, Model model) {
+        // Kiểm tra nếu người dùng chưa đăng nhập (session không chứa username)
+        if (session.getAttribute("username") == null) {
+            return "redirect:/login-siteadmin"; // Chuyển hướng đến trang đăng nhập
+        }
+
+        // Lấy role từ session
+        String role = (String) session.getAttribute("role");
+
+        // Chuyển hướng dựa trên role
+        if ("admin".equals(role)) {
+            model.addAttribute("role", "admin");
+        } else if ("staff".equals(role)) {
+            model.addAttribute("role", "staff");
+        }
+
         return "page_admin/Dashboard";
     }
 
@@ -530,13 +547,6 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         return "redirect:/dashboard_campaignmanagement";
     }
 
-
-
-
-
-
-
-
     @GetMapping("campaignmanagement/{id_update}")
     public String campaignmanagement_update(@PathVariable("id_update") Long id, Model model) {
         FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
@@ -578,4 +588,57 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         return "redirect:/dashboard_campaignmanagement";
     }
 
+    @GetMapping("/dashboard_authorization")
+    public String render_authorization(Model model) {
+        List<Authorization_model> authorizationModels = authorizationRepo.findAll();
+        model.addAttribute("authorizationModels",authorizationModels);
+        return "page_admin/AuthorizationManagement_admin";
+    }
+
+    @GetMapping("/insert/authorizaton")
+    public String insertauthorization() {
+        return "page_admin/CRUD_AuthorizationManagement/insertAuthorization";
+    }
+
+    @PostMapping("/insert/authorizaton")
+    public String insertauthorizaton(@RequestParam("inputusername") String inputusername, @RequestParam("inputpassword") String inputpassword,
+                                @RequestParam("inputroles") String inputroles) {
+
+        Authorization_model authorizationModel = new Authorization_model();
+        authorizationModel.setUsername(inputusername);
+        authorizationModel.setPassword(inputpassword);
+        authorizationModel.setRoles(inputroles);
+
+        authorizationRepo.save(authorizationModel);
+
+        return "redirect:/dashboard_authorization";
+    }
+
+    @GetMapping("/authorizaton/{id_update}")
+    public String authorizaton_update(@PathVariable("id_update") Long id, Model model) {
+        Authorization_model authorizationModel = authorizationRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid service ID: " + id));
+        model.addAttribute("authorizationModel", authorizationModel);
+        return "page_admin/CRUD_AuthorizationManagement/updateAuthorization";
+    }
+
+    @PostMapping("/authorizaton/{id_update}")
+    public String handle_authorization_update(@RequestParam("inputusername") String inputusername, @RequestParam("inputpassword") String inputpassword,
+                                              @RequestParam("inputroles") String inputroles, @PathVariable("id_update") Long id) {
+        Authorization_model authorizationModel = authorizationRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        authorizationModel.setUsername(inputusername);
+        authorizationModel.setPassword(inputpassword);
+        authorizationModel.setRoles(inputroles);
+
+        authorizationRepo.save(authorizationModel);
+
+        return "redirect:/dashboard_authorization";
+    }
+
+    @PostMapping("authorizaton/delete/{id_delete}")
+    public String authorizaton_delete(@PathVariable("id_delete") Long id) {
+        authorizationRepo.deleteById(id);
+
+        return "redirect:/dashboard_authorization";
+    }
 }

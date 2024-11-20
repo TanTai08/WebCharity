@@ -18,9 +18,9 @@ public class Statistical_model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String successfulproject;
-    private String participants;
     private String donationamount;
     private String eventsorganized;
+    private String successfulproject;
+    private String participants;
     private LocalDate dateupdated;
 }

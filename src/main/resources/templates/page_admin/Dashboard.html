@@ -177,14 +177,14 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:if="${role == 'admin'}">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#analyticsMenu" aria-expanded="false" aria-controls="analyticsMenu">
                         Quản lý chức năng<i style="margin-left: 4px" class="fa-solid fa-caret-down"></i>
                     </a>
                     <div class="collapse" id="analyticsMenu">
                         <ul class="nav flex-column ml-3">
                             <li class="nav-item">
-                                <a href="/accountManagement" onclick="loadIframe('sendmessage_dashboard')" class="nav-link nav-decor">Thông tin tài khoản</a>
+                                <a href="#" onclick="loadIframe('dashboard_authorization')" class="nav-link nav-decor">Quản lý tài khoản</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" onclick="loadIframe('dashboard_revenuemanagement')" class="nav-link nav-decor">Quản lý doanh thu</a>
@@ -198,13 +198,13 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:if="${role == 'admin'}">
                     <a class="nav-link" href="#" onclick="loadIframe('dashboard_statistical')"  data-toggle="collapse" data-target="#ordersMenu" aria-expanded="false" aria-controls="ordersMenu">
                         Thống kê<i style="margin-left: 4px" class="fa-solid"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login"  >
+                    <a class="nav-link" href="logout"  >
                         Đăng xuất<i style="margin-left: 4px" class="fa-solid"></i>
                     </a>
                 </li>

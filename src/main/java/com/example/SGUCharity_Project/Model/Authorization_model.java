@@ -1,6 +1,9 @@
 package com.example.SGUCharity_Project.Model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account_admin_model {
+public class Authorization_model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String decentralization;
-
-//    @ManyToOne
-//    @JoinColumn(name = "artical_id", referencedColumnName = "id")
-//    private Artical_model artical;
+    private String roles;
 }

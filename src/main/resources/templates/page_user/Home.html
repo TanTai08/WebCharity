@@ -254,7 +254,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Dự án thành công</h5>
-                        <p class="card-text display-4 text-primary" th:text="${successfulproject}">0</p>
+                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.successfulproject}">0</p>
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Số người đang truy cập</h5>
-                        <p class="card-text display-4 text-primary" th:text="${currentVisitors}">0</p>
+                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.participants}">0</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +270,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Số tiền quyên góp</h5>
-                        <p class="card-text display-4 text-primary" th:text="${donationamount}">0</p>
+                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.donationamount}">0</p>
                     </div>
                 </div>
             </div>
@@ -278,7 +278,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Sự kiện tổ chức</h5>
-                        <p class="card-text display-4 text-primary" th:text="${eventsorganized}">0</p>
+                        <p class="card-text display-4 text-primary" th:text="${statisticalModel.eventsorganized}">0</p>
                     </div>
                 </div>
             </div>
