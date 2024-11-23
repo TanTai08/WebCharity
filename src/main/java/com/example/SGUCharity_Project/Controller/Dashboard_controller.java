@@ -76,20 +76,21 @@ public class Dashboard_controller {
 
 
     @GetMapping("/dashboard_programmanagement")
-    public String getDashboard(@RequestParam(value = "searchTerm", required = false) String searchTerm,
-                               @RequestParam(value = "page", defaultValue = "0") int page,
-                               @RequestParam(value = "size", defaultValue = "3") int size,
-                               Model model) {
+    public String getDashboard(
+            @RequestParam(value = "searchTerm", required = false) String searchTerm,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "3") int size,
+            Model model) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Artical_model> resultPage;
 
         if (searchTerm != null && !searchTerm.isEmpty()) {
             try {
-                // Thử chuyển searchTerm thành Long nếu có thể (dùng cho tìm kiếm theo ID)
+                // Tìm kiếm theo ID
                 Long id = Long.valueOf(searchTerm);
-                resultPage = charitycontentRepo.searchById(id, pageable); // Tìm kiếm theo ID
+                resultPage = charitycontentRepo.searchById(id, pageable);
             } catch (NumberFormatException e) {
-                // Nếu không chuyển được, thực hiện tìm kiếm theo tiêu đề
+                // Tìm kiếm theo tiêu đề
                 resultPage = charitycontentRepo.searchByTitle(searchTerm, pageable);
             }
         } else {
@@ -102,6 +103,7 @@ public class Dashboard_controller {
         model.addAttribute("searchTerm", searchTerm);
         return "page_admin/ProgramManagement_admin";
     }
+
 
     // Render ra trang quản lý nội dung bài viết
     @GetMapping("/dashboard_articlemanagement")
@@ -124,6 +126,7 @@ public class Dashboard_controller {
         charitycontentRepo.deleteById(id);
         return "redirect:/dashboard_programmanagement";
     }
+
     @GetMapping("/insert/program")
     public String insert_program() {
         return "page_admin/CRUD_ProgramManagement/insertProgram";
@@ -131,38 +134,43 @@ public class Dashboard_controller {
 
     // Handle chuc nang insert account
     @PostMapping("/insert/program")
-    public String insertProgram(@RequestParam("inputimg") String inputimg, @RequestParam("inputtitle") String inputtitle, @RequestParam("content1") String content1, @RequestParam("content2") String content2,@RequestParam("content3") String content3,  // Nội dung chi tiết 1
-                                @RequestParam("imgContent") String imgContent, @RequestParam("imgContent2") String imgContent2  // Ảnh chi tiết
+    public String insertProgram(
+            @RequestParam("inputimg") String inputimg,
+            @RequestParam("inputtitle") String inputtitle,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("goalAmount") double goalAmount,
+            @RequestParam("content1") String content1,
+            @RequestParam("content2") String content2,
+            @RequestParam("content3") String content3,
+            @RequestParam("imgContent") String imgContent,
+            @RequestParam("imgContent2") String imgContent2) {
 
-                                ) {  // Nội dung chi tiết 2
-
-
-        // Tạo một Artical_model mới và lưu nó
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
         artical.setTitle(inputtitle);
-        artical.setStatus("Đang vận động");
-        artical.setDisplaycategory("Mặc định");
+        artical.setStartDate(LocalDate.parse(startDate));
+        artical.setEndDate(LocalDate.parse(endDate));
+        artical.setGoalAmount(goalAmount);
+        artical.setAmountRaised(0); // Initialize với 0
+        artical.setStatus("Active");
+        artical.setDisplaycategory("Default");
 
-        // Lưu Artical_model vào database để có ID
         Artical_model savedArtical = charitycontentRepo.save(artical);
 
-        // Tạo một Articaldetail_model mới và liên kết với Artical_model đã lưu
         Articaldetail_model articalDetail = new Articaldetail_model();
         articalDetail.setContent_1(content1);
         articalDetail.setContent_2(content2);
         articalDetail.setContent_3(content3);
         articalDetail.setImg_content(imgContent);
         articalDetail.setImg_content2(imgContent2);
-
-        // Liên kết với bài viết chính
         articalDetail.setArtical(savedArtical);
 
-        // Lưu Articaldetail_model vào database
         articalDetailRepo.save(articalDetail);
 
         return "redirect:/dashboard_programmanagement";
     }
+
 
 
     @GetMapping("programmanagement/{id_update}")
@@ -176,62 +184,66 @@ public class Dashboard_controller {
     }
 
 
-    @PostMapping("programmanagement/{id_update}")
-    public String handle_programmanagement_update(@RequestParam("inputimg") String inputimg, @RequestParam("inputtitle") String inputtitle, @RequestParam("content1") String content1, @RequestParam("content2") String content2,@RequestParam("content3") String content3,  // Nội dung chi tiết 1
-                                @RequestParam("imgContent") String imgContent, @RequestParam("imgContent2") String imgContent2, @PathVariable("id_update") Long id  // Ảnh chi tiết
 
-    ) {  // Nội dung chi tiết 2
-        Artical_model artical = charitycontentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
-        // Tạo một Artical_model mới và lưu nó
+    @PostMapping("programmanagement/{id_update}")
+    public String handle_programmanagement_update(
+            @PathVariable("id_update") Long id,
+            @RequestParam("img") String inputimg,  // Match form field name
+            @RequestParam("title") String inputtitle,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("goalAmount") double goalAmount,
+            @RequestParam("content1") String content1,
+            @RequestParam("content2") String content2,
+            @RequestParam("content3") String content3,
+            @RequestParam("imgContent") String imgContent,
+            @RequestParam("imgContent2") String imgContent2) {
+
+        Artical_model artical = charitycontentRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + id));
+
         artical.setImg(inputimg);
         artical.setTitle(inputtitle);
-        artical.setStatus("Đang vận động");
-        artical.setDisplaycategory("Mặc định");
+        artical.setStartDate(LocalDate.parse(startDate));
+        artical.setEndDate(LocalDate.parse(endDate));
+        artical.setGoalAmount(goalAmount);
 
-        // Lưu Artical_model vào database để có ID
-        Artical_model savedArtical = charitycontentRepo.save(artical);
+        charitycontentRepo.save(artical);
 
-        // Tạo một Articaldetail_model mới và liên kết với Artical_model đã lưu
-        Articaldetail_model articalDetail = articalDetailRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        Articaldetail_model articalDetail = articalDetailRepo.findFirstByArtical_Id(id);
         articalDetail.setContent_1(content1);
         articalDetail.setContent_2(content2);
         articalDetail.setContent_3(content3);
         articalDetail.setImg_content(imgContent);
         articalDetail.setImg_content2(imgContent2);
 
-        // Liên kết với bài viết chính
-        articalDetail.setArtical(savedArtical);
-
-        // Lưu Articaldetail_model vào database
         articalDetailRepo.save(articalDetail);
 
         return "redirect:/dashboard_programmanagement";
     }
 
 
+
     @PostMapping("/updateStatus")
     public String updateStatus(@RequestParam("id") Long id, @RequestParam("status") String status) {
-        // Tìm đối tượng charitycontentModelList bằng id
-        Optional<Artical_model> charityContentOptional = charitycontentRepo.findById(id);
-        if (charityContentOptional.isPresent()) {
-            Artical_model charityContent = charityContentOptional.get();
-            charityContent.setStatus(status); // Cập nhật status
-            charitycontentRepo.save(charityContent); // Lưu lại thay đổi
-        }
-        return "redirect:/dashboard_programmanagement"; // Chuyển hướng về trang mà bạn muốn
+        charitycontentRepo.findById(id).ifPresent(artical -> {
+            artical.setStatus(status);
+            charitycontentRepo.save(artical);
+        });
+        return "redirect:/dashboard_programmanagement";
     }
+
 
 
     @PostMapping("/updateDisplayCategory")
     public String updateDisplayCategory(@RequestParam("id") Long id, @RequestParam("display") String display) {
-        Optional<Artical_model> charityContentOptional = charitycontentRepo.findById(id);
-        if (charityContentOptional.isPresent()) {
-            Artical_model charityContent = charityContentOptional.get();
-            charityContent.setDisplaycategory(display);
-            charitycontentRepo.save(charityContent);
-        }
+        charitycontentRepo.findById(id).ifPresent(artical -> {
+            artical.setDisplaycategory(display);
+            charitycontentRepo.save(artical);
+        });
         return "redirect:/dashboard_programmanagement";
     }
+
 
     @GetMapping("dashboard_revenuemanagement")
     public String revenue(Model model) {
@@ -342,12 +354,39 @@ public class Dashboard_controller {
     }
 
 
-    @GetMapping("dashboard_servicemanagement")
-    public String servicemanagement(Model model) {
-        List<Service_model> serviceModels = serviceOperationsRepo.findAll();
-        model.addAttribute("serviceModels", serviceModels);
-        return "page_admin/ServiceManagement_admin";
+    @GetMapping("/dashboard_servicemanagement")
+    public String servicemanagement(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "3") int size,
+                                    @RequestParam(required = false) String searchTerm,
+                                    Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Set the page and size for pagination
+        Page<Service_model> serviceModelsPage;
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            try {
+                // Attempt to convert searchTerm to Long to search by ID
+                Long id = Long.valueOf(searchTerm);
+                serviceModelsPage = serviceOperationsRepo.findById(id, pageable); // Search by ID
+            } catch (NumberFormatException e) {
+                // If conversion fails, search by title
+                serviceModelsPage = serviceOperationsRepo.findByTitle_serviceContainingIgnoreCase(searchTerm, pageable);
+            }
+        } else {
+            // If no search term is provided, return all records
+            serviceModelsPage = serviceOperationsRepo.findAll(pageable);
+        }
+
+        // Add the data to the model for rendering in the view
+        model.addAttribute("serviceModels", serviceModelsPage.getContent()); // List of service models
+        model.addAttribute("currentPage", page); // Current page number
+        model.addAttribute("totalPages", serviceModelsPage.getTotalPages()); // Total number of pages
+        model.addAttribute("searchTerm", searchTerm); // Preserve the search term in the view
+
+        return "page_admin/ServiceManagement_admin";  // The Thymeleaf template for rendering the view
     }
+
+
+
 
     @GetMapping("/insert/service")
     public String insertservice() {

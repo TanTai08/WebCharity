@@ -12,35 +12,83 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet"/>
     <!-- Intro settings -->
     <style>
-        /* Default height for small devices */
-        #intro-example {
-            height: 400px;
-        }
-
-        /* Height for devices larger than 992px */
-        @media (min-width: 992px) {
-            #intro-example {
-                height: 800px;
-            }
-        }
-        /* Điều chỉnh kích thước chữ và cho phép xuống dòng */
-        .badge {
-            font-size: 1.0rem; /* Tăng kích thước chữ */
-            white-space: normal; /* Cho phép xuống dòng */
-            word-wrap: break-word; /* Tự động xuống dòng nếu từ quá dài */
-        }
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000; /* Đảm bảo menu luôn nằm trên các thành phần khác */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #ffefdb !important;
-       }
-       .nav-item.dropdown:hover .dropdown-menu {
+        }
+        .nav-item.dropdown:hover .dropdown-menu {
             display: block;
             margin-top: 0; /* Đảm bảo không có khoảng cách giữa menu và dropdown */
-       }
+        }
+        .project {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .card {
+            margin-bottom: 30px; /* Khoảng cách giữa các card */
+            border: none; /* Bỏ viền card */
+            border-radius: 10px; /* Bo góc card */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+            transition: transform 0.2s; /* Hiệu ứng khi hover */
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Hiệu ứng nhấc card lên khi hover */
+        }
+
+        .card-title {
+            font-size: 1.5rem; /* Kích thước tiêu đề lớn hơn */
+            font-weight: bold; /* Đậm tiêu đề */
+        }
+
+        .card-text {
+            margin-bottom: 15px; /* Khoảng cách dưới của text */
+        }
+
+        .btn {
+            background-color: #007bff; /* Màu nền của nút */
+            color: white; /* Màu chữ trên nút */
+            border-radius: 5px; /* Bo góc nút */
+            padding: 10px 20px; /* Padding cho nút */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap; /* Cho phép các card xuống dòng */
+        }
+
+        .col-md-4 {
+            display: flex; /* Thiết lập flexbox cho cột */
+            justify-content: center; /* Căn giữa nội dung */
+        }
+
+        .card {
+            flex: 1; /* Chiếm đều không gian */
+            display: flex;
+            flex-direction: column; /* Để các phần tử bên trong sắp xếp theo chiều dọc */
+            justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+            margin-bottom: 30px; /* Khoảng cách giữa các card */
+            border: none; /* Bỏ viền card */
+            border-radius: 10px; /* Bo góc card */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho card */
+            transition: transform 0.2s; /* Hiệu ứng khi hover */
+        }
+
+        .card-body {
+            flex-grow: 1; /* Để card-body chiếm hết không gian còn lại */
+        }
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -138,7 +186,7 @@
         </div>
     </div>
 </nav>
-<--- Content --->
+<!--<-&#45;&#45; Content -&ndash;&gt;-->
 <section style="background-color: #eee;">
     <div class="container py-5" style="margin-top: 100px; max-width: 1200px;">
         <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;">
@@ -146,18 +194,49 @@
         </h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4" th:each="charitycontent : ${charitycontent}">
-                <div class="card shadow" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div style="height: 250px; overflow: hidden; border-top-left-radius: .25rem; border-top-right-radius: .25rem;">
-                        <img th:src="${charitycontent.img}"
-                             src=""
-                             alt="Hình ảnh dự án"
+                <div class="card project shadow h-100"
+                     style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; transition: transform 0.3s;">
+                    <!-- Image section -->
+                    <div style="height: 250px; overflow: hidden;">
+                        <img th:src="${charitycontent.img}" src="" alt="Hình ảnh dự án"
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <div class="card-body d-flex flex-column" style="flex: 1; padding: 20px;">
-                        <h5 class="card-title text-center mb-3" style="color: #8b2323; font-weight: 600;" th:text="${charitycontent.title}"></h5>
-                        <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}"
-                           class="btn btn-primary mt-auto"
-                           style="background-color: #8b2323; border-color: #8b2323; color: white;">Xem thêm</a>
+
+                    <!-- Card body section -->
+                    <div class="card-body d-flex flex-column" style="padding: 15px;">
+                        <h5 class="card-title text-center mb-3" th:text="${charitycontent.title}"
+                            style="font-size: 1.1em; font-weight: bold; color: #333;">
+                        </h5>
+                        <p class="card-text text-center" th:text="${charitycontent.startDate + ' - ' + charitycontent.endDate}"
+                           style="font-size: 0.9em; color: #666;">
+                        </p>
+
+                        <p class="card-text text-center" th:text="${charitycontent.isActive() ? 'Còn hạn' : 'Hết hạn'}"
+                           style="font-size: 0.9em; font-weight: bold; color: #8b2323;">
+                        </p>
+
+<!--                 <-- Progress bar container -->
+                        <div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 10px 0;">
+                            <!-- Progress bar itself, with dynamic width set based on progressPercentage -->
+                            <div th:attr="style='height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${charitycontent.progressPercentage} + '%;'">
+                            </div>
+                        </div>
+
+                        <!-- An alternative way to display progress, directly using the amountRaised and goalAmount -->
+                        <div th:attr="style='width:' + ${#numbers.formatDecimal((charitycontent.amountRaised / charitycontent.goalAmount) * 100, 0, 0)} + '%;'">
+                        </div>
+
+
+
+                        <!-- Buttons -->
+                        <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}" class="btn btn-primary"
+                           style="background-color: #0056b3; color: white; margin-top: auto; margin-bottom: 10px; border-radius: 5px; border: none;">
+                            Xem thêm
+                        </a>
+                        <a href="huong-dan-dong-gop" class="btn btn-primary"
+                           style="background-color: #8b2323; border-color: #8b2323; color: white; border-radius: 5px; border: none;">
+                            Đóng Góp Ngay
+                        </a>
                     </div>
                 </div>
             </div>
