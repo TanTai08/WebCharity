@@ -32,6 +32,10 @@ public class Artical_model {
     private String status;
     private String displaycategory;
 
+
+    @Column(name = "code")
+    private String code;
+
     @OneToMany(mappedBy = "artical", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Articaldetail_model> articalDetails;
 
