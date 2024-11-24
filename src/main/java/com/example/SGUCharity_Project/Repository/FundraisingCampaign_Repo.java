@@ -21,4 +21,7 @@ public interface FundraisingCampaign_Repo extends JpaRepository<FundraisingCampa
     // Tìm chiến dịch theo tiêu đề
     @Query("SELECT f FROM FundraisingCampaign_model f WHERE f.title LIKE %:searchTerm%")
     Page<FundraisingCampaign_model> searchByTitle(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    // Tìm chiến dịch theo cột code
+    List<FundraisingCampaign_model> findByCode(String code);
 }
