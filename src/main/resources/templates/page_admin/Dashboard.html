@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -207,8 +207,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout"  >
-                        Đăng xuất<i style="margin-left: 4px" class="fa-solid"></i>
+                    <a class="nav-link" href="#" onclick="openLogoutModal()" >
+                        Đăng xuất <i style="margin-left: 4px" class="fa-solid"></i>
                     </a>
                 </li>
             </ul>
@@ -221,6 +221,26 @@
             </div>
             <iframe name="content-frame" src="account_dashboard"></iframe>
         </main>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmLogoutModalLabel">Xác nhận đăng xuất</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn đăng xuất không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-danger" onclick="confirmLogout()">Có</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -254,6 +274,17 @@
     }
 
 
+</script>
+
+<script>
+    function openLogoutModal() {
+        $('#confirmLogoutModal').modal('show');
+    }
+
+    function confirmLogout() {
+        // You can use a simple window.location to log out or any other logout mechanism
+        window.location.href = '/logout'; // Adjust this URL to match your logout endpoint
+    }
 </script>
 </body>
 </html>

@@ -40,9 +40,21 @@ public class Artical_model {
     private List<Articaldetail_model> articalDetails;
 
     @Transient
+    private String formattedEndDate;
+
+    public String getFormattedEndDate() {
+        return formattedEndDate;
+    }
+
+    public void setFormattedEndDate(String formattedEndDate) {
+        this.formattedEndDate = formattedEndDate;
+    }
+
+    @Transient
     public int getProgressPercentage() {
         if (goalAmount > 0) {
-            return (int) Math.round((amountRaised * 100) / goalAmount);
+            // Ensure the progress is capped at 100%
+            return Math.min(100, (int) Math.round((amountRaised * 100) / goalAmount));
         } else {
             return 0;
         }

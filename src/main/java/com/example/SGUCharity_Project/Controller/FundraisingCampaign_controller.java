@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
+
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -15,12 +18,20 @@ public class FundraisingCampaign_controller {
     @Autowired
     private FundraisingCampaign_Repo fundraisingCampaignRepo;
 
+
+
     @GetMapping("/chien-dich-gay-quy")
     public String fundraisingCampaign(Model model) {
         List<FundraisingCampaign_model> campaigns = fundraisingCampaignRepo.findAll();
+
+        // Convert LocalDate to formatted string (dd/MM/yyyy)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        campaigns.forEach(campaign -> campaign.setFormattedEndDate(campaign.getEndDate().format(formatter)));
+
         model.addAttribute("campaigns", campaigns);
         return "page_user/FundraisingCampaign";
     }
+
     @GetMapping("/benh-hiem-ngheo")
     public String diseaseCampaign(Model model) {
         List<FundraisingCampaign_model> campaigns = fundraisingCampaignRepo.findByCategory("Bệnh hiểm nghèo");

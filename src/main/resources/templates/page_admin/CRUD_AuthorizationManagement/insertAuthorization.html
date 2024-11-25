@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,8 +39,9 @@
 <body>
 <div class="form-container">
     <h2 class="text-center">Thêm tài khoản</h2>
-    <form method="post" th:action="@{/insert/authorizaton}">
-        <!-- Username -->
+    <form method="post" th:action="@{/insert/authorization}">
+
+    <!-- Username -->
         <div class="form-group mb-3">
             <label for="inputusername" class="form-label">
                 <i class="fas fa-user"></i> Tên tài khoản
@@ -54,6 +55,13 @@
                 <i class="fas fa-lock"></i> Mật khẩu
             </label>
             <input type="password" name="inputpassword" class="form-control" id="inputpassword" placeholder="Nhập mật khẩu" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email" class="form-label">
+                <i class="fas fa-lock"></i> Email
+            </label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Nhập email" required>
         </div>
 
         <!-- Roles -->
