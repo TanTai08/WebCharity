@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import jakarta.servlet.http.HttpSession;
@@ -52,6 +53,9 @@ public class Dashboard_controller {
 
     @Autowired
     Authorization_Repo authorizationRepo;
+
+    @Autowired
+    Activity_Repo activityRepo;
 
     // Render ra trang dashboard
     @GetMapping("/manager")
@@ -122,7 +126,18 @@ public class Dashboard_controller {
     }
 
     @PostMapping("program/delete/{id_delete}")
-    public String program_delete(@PathVariable("id_delete") Long id) {
+    public String program_delete(@PathVariable("id_delete") Long id, HttpSession session) {
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Xóa");
+        activityModel.setDetail_activity("Xóa bài viết chương trình với ID: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
         charitycontentRepo.deleteById(id);
         return "redirect:/dashboard_programmanagement";
     }
@@ -144,7 +159,7 @@ public class Dashboard_controller {
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
-            @RequestParam("imgContent2") String imgContent2) {
+            @RequestParam("imgContent2") String imgContent2,HttpSession session) {
 
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
@@ -167,6 +182,17 @@ public class Dashboard_controller {
         articalDetail.setArtical(savedArtical);
 
         articalDetailRepo.save(articalDetail);
+
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Thêm");
+        activityModel.setDetail_activity("Thêm một chương trình mới");
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
 
         return "redirect:/dashboard_programmanagement";
     }
@@ -197,7 +223,8 @@ public class Dashboard_controller {
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
-            @RequestParam("imgContent2") String imgContent2) {
+            @RequestParam("imgContent2") String imgContent2,
+            HttpSession session) {
 
         Artical_model artical = charitycontentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + id));
@@ -218,6 +245,17 @@ public class Dashboard_controller {
         articalDetail.setImg_content2(imgContent2);
 
         articalDetailRepo.save(articalDetail);
+
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Sửa");
+        activityModel.setDetail_activity("Sửa bài viết chương trình với ID: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
 
         return "redirect:/dashboard_programmanagement";
     }
@@ -313,7 +351,7 @@ public class Dashboard_controller {
 
     @PostMapping("newsmanagement/{id_update}")
     public String handle_newsmanagement_update(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
-                                 @RequestParam("inputurlartical") String inputurlartical, @PathVariable("id_update") Long id) {
+                                 @RequestParam("inputurlartical") String inputurlartical, @PathVariable("id_update") Long id, HttpSession session) {
         Communitynews_model communitynewsModel = communityNewsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
         communitynewsModel.setTitle_news(inputtitlenews);
         communitynewsModel.setImg_news(inputimgnews);
@@ -323,11 +361,33 @@ public class Dashboard_controller {
 
         communityNewsRepo.save(communitynewsModel);
 
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Cập nhật");
+        activityModel.setDetail_activity("Sửa 1 bài viết tin tức cộng đồng: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
         return "redirect:/dashboard_newsmanagement";
     }
 
     @PostMapping("newsmanagement/delete/{id_delete}")
-    public String newsmanagement_delete(@PathVariable("id_delete") Long id) {
+    public String newsmanagement_delete(@PathVariable("id_delete") Long id, HttpSession session) {
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Xóa");
+        activityModel.setDetail_activity("Xóa 1 bài viết tin tức cộng đồng" + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
         communityNewsRepo.deleteById(id);
         return "redirect:/dashboard_newsmanagement";
     }
@@ -339,7 +399,7 @@ public class Dashboard_controller {
 
     @PostMapping("/insert/news")
     public String insertnews(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
-                                @RequestParam("inputurlartical") String inputurlartical) {
+                                @RequestParam("inputurlartical") String inputurlartical, HttpSession session) {
 
         Communitynews_model communitynewsModel = new Communitynews_model();
         communitynewsModel.setTitle_news(inputtitlenews);
@@ -349,6 +409,17 @@ public class Dashboard_controller {
         communitynewsModel.setUrl_artical(inputurlartical);
 
         communityNewsRepo.save(communitynewsModel);
+
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Thêm");
+        activityModel.setDetail_activity("Thêm 1 bài viết tin tức cộng đồng");
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
 
         return "redirect:/dashboard_newsmanagement";
     }
@@ -395,7 +466,7 @@ public class Dashboard_controller {
 
     @PostMapping("/insert/service")
     public String insertservice(@RequestParam("inputtitleservice") String inputtitleservice, @RequestParam("inputimgservice") String inputimgservice, @RequestParam("inputsubtitleservice") String inputsubtitleservice,
-                             @RequestParam("inputurlarticalservice") String inputurlarticalservice) {
+                             @RequestParam("inputurlarticalservice") String inputurlarticalservice, HttpSession session) {
 
         Service_model serviceModel = new Service_model();
         serviceModel.setTitle_service(inputtitleservice);
@@ -404,6 +475,18 @@ public class Dashboard_controller {
         serviceModel.setUrlartical_service(inputurlarticalservice);
 
         serviceOperationsRepo.save(serviceModel);
+
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Thêm");
+        activityModel.setDetail_activity("Thêm 1 bài viết hoạt động dịch vụ");
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
 
         return "redirect:/dashboard_servicemanagement";
     }
@@ -418,7 +501,7 @@ public class Dashboard_controller {
 
     @PostMapping("/servicemanagement/{id_update}")
     public String handle_servicemanagement_update(@RequestParam("inputtitleservice") String inputtitleservice, @RequestParam("inputimgservice") String inputimgservice, @RequestParam("inputsubtitleservice") String inputsubtitleservice,
-                                                  @RequestParam("inputurlarticalservice") String inputurlarticalservice, @PathVariable("id_update") Long id) {
+                                                  @RequestParam("inputurlarticalservice") String inputurlarticalservice, @PathVariable("id_update") Long id, HttpSession session) {
         Service_model serviceModel = serviceOperationsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
         serviceModel.setTitle_service(inputtitleservice);
         serviceModel.setImg_thumbnail(inputimgservice);
@@ -427,11 +510,34 @@ public class Dashboard_controller {
 
         serviceOperationsRepo.save(serviceModel);
 
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Sửa");
+        activityModel.setDetail_activity("Sửa 1 bài viết hoạt động dịch vụ: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
+
         return "redirect:/dashboard_servicemanagement";
     }
 
     @PostMapping("servicemanagement/delete/{id_delete}")
-    public String servicemanagement_delete(@PathVariable("id_delete") Long id) {
+    public String servicemanagement_delete(@PathVariable("id_delete") Long id, HttpSession session) {
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Xóa");
+        activityModel.setDetail_activity("Xóa 1 bài viết hoạt động dịch vụ: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
         serviceOperationsRepo.deleteById(id);
         return "redirect:/dashboard_servicemanagement";
     }
@@ -542,6 +648,7 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
             fundraisingCampaign.setStatus(status); // Cập nhật status
             fundraisingCampaignRepo.save(fundraisingCampaign); // Lưu lại thay đổi
         }
+
         return "redirect:/dashboard_campaignmanagement"; // Chuyển hướng về trang mà bạn muốn
     }
 
@@ -566,7 +673,8 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                  @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
                                  @RequestParam("goalAmount") String goalAmount,
-                                 @RequestParam("detailUrl") String detailUrl) {
+                                 @RequestParam("detailUrl") String detailUrl,
+                                 HttpSession session) {
 
         // Tạo một đối tượng mới và thiết lập các thuộc tính
         FundraisingCampaign_model fundraisingCampaignModel = new FundraisingCampaign_model();
@@ -582,6 +690,17 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
 
         // Lưu vào database mà không thay đổi ID
         fundraisingCampaignRepo.save(fundraisingCampaignModel);
+
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Thêm");
+        activityModel.setDetail_activity("Thêm một chiến dịch mới");
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
 
         return "redirect:/dashboard_campaignmanagement";
     }
@@ -601,7 +720,8 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                                    @RequestParam("endDate") String endDate, // Correct name for endDate
                                                    @RequestParam("goalAmount") String goalAmount,
                                                    @RequestParam("detailUrl") String detailUrl, // detailUrl is a request parameter, not a path variable
-                                                   @PathVariable("id_update") Long id) {
+                                                   @PathVariable("id_update") Long id,
+                                                   HttpSession session) {
         FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID " + id));
 
@@ -616,14 +736,35 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         // Save updated campaign
         fundraisingCampaignRepo.save(fundraisingCampaignModel);
 
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Sửa");
+        activityModel.setDetail_activity("Xóa bài viết chiến dịch với ID: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
+
         return "redirect:/dashboard_campaignmanagement";
     }
 
 
     @PostMapping("campaign/delete/{id_delete}")
-    public String campaign_delete(@PathVariable("id_delete") Long id) {
-        fundraisingCampaignRepo.deleteById(id);
+    public String campaign_delete(@PathVariable("id_delete") Long id, HttpSession session) {
+        // Lấy username từ session
+        String username = (String) session.getAttribute("username");
+        // Tạo log cho hoạt động
+        Activity_model activityModel = new Activity_model();
+        activityModel.setUsername(username);
+        activityModel.setActivity("Xóa");
+        activityModel.setDetail_activity("Xóa bài viết chiến dịch với ID: " + id);
+        activityModel.setDatetime(LocalDateTime.now());
+        // Lưu log hoạt động
+        activityRepo.save(activityModel);
 
+        fundraisingCampaignRepo.deleteById(id);
         return "redirect:/dashboard_campaignmanagement";
     }
 
@@ -679,5 +820,12 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         authorizationRepo.deleteById(id);
 
         return "redirect:/dashboard_authorization";
+    }
+
+    @GetMapping("dashboard_activity")
+    public String render_activity(Model model) {
+        List<Activity_model> activityModels = activityRepo.findAll();
+        model.addAttribute("activityModels",activityModels);
+        return "page_admin/Activity_admin";
     }
 }

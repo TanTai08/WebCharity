@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Hoạt Động</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Tùy chỉnh cột Ngày giờ để nổi bật */
+        .highlight-datetime {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        /* Tăng độ tương phản và làm nổi bật đầu bảng */
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        /* Tạo hiệu ứng hover cho các hàng */
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">Lịch Sử Hoạt Động</h2>
+
+    <!-- Thông báo khi không có dữ liệu -->
+    <div th:if="${activityModels.isEmpty()}" class="alert alert-warning text-center">
+        Không có dữ liệu lịch sử hoạt động.
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Mã</th>
+            <th>Tài khoản</th>
+            <th>Hành động</th>
+            <th>Chi tiết hành động</th>
+            <th class="highlight-datetime">Ngày giờ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Dòng mẫu cho dữ liệu -->
+        <tr th:each="activityModel : ${activityModels}">
+            <td th:text="${activityModel.id}"></td>
+            <td th:text="${activityModel.username}"></td>
+            <td th:text="${activityModel.activity}"></td>
+            <td th:text="${activityModel.detail_activity}"></td>
+            <td class="highlight-datetime" th:text="${activityModel.datetime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
