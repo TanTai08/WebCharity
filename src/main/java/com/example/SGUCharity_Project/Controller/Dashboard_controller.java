@@ -15,11 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
 import java.time.LocalDateTime;
-=======
-import java.util.Collections;
->>>>>>> 14e683caedc71ed8c502992a9e3fc329f0fe87c4
 import java.util.List;
 import java.util.Optional;
 import jakarta.servlet.http.HttpSession;
@@ -61,15 +57,10 @@ public class Dashboard_controller {
     @Autowired
     Authorization_Repo authorizationRepo;
 
-<<<<<<< HEAD
     @Autowired
     Activity_Repo activityRepo;
 
-    // Render ra trang dashboard
-=======
-
     // Render ra trang dashboar
->>>>>>> 14e683caedc71ed8c502992a9e3fc329f0fe87c4
     @GetMapping("/manager")
     public String dashboard(HttpSession session, Model model) {
         // Kiểm tra nếu người dùng chưa đăng nhập (session không chứa username)
@@ -171,12 +162,9 @@ public class Dashboard_controller {
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
-<<<<<<< HEAD
-            @RequestParam("imgContent2") String imgContent2,HttpSession session) {
-=======
             @RequestParam("imgContent2") String imgContent2,
+            HttpSession session,
             @RequestParam("code") String code) {
->>>>>>> 14e683caedc71ed8c502992a9e3fc329f0fe87c4
 
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
@@ -242,11 +230,7 @@ public class Dashboard_controller {
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
             @RequestParam("imgContent2") String imgContent2,
-<<<<<<< HEAD
-            HttpSession session) {
-=======
-            @RequestParam("code") String code) {
->>>>>>> 14e683caedc71ed8c502992a9e3fc329f0fe87c4
+            HttpSession session, @RequestParam("code") String code) {
 
         Artical_model artical = charitycontentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + id));
@@ -720,13 +704,9 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                  @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
                                  @RequestParam("goalAmount") String goalAmount,
-<<<<<<< HEAD
-                                 @RequestParam("detailUrl") String detailUrl,
-                                 HttpSession session) {
-=======
+                                 HttpSession session,
                                  @RequestParam("goalAmount") String code,
                                  @RequestParam("detailUrl") String detailUrl) {
->>>>>>> 14e683caedc71ed8c502992a9e3fc329f0fe87c4
 
         // Tạo một đối tượng mới và thiết lập các thuộc tính
         FundraisingCampaign_model fundraisingCampaignModel = new FundraisingCampaign_model();
