@@ -206,6 +206,7 @@
             <th scope="col">Số tiền cần đạt</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Loại chiến dịch</th>
+            <th scope="col">Cú pháp</th>
             <th scope="col">Thao tác</th>
         </tr>
         </thead>
@@ -277,6 +278,7 @@
                     </li>
                 </ul>
             </td>
+            <td th:text="${fundraisingCampaignModel.code}"></td>
             <td>
                 <!-- Dropdown button for Edit and Delete -->
                 <div class="dropdown">
@@ -301,14 +303,14 @@
         </tr>
         <tr>
 
-            <td colspan="5">
-                <a class="btn btn-outline-success"  th:href="@{/insert/campaign}">
-                    Thêm
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>
+    <td colspan="5">
+        <a class="btn btn-outline-success"  th:href="@{/insert/campaign}">
+            Thêm
+        </a>
+    </td>
 </div>
 
 <div class="pagination">

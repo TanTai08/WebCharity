@@ -208,17 +208,48 @@
                             style="font-size: 1.1em; font-weight: bold; color: #333;">
                         </h5>
                         <p class="card-text text-center" th:text="${charitycontent.startDate + ' - ' + charitycontent.endDate}"
-                           style="font-size: 0.9em; color: #666;">
+                           style="font-size: 1em; font-weight: bold; color: rosybrown; text-align: center;">
                         </p>
 
-                        <p class="card-text text-center" th:text="${charitycontent.isActive() ? 'Còn hạn' : 'Hết hạn'}"
-                           style="font-size: 0.9em; font-weight: bold; color: #8b2323;">
+                        <div th:each="charitycontent : ${charitycontent}">
+                            <div style="text-align: center; margin-top: 20px;">
+                                <p class="card-text countdown"
+                                   style="font-size: 1em; font-weight: bold; text-align: center; color: #1e90ff;
+                  background-color: #e7f5ff; border: 2px solid #1e90ff; padding: 10px 20px;
+                  border-radius: 5px; display: inline-block; width: fit-content; margin-bottom: 15px"
+                                   th:if="${charitycontent.isActive()}"
+                                   th:attr="data-enddate=${charitycontent.formattedEndDate}"
+                                   id="countdown-${charitycontent.id}">
+                                    Đang tính toán thời gian còn lại...
+                                </p>
+
+                                <p class="card-text countdown-expired"
+                                   style="font-size: 1em; font-weight: bold; text-align: center; color: #dc3545;
+                  background-color: #f8d7da; border: 2px solid #dc3545; padding: 10px 20px;
+                  border-radius: 5px; display: inline-block; width: fit-content; margin-bottom: 15px"
+                                   th:unless="${charitycontent.isActive()}"
+                                   id="expired-${charitycontent.id}">
+                                    Đã hết hạn
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <p class="card-text" th:text="'Mã dự án: ' + ${charitycontent.code}"
+                           style="font-size: 0.9em; font-weight: bold; text-align: center; color: #8b2323;">
+                        </p>
+
+                        <p class="card-text" th:text="'Số tiền đã đóng góp: ' + ${charitycontent.goalAmount}"
+                           style="font-size: 0.9em; font-weight: bold; text-align: center; color: cadetblue;">
+                        </p>
+
+                        <p class="card-text" th:text="'Cần huy động: ' + ${charitycontent.amountRaised}"
+                           style="font-size: 0.9em; font-weight: bold; text-align: center; color: cadetblue;">
                         </p>
 
 <!--                 <-- Progress bar container -->
                         <div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 10px 0;">
-                            <!-- Progress bar itself, with dynamic width set based on progressPercentage -->
-                            <div th:attr="style='height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${charitycontent.progressPercentage} + '%;'">
+                            <div th:style="'height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${charitycontent.progressPercentage} + '%;'">
                             </div>
                         </div>
 
@@ -292,10 +323,10 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>Company name</h6>
+                        <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
                     <p>
-                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                        dolor sit amet, consectetur adipisicing elit.
+                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt đẹp hơn.
+                        Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -304,19 +335,19 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        Products
+                        Hướng dẫn
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Angular</a>
+                        <a href="#!" class="text-reset">Hướng dẫn đóng góp</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">React</a>
+                        <a href="#!" class="text-reset">Giới thiệu</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Vue</a>
+                        <a href="#!" class="text-reset">Tổ chức</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Laravel</a>
+                        <a href="#!" class="text-reset">Lịch sử</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -325,31 +356,31 @@
                 <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        Useful links
+                        Chương trình
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Pricing</a>
+                        <a href="#!" class="text-reset">Cứu trợ khẩn cấp</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Settings</a>
+                        <a href="#!" class="text-reset">Trợ giúp y tế</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Orders</a>
+                        <a href="#!" class="text-reset">Bữa ăn giá thấp</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Help</a>
+                        <a href="#!" class="text-reset">Phương tiện mưu sinh</a>
                     </p>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                    <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                    <p><i class="fas fa-home me-3"></i> An Dương Vương, Quận 5, TP.Hồ Chí Minh</p>
                     <p>
                         <i class="fas fa-envelope me-3"></i>
-                        info@example.com
+                        quytuthienmattroi@gmail.com
                     </p>
                     <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
                     <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
@@ -363,8 +394,8 @@
 
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+
+        <a class="text-reset fw-bold">Quỹ từ thiện trường đại học Sài Gòn</a>
     </div>
     <!-- Copyright -->
 </footer>
@@ -373,6 +404,49 @@
 </body>
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const countdownElements = document.querySelectorAll('.countdown');
+
+        countdownElements.forEach(function (element) {
+            const endDateStr = element.dataset.enddate;
+
+            // Manually parse the date from 'dd/MM/yyyy' to 'yyyy-MM-dd'
+            const [day, month, year] = endDateStr.split('/');
+            const endDate = new Date(`${year}-${month}-${day}`); // Reformat to 'yyyy-MM-dd'
+
+            if (isNaN(endDate)) {
+                console.error("Invalid date format for countdown:", endDateStr);
+                element.textContent = "Lỗi định dạng ngày";
+                return;
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                const timeDifference = endDate - now;
+
+                if (timeDifference <= 0) {
+                    // Set the text to "Đã hết hạn" if the campaign is expired
+                    element.textContent = "Đã hết hạn";
+                    return;
+                }
+
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                element.textContent = `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+            }
+
+            // Update immediately, and then update every second
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    });
+
+
+</script>
 <script>
     // Hiệu ứng mở menu thả xuống khi hover
     document.querySelectorAll('.nav-item.dropdown').forEach(function (dropdown) {

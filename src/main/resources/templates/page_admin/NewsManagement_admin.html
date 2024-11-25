@@ -179,12 +179,16 @@
     </style>
 </head>
 <body>
+
+<h4 class="text-danger">Danh sách bài viết tin tức</h4>
 <form th:action="@{/dashboard_newsmanagement}" method="get" class="text-center mt-3">
     <input type="text" name="searchTerm" th:value="${searchTerm}" placeholder="Search by ID or Title" class="form-control w-50 d-inline-block">
     <button type="submit" class="btn btn-primary ml-2">Tìm kiếm</button>
 </form>
+
+
 <div class="container mt-4">
-    <h4 class="text-danger">Danh sách bài viết tin tức</h4>
+
 
     <table class="table align-middle table-bordered">
         <thead class="thead-light">

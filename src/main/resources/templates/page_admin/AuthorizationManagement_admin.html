@@ -16,6 +16,7 @@
             <th>Mã</th>
             <th>Tài khoản</th>
             <th>Mật khẩu</th>
+            <th>Email</th>
             <th>Chức vụ</th>
             <th></th>
             <th></th>
@@ -28,6 +29,7 @@
             <td th:text="${authorizationModel.username}"></td>
             <!-- Hiển thị mật khẩu là **** -->
             <td>*****</td>
+            <td th:text="${authorizationModel.email}"></td>
             <!-- Kiểm tra vai trò và hiển thị tương ứng -->
             <td th:text="${authorizationModel.roles == 'admin' ? 'Quản trị viên' : 'Nhân viên'}"></td>
             <td>
@@ -35,8 +37,8 @@
                     Sửa
                 </a>
             </td>
-            <form th:action="@{/authorizaton/delete/{id_delete}(id_delete=${authorizationModel.id})}" method="post">
-                <td><button type="submit" class="btn btn-danger btn-sm">Xóa</button></td>
+            <form th:action="@{/authorizaton/delete/{id_delete}(id_delete=${authorizationModel.id})}" method="post" id="deleteForm">
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="openDeleteModal(this.form.action)">Xóa</button></td>
             </form>
         </tr>
         <tr>
@@ -52,6 +54,41 @@
         </tbody>
     </table>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa mục này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Có</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function openDeleteModal(action) {
+        document.getElementById('deleteForm').action = action;
+        $('#confirmDeleteModal').modal('show');
+    }
+    function confirmDelete() {
+        document.getElementById('deleteForm').submit();
+    }
+
+</script>
+<!-- Ensure jQuery is included first and only once -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Then include Bootstrap and MDB -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
 </body>
 </html>

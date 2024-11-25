@@ -2,6 +2,7 @@ package com.example.SGUCharity_Project.Controller;
 
 import com.example.SGUCharity_Project.Model.*;
 import com.example.SGUCharity_Project.Repository.*;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import jakarta.servlet.http.HttpSession;
+
+
 
 @Controller
 public class Dashboard_controller {
@@ -53,7 +57,8 @@ public class Dashboard_controller {
     @Autowired
     Authorization_Repo authorizationRepo;
 
-    // Render ra trang dashboard
+
+    // Render ra trang dashboar
     @GetMapping("/manager")
     public String dashboard(HttpSession session, Model model) {
         // Kiểm tra nếu người dùng chưa đăng nhập (session không chứa username)
@@ -144,7 +149,8 @@ public class Dashboard_controller {
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
-            @RequestParam("imgContent2") String imgContent2) {
+            @RequestParam("imgContent2") String imgContent2,
+            @RequestParam("code") String code) {
 
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
@@ -153,6 +159,7 @@ public class Dashboard_controller {
         artical.setEndDate(LocalDate.parse(endDate));
         artical.setGoalAmount(goalAmount);
         artical.setAmountRaised(0); // Initialize với 0
+        artical.setCode(code);
         artical.setStatus("Active");
         artical.setDisplaycategory("Default");
 
@@ -197,7 +204,8 @@ public class Dashboard_controller {
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
-            @RequestParam("imgContent2") String imgContent2) {
+            @RequestParam("imgContent2") String imgContent2,
+            @RequestParam("code") String code) {
 
         Artical_model artical = charitycontentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + id));
@@ -207,6 +215,7 @@ public class Dashboard_controller {
         artical.setStartDate(LocalDate.parse(startDate));
         artical.setEndDate(LocalDate.parse(endDate));
         artical.setGoalAmount(goalAmount);
+        artical.setCode(code);
 
         charitycontentRepo.save(artical);
 
@@ -245,12 +254,36 @@ public class Dashboard_controller {
     }
 
 
-    @GetMapping("dashboard_revenuemanagement")
-    public String revenue(Model model) {
-        List<Payment_model> paymentModels = paymentRepo.findAll();
-        model.addAttribute("paymentModel",paymentModels);
+    @GetMapping("/dashboard_revenuemanagement")
+    public String revenue(
+            @RequestParam(value = "searchTerm", required = false) String searchTerm,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "3") int size,
+            Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Payment_model> resultPage;
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            try {
+                // Tìm kiếm theo ID (ID có thể là một số)
+                Long id = Long.valueOf(searchTerm);
+                resultPage = paymentRepo.searchById(id, pageable);
+            } catch (NumberFormatException e) {
+                // Tìm kiếm theo nội dung chuyển khoản hoặc trường hợp tìm kiếm khác
+                resultPage = paymentRepo.searchByOrderId(searchTerm, pageable);
+            }
+        } else {
+            resultPage = paymentRepo.findAll(pageable);
+        }
+
+        model.addAttribute("paymentModel", resultPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", resultPage.getTotalPages());
+        model.addAttribute("searchTerm", searchTerm);
+
         return "page_admin/RevenueManagement_admin";
     }
+
 
     @PostMapping("/displayrevenue")
     public String displayrevenue(@RequestParam("id") Long id, @RequestParam("display") int display, Model model) {
@@ -566,6 +599,7 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                  @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
                                  @RequestParam("goalAmount") String goalAmount,
+                                 @RequestParam("goalAmount") String code,
                                  @RequestParam("detailUrl") String detailUrl) {
 
         // Tạo một đối tượng mới và thiết lập các thuộc tính
@@ -576,6 +610,7 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
         fundraisingCampaignModel.setAmountRaised(0);
         fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
+        fundraisingCampaignModel.setCode(code);
         fundraisingCampaignModel.setStatus("Đang vận động");
         fundraisingCampaignModel.setDetailUrl(detailUrl);
         fundraisingCampaignModel.setCategory("Bệnh hiểm nghèo");
@@ -600,6 +635,7 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                                    @RequestParam("startDate") String startDate, // Correct name for startDate
                                                    @RequestParam("endDate") String endDate, // Correct name for endDate
                                                    @RequestParam("goalAmount") String goalAmount,
+                                                   @RequestParam("code") String code,
                                                    @RequestParam("detailUrl") String detailUrl, // detailUrl is a request parameter, not a path variable
                                                    @PathVariable("id_update") Long id) {
         FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
@@ -612,6 +648,7 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate)); // Set endDate
         fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
         fundraisingCampaignModel.setDetailUrl(detailUrl);
+        fundraisingCampaignModel.setCode(code);
 
         // Save updated campaign
         fundraisingCampaignRepo.save(fundraisingCampaignModel);
@@ -639,19 +676,30 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         return "page_admin/CRUD_AuthorizationManagement/insertAuthorization";
     }
 
-    @PostMapping("/insert/authorizaton")
-    public String insertauthorizaton(@RequestParam("inputusername") String inputusername, @RequestParam("inputpassword") String inputpassword,
-                                @RequestParam("inputroles") String inputroles) {
+    @PostMapping("/insert/authorization")
+    public String insertauthorization(@RequestParam("inputusername") String inputusername,
+                                      @RequestParam("inputpassword") String inputpassword,
+                                      @RequestParam("email") String email,
+                                      @RequestParam("inputroles") String inputroles) {
 
+        // Tạo và gán dữ liệu vào Authorization_model
         Authorization_model authorizationModel = new Authorization_model();
         authorizationModel.setUsername(inputusername);
-        authorizationModel.setPassword(inputpassword);
+        authorizationModel.setPassword(inputpassword); // Có thể mã hóa mật khẩu nếu cần
+        authorizationModel.setEmail(email);
         authorizationModel.setRoles(inputroles);
 
+        // Lưu tài khoản mới vào database
         authorizationRepo.save(authorizationModel);
 
+
+        // Redirect đến dashboard authorization sau khi thành công
         return "redirect:/dashboard_authorization";
     }
+
+
+
+
 
     @GetMapping("/authorizaton/{id_update}")
     public String authorizaton_update(@PathVariable("id_update") Long id, Model model) {
@@ -662,11 +710,12 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
     }
 
     @PostMapping("/authorizaton/{id_update}")
-    public String handle_authorization_update(@RequestParam("inputusername") String inputusername, @RequestParam("inputpassword") String inputpassword,
+    public String handle_authorization_update(@RequestParam("inputusername") String inputusername, @RequestParam("inputpassword") String inputpassword, @RequestParam("email") String email,
                                               @RequestParam("inputroles") String inputroles, @PathVariable("id_update") Long id) {
         Authorization_model authorizationModel = authorizationRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
         authorizationModel.setUsername(inputusername);
         authorizationModel.setPassword(inputpassword);
+        authorizationModel.setEmail(email);
         authorizationModel.setRoles(inputroles);
 
         authorizationRepo.save(authorizationModel);

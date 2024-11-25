@@ -204,6 +204,7 @@
             <th scope="col">Số tiền cần đạt</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Loại chiến dịch</th>
+            <th scope="col">Mã cú pháp</th>
             <th scope="col">Thao tác</th>
         </tr>
         </thead>
@@ -280,6 +281,7 @@
                 </ul>
 
             </td>
+            <td th:text="${charitycontentModelList.code}"></td>
             <td>
                 <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton_2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; font-size: 13px;">
@@ -301,15 +303,16 @@
                 </div>
             </td>
             <tr>
-            <td colspan="5">
-                <a class="btn btn-outline-success"  th:href="@{/insert/program}">
-                    Thêm
-                </a>
 
-            </td>
         </tr>
+
         </tbody>
     </table>
+    <td colspan="5">
+        <a class="btn btn-outline-success"  th:href="@{/insert/program}">
+            Thêm
+        </a>
+    </td>
     <div class="pagination">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:if="${currentPage > 0}">
