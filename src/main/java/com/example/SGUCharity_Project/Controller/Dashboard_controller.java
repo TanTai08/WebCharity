@@ -3,6 +3,7 @@ package com.example.SGUCharity_Project.Controller;
 import com.example.SGUCharity_Project.Model.*;
 import com.example.SGUCharity_Project.Repository.*;
 
+import com.example.SGUCharity_Project.Service.EmailService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,9 @@ public class Dashboard_controller {
 
     @Autowired
     Activity_Repo activityRepo;
+
+    @Autowired
+    private EmailService emailService;
 
     // Render ra trang dashboar
     @GetMapping("/manager")
@@ -836,10 +840,6 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         return "redirect:/dashboard_authorization";
     }
 
-
-
-
-
     @GetMapping("/authorizaton/{id_update}")
     public String authorizaton_update(@PathVariable("id_update") Long id, Model model) {
         Authorization_model authorizationModel = authorizationRepo.findById(id)
@@ -874,5 +874,17 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         List<Activity_model> activityModels = activityRepo.findAll();
         model.addAttribute("activityModels",activityModels);
         return "page_admin/Activity_admin";
+    }
+
+    @GetMapping("/email")
+    public String showEmailForm(Model model) {
+        return "page_admin/Handle/FormEmail";
+    }
+
+    @PostMapping("/send-email")
+    public String sendEmail(String to, String subject, String message, Model model) {
+        emailService.sendMail(to, subject, message);
+        model.addAttribute("success", "Email đã được gửi thành công!");
+        return "page_admin/Handle/ResponeEmail";
     }
 }
