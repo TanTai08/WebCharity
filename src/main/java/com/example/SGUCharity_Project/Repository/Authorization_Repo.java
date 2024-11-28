@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface Authorization_Repo extends JpaRepository<Authorization_model, Long> {
     Optional<Authorization_model> findByUsername(String username);
+    boolean existsByUsername(String username);
 }

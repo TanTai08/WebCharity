@@ -825,8 +825,21 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
     @PostMapping("/insert/authorization")
     public String insertauthorization(@RequestParam("inputusername") String inputusername,
                                       @RequestParam("inputpassword") String inputpassword,
+                                      @RequestParam("confirmpassword") String confirmpassword,
                                       @RequestParam("email") String email,
-                                      @RequestParam("inputroles") String inputroles) {
+                                      @RequestParam("inputroles") String inputroles, Model model) {
+
+        // Kiểm tra xem tên tài khoản đã tồn tại
+        if (authorizationRepo.existsByUsername(inputusername)) {
+            model.addAttribute("error", "Tên tài khoản đã tồn tại. Vui lòng chọn tên khác.");
+            return "page_admin/CRUD_AuthorizationManagement/insertAuthorization";
+        }
+
+        // Kiểm tra mật khẩu có khớp không
+        if (!inputpassword.equals(confirmpassword)) {
+            model.addAttribute("error", "Mật khẩu và mật khẩu nhập lại không khớp. Vui lòng thử lại.");
+            return "page_admin/CRUD_AuthorizationManagement/insertAuthorization";
+        }
 
         // Tạo và gán dữ liệu vào Authorization_model
         Authorization_model authorizationModel = new Authorization_model();
