@@ -288,6 +288,9 @@ public class Dashboard_controller {
     public String updateDisplayCategory(@RequestParam("id") Long id, @RequestParam("display") String display) {
         charitycontentRepo.findById(id).ifPresent(artical -> {
             artical.setDisplaycategory(display);
+            if ("5".equals(display)) { // Kiểm tra nếu là "Các dự án thành công"
+                artical.setStatus("1"); // Tự động chuyển trạng thái thành "Đã đóng"
+            }
             charitycontentRepo.save(artical);
         });
         return "redirect:/dashboard_programmanagement";

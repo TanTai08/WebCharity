@@ -220,7 +220,7 @@
             <td th:text="${charitycontentModelList.goalAmount}"></td>
 
             <td>
-                <div class="dropdown">
+                <div class="dropdown" th:if="${charitycontentModelList.displaycategory != '5'}">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false"
                             th:text="${charitycontentModelList.status == '0' ? 'Đang vận động' : 'Đã đóng'}"></button>
@@ -241,6 +241,7 @@
                         </li>
                     </ul>
                 </div>
+                <p th:if="${charitycontentModelList.displaycategory == '5'}">Đã đóng</p>
             </td>
             <td>
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_1"
@@ -276,6 +277,13 @@
                             <input type="hidden" th:name="id" th:value="${charitycontentModelList.id}"/>
                             <input type="hidden" th:name="display" value="3"/>
                             <button class="dropdown-item" type="submit">Các dự án đang thực hiện</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form th:action="@{/updateDisplayCategory}" method="post">
+                            <input type="hidden" th:name="id" th:value="${charitycontentModelList.id}"/>
+                            <input type="hidden" th:name="display" value="5"/>
+                            <button class="dropdown-item" type="submit">Dự án thành công</button>
                         </form>
                     </li>
                 </ul>
