@@ -249,7 +249,9 @@
                         th:text="${charitycontentModelList.displaycategory == '0' ? 'Hoàn cảnh quyên góp'
         : (charitycontentModelList.displaycategory == '1' ? 'Các dự án quan trọng'
         : (charitycontentModelList.displaycategory == '2' ? 'Các dự án mới được công bố'
-        : 'Các dự án đang thực hiện'))}"></button>
+        : (charitycontentModelList.displaycategory == '3' ? 'Các dự án đang thực hiện'
+        : (charitycontentModelList.displaycategory == '5' ? 'Dự án thành công' : 'Không xác định'))))}">
+                </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_1">
                     <li>
                         <form th:action="@{/updateDisplayCategory}" method="post">
