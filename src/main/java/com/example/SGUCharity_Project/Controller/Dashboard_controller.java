@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
@@ -560,7 +561,7 @@ public class Dashboard_controller {
 
     @PostMapping("newsmanagement/{id_update}")
     public String handle_newsmanagement_update(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
-                                 @RequestParam("inputurlartical") String inputurlartical, @PathVariable("id_update") Long id, HttpSession session) {
+                                               @RequestParam("inputurlartical") String inputurlartical, @PathVariable("id_update") Long id, HttpSession session) {
         Communitynews_model communitynewsModel = communityNewsRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
         communitynewsModel.setTitle_news(inputtitlenews);
         communitynewsModel.setImg_news(inputimgnews);
@@ -608,7 +609,7 @@ public class Dashboard_controller {
 
     @PostMapping("/insert/news")
     public String insertnews(@RequestParam("inputtitlenews") String inputtitlenews, @RequestParam("inputimgnews") String inputimgnews, @RequestParam("inputsubtitlenews") String inputsubtitlenews,
-                                @RequestParam("inputurlartical") String inputurlartical, HttpSession session) {
+                             @RequestParam("inputurlartical") String inputurlartical, HttpSession session) {
 
         Communitynews_model communitynewsModel = new Communitynews_model();
         communitynewsModel.setTitle_news(inputtitlenews);
@@ -675,7 +676,7 @@ public class Dashboard_controller {
 
     @PostMapping("/insert/service")
     public String insertservice(@RequestParam("inputtitleservice") String inputtitleservice, @RequestParam("inputimgservice") String inputimgservice, @RequestParam("inputsubtitleservice") String inputsubtitleservice,
-                             @RequestParam("inputurlarticalservice") String inputurlarticalservice, HttpSession session) {
+                                @RequestParam("inputurlarticalservice") String inputurlarticalservice, HttpSession session) {
 
         Service_model serviceModel = new Service_model();
         serviceModel.setTitle_service(inputtitleservice);
@@ -814,38 +815,38 @@ public class Dashboard_controller {
         return "redirect:/dashboard_statistical";
     }
 
-//     render ra trang chiến dịch dashboard
-@GetMapping("/dashboard_campaignmanagement")
-public String campaignmanagement(@RequestParam(value = "searchTerm", required = false) String searchTerm,
-                                 @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "3") int size,
-                                 Model model) {
-    Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
-    Page<FundraisingCampaign_model> pageResult;
+    //     render ra trang chiến dịch dashboard
+    @GetMapping("/dashboard_campaignmanagement")
+    public String campaignmanagement(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+                                     @RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "3") int size,
+                                     Model model) {
+        Pageable pageable = PageRequest.of(page, size); // Xác định số trang và số mục trên mỗi trang
+        Page<FundraisingCampaign_model> pageResult;
 
-    // Nếu có searchTerm, thực hiện tìm kiếm theo id hoặc title
-    if (searchTerm != null && !searchTerm.isEmpty()) {
-        try {
-            // Thử chuyển searchTerm thành Long nếu có thể (dùng cho tìm kiếm theo ID)
-            Long id = Long.valueOf(searchTerm);
-            pageResult = fundraisingCampaignRepo.searchById(id, pageable); // Tìm kiếm theo ID
-        } catch (NumberFormatException e) {
-            // Nếu không thể chuyển được, tìm kiếm theo tiêu đề
-            pageResult = fundraisingCampaignRepo.searchByTitle(searchTerm, pageable);
+        // Nếu có searchTerm, thực hiện tìm kiếm theo id hoặc title
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            try {
+                // Thử chuyển searchTerm thành Long nếu có thể (dùng cho tìm kiếm theo ID)
+                Long id = Long.valueOf(searchTerm);
+                pageResult = fundraisingCampaignRepo.searchById(id, pageable); // Tìm kiếm theo ID
+            } catch (NumberFormatException e) {
+                // Nếu không thể chuyển được, tìm kiếm theo tiêu đề
+                pageResult = fundraisingCampaignRepo.searchByTitle(searchTerm, pageable);
+            }
+        } else {
+            pageResult = fundraisingCampaignRepo.findAll(pageable); // Nếu không có searchTerm, lấy tất cả
         }
-    } else {
-        pageResult = fundraisingCampaignRepo.findAll(pageable); // Nếu không có searchTerm, lấy tất cả
+
+        // Thêm các thuộc tính vào model để sử dụng trong view
+        model.addAttribute("fundraisingCampaignModel", pageResult.getContent()); // Danh sách các mục của trang hiện tại
+        model.addAttribute("currentPage", page); // Trang hiện tại
+        model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
+        model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
+        model.addAttribute("searchTerm", searchTerm); // Từ khóa tìm kiếm
+
+        return "page_admin/CampaignManagement_admin";
     }
-
-    // Thêm các thuộc tính vào model để sử dụng trong view
-    model.addAttribute("fundraisingCampaignModel", pageResult.getContent()); // Danh sách các mục của trang hiện tại
-    model.addAttribute("currentPage", page); // Trang hiện tại
-    model.addAttribute("totalPages", pageResult.getTotalPages()); // Tổng số trang
-    model.addAttribute("totalItems", pageResult.getTotalElements()); // Tổng số mục
-    model.addAttribute("searchTerm", searchTerm); // Từ khóa tìm kiếm
-
-    return "page_admin/CampaignManagement_admin";
-}
 
 
     @PostMapping("/updateStatusCampaign")
@@ -1196,12 +1197,54 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
         return "redirect:/dashboard_authorization";
     }
 
+
     @GetMapping("dashboard_activity")
-    public String render_activity(Model model) {
-        List<Activity_model> activityModels = activityRepo.findAll();
-        model.addAttribute("activityModels",activityModels);
+    public String render_activity(@RequestParam(value = "username", required = false) String username,
+                                  @RequestParam(value = "startDate", required = false) String startDate,
+                                  @RequestParam(value = "startTime", required = false) String startTime,
+                                  Model model) {
+        List<Activity_model> activityModels;
+
+        // Định dạng lại ngày giờ thành kiểu dễ đọc
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss");
+
+        // Kiểm tra và xử lý tìm kiếm theo ngày giờ
+        if (startDate != null && !startDate.isEmpty() && startTime != null && !startTime.isEmpty()) {
+            LocalDateTime startDateTime = null;
+            String dateTimeStr = startDate + "T" + startTime;  // Ghép ngày và giờ lại thành chuỗi
+            try {
+                startDateTime = LocalDateTime.parse(dateTimeStr);  // Chuyển thành LocalDateTime
+            } catch (DateTimeParseException e) {
+                // Nếu xảy ra lỗi khi phân tích, có thể hiển thị thông báo lỗi cho người dùng
+                model.addAttribute("error", "Định dạng thời gian không hợp lệ.");
+                return "page_admin/Activity_admin"; // Quay lại trang mà không tìm kiếm
+            }
+
+            // Tìm kiếm theo thời gian, có thể có hoặc không có username
+            if (username != null && !username.isEmpty()) {
+                activityModels = activityRepo.findByUsernameAndDatetimeAfter(username, startDateTime);
+            } else {
+                activityModels = activityRepo.findByDatetimeAfter(startDateTime); // Tìm theo thời gian thôi
+            }
+        } else {
+            // Nếu không có thông tin thời gian, hiển thị tất cả dữ liệu
+            activityModels = activityRepo.findAll();
+        }
+
+        // Định dạng ngày giờ trước khi truyền vào model để hiển thị
+        activityModels.forEach(activity -> activity.setFormattedDatetime(activity.getDatetime().format(formatter)));
+
+        model.addAttribute("activityModels", activityModels);
+        model.addAttribute("username", username);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("startTime", startTime);
         return "page_admin/Activity_admin";
     }
+
+
+
+
+
 
     @GetMapping("/email")
     public String showEmailForm(Model model) {

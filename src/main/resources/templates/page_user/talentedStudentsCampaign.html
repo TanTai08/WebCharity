@@ -88,6 +88,73 @@
       display: block;
       opacity: 1;
     }
+    /* Dropdown Style */
+    .nav-item.dropdown {
+      position: relative;
+    }
+
+    .nav-link.dropdown-toggle {
+      padding: 10px 15px;
+      color: #000;
+      font-weight: 500;
+      border-radius: 50px; /* Tạo hình tròn cho nút dropdown */
+      transition: all 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+    }
+
+    /* Hover effect */
+    .nav-link.dropdown-toggle:hover {
+      background-color: #ff6f61; /* Màu nền khi hover */
+      color: white; /* Màu chữ khi hover */
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ */
+    }
+
+    /* Dropdown menu */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      display: none;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      min-width: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Show dropdown menu on hover */
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Dropdown item */
+    .dropdown-item {
+      padding: 12px 20px;
+      color: #333;
+      font-size: 1.1em;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    /* Hover effect on dropdown items */
+    .dropdown-item:hover {
+      background-color: #ff6f61;
+      color: white;
+      transform: translateX(5px); /* Hiệu ứng chuyển động */
+    }
+
+    /* For small screens */
+    @media (max-width: 768px) {
+      .nav-link.dropdown-toggle {
+        padding: 10px;
+      }
+
+      .dropdown-item {
+        font-size: 0.9em;
+      }
+    }
 
   </style>
 
@@ -201,38 +268,72 @@
         <div class="card project shadow h-100" th:data-category="${campaign.category}"
              style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; transition: transform 0.3s;">
 
+          <!-- Hình ảnh chiến dịch -->
           <div style="height: 250px; overflow: hidden;">
             <img th:src="${campaign.imgUrl}" class="card-img-top w-100" alt="Chiến dịch"
                  style="width: 100%; height: 100%; object-fit: cover;" src="">
           </div>
 
+          <!-- Nội dung chiến dịch -->
           <div class="card-body d-flex flex-column" style="padding: 15px;">
             <h5 class="card-title" th:text="${campaign.title}"
                 style="font-size: 1.1em; font-weight: bold; color: #333; text-align: center; margin: 10px 0;">
             </h5>
             <p class="card-text" th:text="${campaign.startDate + ' - ' + campaign.endDate}"
-               style="font-size: 0.9em; color: #666; text-align: center;"></p>
+               style="font-size: 1em; font-weight: bold; color: rosybrown; text-align: center;">
+            </p>
+            <div style="text-align: center; margin-top: 20px;">
+              <p class="card-text countdown"
+                 style="font-size: 1em; font-weight: bold; text-align: center; color: #1e90ff;
+              background-color: #e7f5ff; border: 2px solid #1e90ff; padding: 10px 20px;
+              border-radius: 5px; display: inline-block; width: fit-content; margin-bottom : 15px"
+                 th:if="${campaign.isActive()}"
+                 th:attr="data-enddate=${campaign.formattedEndDate}"
+                 id="countdown-${campaign.id}">
+                Đang tính toán thời gian còn lại...
+              </p>
 
-            <p class="card-text" th:text="${campaign.isActive() ? 'Còn hạn' : 'Hết hạn'}"
+              <p class="card-text countdown-expired"
+                 style="font-size: 1em; font-weight: bold; text-align: center; color: #dc3545;
+              background-color: #f8d7da; border: 2px solid #dc3545; padding: 10px 20px;
+              border-radius: 5px; display: inline-block; width: fit-content; margin-bottom : 15px"
+                 th:unless="${campaign.isActive()}"
+                 id="expired-${campaign.id}">
+                Đã hết hạn
+              </p>
+            </div>
+
+
+
+            <p class="card-text" th:text="'Mã chiến dịch: ' + ${campaign.code}"
                style="font-size: 0.9em; font-weight: bold; text-align: center; color: #8b2323;">
             </p>
 
+            <p class="card-text" th:text="'Số tiền đã đóng góp: ' + ${campaign.amountRaised}"
+               style="font-size: 0.9em; font-weight: bold; text-align: center; color: cadetblue;">
+            </p>
+
+            <p class="card-text" th:text="'Cần huy động: ' + ${campaign.goalAmount}"
+               style="font-size: 0.9em; font-weight: bold; text-align: center; color: cadetblue;">
+            </p>
+
+            <!-- Thanh tiến trình -->
             <div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 10px 0;">
-              <div th:attr="style='height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${campaign.progressPercentage} + '%;'">
+              <div th:style="'height: 20px; background-color: #8b2323; border-radius: 5px; width: ' + ${campaign.progressPercentage} + '%;'">
               </div>
             </div>
 
-            <div th:attr="style='width:' + ${#numbers.formatDecimal((campaign.amountRaised / campaign.goalAmount) * 100, 0, 0)} + '%;'">
-            </div>
 
-
+            <!-- Các nút điều hướng -->
             <a th:href="${campaign.detailUrl}" class="btn btn-primary"
-               style="background-color: #0056b3; color: white; margin-top: auto; margin-bottom: 10px; border-radius: 5px; border: none;">
+               style="background-color: #0056b3; color: white; margin-top: auto; margin-bottom: 10px;
+                                  border-radius: 5px; border: none;">
               Xem thêm về thông tin chi tiết
             </a>
-
-            <a href="huong-dan-dong-gop" class="btn btn-primary"
-               style="background-color: #8b2323; border-color: #8b2323; color: white; border-radius: 5px; border: none;">Đóng Góp Ngay
+            <a th:href="@{/thanh-toan}" class="btn btn-primary"
+               style="background-color: #8b2323; border-color: #8b2323; color: white; border-radius: 5px;
+                                  border: none;">
+              Đóng Góp Ngay
             </a>
           </div>
         </div>
@@ -390,6 +491,49 @@
       this.style.color = '#000'; // Màu chữ ban đầu
     });
   });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const countdownElements = document.querySelectorAll('.countdown');
+
+    countdownElements.forEach(function (element) {
+      const endDateStr = element.dataset.enddate;
+
+      // Manually parse the date from 'dd/MM/yyyy' to 'yyyy-MM-dd'
+      const [day, month, year] = endDateStr.split('/');
+      const endDate = new Date(`${year}-${month}-${day}`); // Reformat to 'yyyy-MM-dd'
+
+      if (isNaN(endDate)) {
+        console.error("Invalid date format for countdown:", endDateStr);
+        element.textContent = "Lỗi định dạng ngày";
+        return;
+      }
+
+      function updateCountdown() {
+        const now = new Date();
+        const timeDifference = endDate - now;
+
+        if (timeDifference <= 0) {
+          // Set the text to "Đã hết hạn" if the campaign is expired
+          element.textContent = "Đã hết hạn";
+          return;
+        }
+
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        element.textContent = `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+      }
+
+      // Update immediately, and then update every second
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
+  });
+
+
 </script>
 
 </body>

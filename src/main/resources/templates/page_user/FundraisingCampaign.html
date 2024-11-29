@@ -90,6 +90,74 @@
             opacity: 1;
         }
 
+        /* Dropdown Style */
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .nav-link.dropdown-toggle {
+            padding: 10px 15px;
+            color: #000;
+            font-weight: 500;
+            border-radius: 50px; /* Tạo hình tròn cho nút dropdown */
+            transition: all 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+        }
+
+        /* Hover effect */
+        .nav-link.dropdown-toggle:hover {
+            background-color: #ff6f61; /* Màu nền khi hover */
+            color: white; /* Màu chữ khi hover */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ */
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Show dropdown menu on hover */
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Dropdown item */
+        .dropdown-item {
+            padding: 12px 20px;
+            color: #333;
+            font-size: 1.1em;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect on dropdown items */
+        .dropdown-item:hover {
+            background-color: #ff6f61;
+            color: white;
+            transform: translateX(5px); /* Hiệu ứng chuyển động */
+        }
+
+        /* For small screens */
+        @media (max-width: 768px) {
+            .nav-link.dropdown-toggle {
+                padding: 10px;
+            }
+
+            .dropdown-item {
+                font-size: 0.9em;
+            }
+        }
+
 
     </style>
 

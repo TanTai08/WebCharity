@@ -1,9 +1,6 @@
 package com.example.SGUCharity_Project.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +19,17 @@ public class Activity_model {
     private String activity;
     private String detail_activity;
     private LocalDateTime datetime;
+
+    @Transient
+    private String formattedDatetime;
+
+    // Getters and setters cho formattedDatetime
+    public String getFormattedDatetime() {
+        return formattedDatetime;
+    }
+
+    public void setFormattedDatetime(String formattedDatetime) {
+        this.formattedDatetime = formattedDatetime;
+    }
 }
+
