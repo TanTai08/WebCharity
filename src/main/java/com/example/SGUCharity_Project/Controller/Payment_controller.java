@@ -61,10 +61,14 @@ public class Payment_controller {
             LocalDateTime parsedPaymentTime = LocalDateTime.parse(paymentTime, inputFormatter);
             String formattedPaymentTime = parsedPaymentTime.format(outputFormatter);
 
+            // Cắt bỏ 2 số cuối của vnp_Amount
+            String formattedTotalPrice = totalPrice.substring(0, totalPrice.length() - 2);
+            double totalAmount = Double.parseDouble(formattedTotalPrice);
+
             // Lưu thông tin thanh toán vào cơ sở dữ liệu
             Payment_model payment = new Payment_model();
             payment.setOrderId(orderInfo);
-            payment.setTotalPrice(totalPrice);
+            payment.setTotalPrice(String.valueOf(totalAmount));
             payment.setTransactionId(transactionId);
             payment.setPaymentTime(parsedPaymentTime);
             payment.setPaymentStatus(paymentStatus);

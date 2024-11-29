@@ -70,65 +70,60 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="trang-chu"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
-                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Trang chủ
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;" th:text="#{title_home}">
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="gioi-thieu"
+                        <a class="nav-link active" aria-current="page" href="gioi-thieu" th:text="#{title_introduce}"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Giới thiệu
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="chuong-trinh"
+                        <a class="nav-link active" aria-current="page" href="chuong-trinh" th:text="#{title_donationcontext}"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Hoàn cảnh quyên góp
                         </a>
                     </li>
 
                     <li class="nav-item dropdown" style="position: relative;">
-                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy"
+                        <a class="nav-link active dropdown-toggle" href="chien-dich-gay-quy" th:text="#{title_fundraisingcampaign}"
                            id="navbarDropdown_2" role="button" aria-expanded="false"
                            style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Chiến dịch gây quỹ
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute; top: 100%; left: 0; display: none; background-color: #f1f1f1; border-radius: 5px; min-width: 200px; transition: opacity 0.3s;">
-                            <li><a class="dropdown-item" href="/benh-hiem-ngheo" style="padding: 10px 15px; color: #000;">Bệnh hiểm nghèo</a></li>
-                            <li><a class="dropdown-item" href="/chap-canh-sinh-vien" style="padding: 10px 15px; color: #000;">Chấp cánh sinh viên đến trường</a></li>
-                            <li><a class="dropdown-item" href="/bua-an-sinh-vien" style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
-                            <li><a class="dropdown-item" href="/sinh-vien-gioi-co-hoan-canh" style="padding: 10px 15px; color: #000;">Sinh viên giỏi có hoàn cảnh</a></li>
+                            <li><a class="dropdown-item" href="/benh-hiem-ngheo" th:text="#{title_criticalillness}" style="padding: 10px 15px; color: #000;"></a></li>
+                            <li><a class="dropdown-item" href="/chap-canh-sinh-vien"  th:text="#{title_empoweringstudentstoattendschool}" style="padding: 10px 15px; color: #000;"></a></li>
+                            <li><a class="dropdown-item" href="/bua-an-sinh-vien" th:text="#{title_studentmeals}" style="padding: 10px 15px; color: #000;">Bữa ăn sinh viên</a></li>
+                            <li><a class="dropdown-item" href="/sinh-vien-gioi-co-hoan-canh" th:text="#{title_excellentstudentsfacinghardships}" style="padding: 10px 15px; color: #000;"></a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown"
                         style="position: relative;">
-                        <a class="nav-link active dropdown-toggle" href="huong-dan-dong-gop" id="navbarDropdown_3"
+                        <a class="nav-link active dropdown-toggle" href="huong-dan-dong-gop" th:text="#{title_contribute}" id="navbarDropdown_3"
                            role="button" aria-expanded="false"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
                               border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Đóng góp
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                             style="position: absolute; top: 100%; left: 0; display: none;
                                background-color: #f1f1f1; border-radius: 5px; min-width: 200px;
                                transition: opacity 0.3s;">
                             <li><a class="dropdown-item" href="cap-nhat-dong-gop"
-                                   style="padding: 10px 15px; color: #000;">Cập nhật đóng góp</a></li>
+                                   style="padding: 10px 15px; color: #000;" th:text="#{title_contributionupdates}">Cập nhật đóng góp</a></li>
                             <li><a class="dropdown-item" href="huong-dan-dong-gop"
-                                   style="padding: 10px 15px; color: #000;">Hướng dẫn đóng góp</a></li>
+                                   style="padding: 10px 15px; color: #000;" th:text="#{title_donationguidelines}">Hướng dẫn đóng góp</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="tin-tuc-cong-dong"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
-                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;" th:text="#{title_communitynews}">
                             Tin tức cộng đồng
                         </a>
                     </li>
@@ -136,9 +131,21 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="lien-he"
                            style="padding: 10px 15px; color: #000; font-weight: 500;
-                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;">
-                            Liên hệ
+                              border-radius: 5px; transition: background-color 0.3s, color 0.3s;" th:text="#{title_contact}">
                         </a>
+                    </li>
+
+                    <!-- Dropdown Chuyển Đổi Ngôn Ngữ -->
+                    <li class="nav-item dropdown" style="position: relative;">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownLang"
+                           role="button" aria-expanded="false"
+                           style="padding: 10px 15px; color: #000; font-weight: 500; border-radius: 5px; transition: background-color 0.3s, color 0.3s;" th:text="#{title_language}"><i class="fas fa-language"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownLang"
+                            style="position: absolute; top: 100%; left: 0; display: none; background-color: #f1f1f1; border-radius: 5px; min-width: 200px; transition: opacity 0.3s;">
+                            <li><a class="dropdown-item" href="?lang=vi" style="padding: 10px 15px; color: #000;">Tiếng Việt</a></li>
+                            <li><a class="dropdown-item" href="?lang=en" style="padding: 10px 15px; color: #000;">English</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -151,10 +158,10 @@
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-white">
 
-                    <h1 class="mb-3">"Lòng tốt luôn mang lại những điều kỳ diệu."</h1>
+                    <h1 class="mb-3" th:text="#{Kindnessalwaysbringsaboutmiracles}"></h1>
                     <h5 class="mb-4">A place where dreams are ignited.</h5>
                     <div data-mdb-ripple-init class="btn btn-outline-light btn-lg m-2" href="#" id="scroll-to-products"
-                         role="button" rel="nofollow" target="_blank">Quyên Góp
+                         role="button" rel="nofollow" target="_blank" th:text="#{Donation}">
                     </div>
                 </div>
             </div>
@@ -166,7 +173,7 @@
 
 <section id="important-projects" style="background-color: #eee; padding: 50px 0;">
     <div class="container">
-        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong>Các dự án quan trọng</strong></h4>
+        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong th:text="#{KeyProjects}"></strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4"
                  th:each="charitycontent : ${charitycontent}"
@@ -182,7 +189,7 @@
                         <h5 class="card-title text-center" th:text="${charitycontent.title}" style="margin-bottom: 20px;"></h5>
                         <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}"
                            class="btn btn-primary"
-                           style="margin-top: auto; background-color: #8b2323; border: none;">Xem thêm thông tin chi tiết</a>
+                           style="margin-top: auto; background-color: #8b2323; border: none;" th:text="#{SeeMoreDetails}"></a>
                     </div>
                 </div>
             </div>
@@ -194,7 +201,7 @@
 <!-- Mục dự án mới -->
 <section style="background-color: #eee; padding: 50px 0;">
     <div class="container">
-        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong>Các dự án mới được công bố</strong></h4>
+        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong th:text="#{NewlyAnnouncedProjects}">Các dự án mới được công bố</strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4"
                  th:each="charitycontent : ${charitycontent}"
@@ -210,7 +217,7 @@
                         <h5 class="card-title text-center" th:text="${charitycontent.title}" style="margin-bottom: 20px;"></h5>
                         <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}"
                            class="btn btn-primary"
-                           style="margin-top: auto; background-color: #8b2323; border: none;">Xem thêm thông tin chi tiết</a>
+                           style="margin-top: auto; background-color: #8b2323; border: none;" th:text="#{SeeMoreDetails}"></a>
                     </div>
                 </div>
             </div>
@@ -221,7 +228,7 @@
 <!-- Mục dự án đang thực hiện -->
 <section style="background-color: #eee; padding: 50px 0;">
     <div class="container">
-        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong>Các dự án đang thực hiện</strong></h4>
+        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong th:text="#{OngoingProjects}"></strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4"
                  th:each="charitycontent : ${charitycontent}"
@@ -237,7 +244,7 @@
                         <h5 class="card-title text-center" th:text="${charitycontent.title}" style="margin-bottom: 20px;"></h5>
                         <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}"
                            class="btn btn-primary"
-                           style="margin-top: auto; background-color: #8b2323; border: none;">Xem thêm thông tin chi tiết</a>
+                           style="margin-top: auto; background-color: #8b2323; border: none;" th:text="#{SeeMoreDetails}"></a>
                     </div>
                 </div>
             </div>
@@ -248,7 +255,7 @@
 <!-- Mục các dự án thành công -->
 <section style="background-color: #eee; padding: 50px 0;">
     <div class="container">
-        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong>Các dự án thành công</strong></h4>
+        <h4 class="text-center mb-5" style="color: #8b2323; font-weight: bold;"><strong th:text="#{SuccessfulProjects}">Các dự án thành công</strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4"
                  th:each="charitycontent : ${charitycontent}"
@@ -264,7 +271,7 @@
                         <h5 class="card-title text-center" th:text="${charitycontent.title}" style="margin-bottom: 20px;"></h5>
                         <a th:href="@{'/chuong-trinh/' + ${charitycontent.id}}"
                            class="btn btn-primary"
-                           style="margin-top: auto; background-color: #8b2323; border: none;">Xem thêm thông tin chi tiết</a>
+                           style="margin-top: auto; background-color: #8b2323; border: none;" th:text="#{SeeMoreDetails}"></a>
                     </div>
                 </div>
             </div>
@@ -275,12 +282,12 @@
 <!-- Statistics Section -->
 <section style="background-color: #f8f9fa; padding: 40px 0;margin-top: 100px">
     <div class="container">
-        <h4 class="text-center mb-5"><strong>Thống kê</strong></h4>
+        <h4 class="text-center mb-5"><strong th:text="#{Statistics}"></strong></h4>
         <div class="row text-center">
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Dự án thành công</h5>
+                        <h5 class="card-title" th:text="#{SuccessfulProjects}"></h5>
                         <p class="card-text display-4 text-primary" th:text="${statisticalModel.successfulproject}">0</p>
                     </div>
                 </div>
@@ -288,7 +295,7 @@
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Số người đang truy cập</h5>
+                        <h5 class="card-title" th:text="#{NumberofActiveUsers}"></h5>
                         <p class="card-text display-4 text-primary" th:text="${statisticalModel.participants}">0</p>
                     </div>
                 </div>
@@ -296,7 +303,7 @@
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Số tiền quyên góp</h5>
+                        <h5 class="card-title" th:text="#{AmountDonated}"></h5>
                         <p class="card-text display-4 text-primary" th:text="${statisticalModel.donationamount}">0</p>
                     </div>
                 </div>
@@ -304,7 +311,7 @@
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Sự kiện tổ chức</h5>
+                        <h5 class="card-title" th:text="#{EventsOrganized}"></h5>
                         <p class="card-text display-4 text-primary" th:text="${statisticalModel.eventsorganized}">0</p>
                     </div>
                 </div>
@@ -375,7 +382,7 @@
 <!-- Section: Hoạt động dịch vụ chương trình -->
 <section class="text-center my-5" style="background-color: #f8f9fa;">
     <div class="container py-5">
-        <h4 class="text-center mb-5"><strong>Hoạt động dịch vụ chương trình</strong></h4>
+        <h4 class="text-center mb-5"><strong th:text="#{ProgramServiceActivities}"></strong></h4>
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4" style="display: flex;" th:each="serviceModel : ${serviceModels}">
                 <div class="card shadow" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
@@ -387,7 +394,7 @@
                     <div class="card-body" style="display: flex; flex-direction: column; flex: 1;">
                         <h5 class="card-title" th:text="${serviceModel.title_service}"></h5>
                         <p class="card-text" style="flex-grow: 1;" th:text="${serviceModel.subtitle_service}"></p>
-                        <a th:href="${serviceModel.urlartical_service}" class="btn btn-primary" style="margin-top: auto;">Xem thêm</a>
+                        <a th:href="${serviceModel.urlartical_service}" class="btn btn-primary" th:text="#{ViewMore}" style="margin-top: auto;"></a>
                     </div>
                 </div>
             </div>
@@ -401,7 +408,7 @@
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <!-- Left -->
         <div class="me-5 d-none d-lg-block">
-            <span>Kết nối với chúng tôi qua mạng xã hội:</span>
+            <span th:text="#{Connectwithusonsocialmedia}"></span>
         </div>
         <!-- Left -->
 
@@ -439,32 +446,30 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>Về chúng tôi</h6>
-                    <p>
-                        Chúng tôi tin rằng mọi người đều xứng đáng có cơ hội để phát triển và hưởng thụ cuộc sống tốt
-                        đẹp hơn.
-                        Chúng tôi không chỉ mong muốn giúp đỡ mà còn tạo ra sự kết nối và cảm hứng trong cộng đồng.
-                    </p>
+                        <i class="fas fa-gem me-3"></i>
+                        <span th:text="#{AboutUs}"></span>
+                    </h6>
+                    <p th:text="#{Webelievethat}"></p>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Hướng dẫn
+                    <h6 class="text-uppercase fw-bold mb-4" th:text="#{Guide}">
+
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Hướng dẫn đóng góp</a>
+                        <a href="#!" class="text-reset" th:text="#{DonationGuide}"></a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Giới thiệu</a>
+                        <a href="#!" class="text-reset" th:text="#{Introduction}"></a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Tổ chức</a>
+                        <a href="#!" class="text-reset" th:text="#{Organization}"></a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Lịch sử</a>
+                        <a href="#!" class="text-reset"th:text="#{History}"></a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -472,20 +477,20 @@
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Chương trình
+                    <h6 class="text-uppercase fw-bold mb-4" th:text="#{Program}">
+
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Cứu trợ khẩn cấp</a>
+                        <a href="#!" class="text-reset" th:text="#{EmergencyRelief}"></a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Trợ giúp y tế</a>
+                        <a href="#!" class="text-reset" th:text="#{MedicalAssistance}">Trợ giúp y tế</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Bữa ăn giá thấp</a>
+                        <a href="#!" class="text-reset" th:text="#{LowcostMeals}">Bữa ăn giá thấp</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Phương tiện mưu sinh</a>
+                        <a href="#!" class="text-reset" th:text="#{LivelihoodSupport}">Phương tiện mưu sinh</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -493,7 +498,7 @@
                 <!-- Grid column -->
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                    <h6 class="text-uppercase fw-bold mb-4" th:text="#{Contact}"></h6>
                     <p><i class="fas fa-home me-3"></i> An Dương Vương, Quận 5, TP.Hồ Chí Minh</p>
                     <p>
                         <i class="fas fa-envelope me-3"></i>
@@ -512,7 +517,7 @@
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
 
-        <a class="text-reset fw-bold">Quỹ từ thiện trường đại học Sài Gòn</a>
+        <a class="text-reset fw-bold"  th:text="#{SaigonUniversityCharityFund}"></a>
     </div>
     <!-- Copyright -->
 </footer>

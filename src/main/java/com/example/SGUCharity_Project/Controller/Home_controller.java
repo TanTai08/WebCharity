@@ -44,6 +44,49 @@ public class Home_controller {
             model.addAttribute("statisticalModel", new Statistical_model()); // Gán đối tượng mới nếu danh sách rỗng
         }
 
+        model.addAttribute("title_home", "title_home");
+        model.addAttribute("title_introduce", "title_introduce");
+        model.addAttribute("title_donationcontext", "title_donationcontext");
+        model.addAttribute("title_fundraisingcampaign", "title_fundraisingcampaign");
+        model.addAttribute("title_criticalillness", "title_criticalillness");
+        model.addAttribute("title_empoweringstudentstoattendschool", "title_empoweringstudentstoattendschool");
+        model.addAttribute("title_studentmeals", "title_studentmeals");
+        model.addAttribute("title_excellentstudentsfacinghardships", "title_excellentstudentsfacinghardships");
+        model.addAttribute("title_contribute", "title_contribute");
+        model.addAttribute("title_contributionupdates", "title_contributionupdates");
+        model.addAttribute("title_donationguidelines", "title_donationguidelines");
+        model.addAttribute("title_communitynews", "title_communitynews");
+        model.addAttribute("title_contact", "title_contact");
+        model.addAttribute("title_language", "title_language");
+        model.addAttribute("Kindnessalwaysbringsaboutmiracles", "Kindnessalwaysbringsaboutmiracles");
+        model.addAttribute("Donation", "Donation");
+        model.addAttribute("KeyProjects", "KeyProjects");
+        model.addAttribute("NewlyAnnouncedProjects", "NewlyAnnouncedProjects");
+        model.addAttribute("OngoingProjects", "OngoingProjects");
+        model.addAttribute("SuccessfulProjects", "SuccessfulProjects");
+        model.addAttribute("SeeMoreDetails", "SeeMoreDetails");
+        model.addAttribute("Statistics", "Statistics");
+        model.addAttribute("NumberofActiveUsers", "NumberofActiveUsers");
+        model.addAttribute("AmountDonated", "AmountDonated");
+        model.addAttribute("EventsOrganized", "EventsOrganized");
+        model.addAttribute("ProgramServiceActivities", "ProgramServiceActivities");
+        model.addAttribute("Connectwithusonsocialmedia", "Connectwithusonsocialmedia");
+        model.addAttribute("AboutUs", "AboutUs");
+        model.addAttribute("Webelievethat", "Webelievethat");
+        model.addAttribute("Guide", "Guide");
+        model.addAttribute("DonationGuide", "DonationGuide");
+        model.addAttribute("Introduction", "Introduction");
+        model.addAttribute("Organization", "Organization");
+        model.addAttribute("History", "History");
+        model.addAttribute("Program", "Program");
+        model.addAttribute("EmergencyRelief", "EmergencyRelief");
+        model.addAttribute("MedicalAssistance", "MedicalAssistance");
+        model.addAttribute("LowcostMeals", "LowcostMeals");
+        model.addAttribute("LivelihoodSupport", "LivelihoodSupport");
+        model.addAttribute("Contact", "Contact");
+        model.addAttribute("SaigonUniversityCharityFund", "SaigonUniversityCharityFund");
+        model.addAttribute("ViewMore", "ViewMore");
+
         model.addAttribute("charitycontent", charitycontent);
         model.addAttribute("serviceModels", serviceModels);
 
