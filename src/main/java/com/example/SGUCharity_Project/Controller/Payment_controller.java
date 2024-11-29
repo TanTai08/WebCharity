@@ -87,9 +87,9 @@ public class Payment_controller {
                 if (campaign != null) {
                     if ("1".equals(campaign.getStatus())) {
                         updateDefaultArticle(totalPrice);
-                        model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của tổ chức. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
+                        model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng hoặc không tồn tại không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của quỹ từ thiện SGU. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
                         model.addAttribute("orderId", orderInfo);
-                        model.addAttribute("totalPrice", totalPrice);
+                        model.addAttribute("totalPrice", totalAmount);
                         model.addAttribute("paymentTime", formattedPaymentTime);
                         model.addAttribute("transactionId", transactionId);
                         return "payment/ordersuccess2";
@@ -114,9 +114,9 @@ public class Payment_controller {
                 // Nếu không tìm thấy, tìm bài viết mặc định QC000
                 if (artical == null || "1".equals(artical.getStatus())) {
                     updateDefaultArticle(totalPrice);
-                    model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của tổ chức. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
+                    model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng hoặc không tồn tại không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của quỹ từ thiện SGU. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
                     model.addAttribute("orderId", orderInfo);
-                    model.addAttribute("totalPrice", totalPrice);
+                    model.addAttribute("totalPrice", totalAmount);
                     model.addAttribute("paymentTime", formattedPaymentTime);
                     model.addAttribute("transactionId", transactionId);
                     return "payment/ordersuccess2";
@@ -130,7 +130,7 @@ public class Payment_controller {
 
             // Truyền thông tin đã định dạng vào model để hiển thị
             model.addAttribute("orderId", orderInfo);
-            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("totalPrice", totalAmount);
             model.addAttribute("paymentTime", formattedPaymentTime);
             model.addAttribute("transactionId", transactionId);
 
