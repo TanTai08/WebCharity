@@ -79,13 +79,26 @@ public class Payment_controller {
                 FundraisingCampaign_model campaign = fundraisingCampaignRepo.findByCode(lastFiveChars).stream()
                         .findFirst()
                         .orElse(null);
+
                 if (campaign != null) {
-                    Long campaignId = campaign.getId();
-                    campaign = fundraisingCampaignRepo.findById(campaignId).orElse(null);
-                    if (campaign != null) {
-                        double amountRaised = campaign.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
-                        campaign.setAmountRaised(amountRaised);
-                        fundraisingCampaignRepo.save(campaign);
+                    if ("1".equals(campaign.getStatus())) {
+                        updateDefaultArticle(totalPrice);
+                        model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của tổ chức. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
+                        model.addAttribute("orderId", orderInfo);
+                        model.addAttribute("totalPrice", totalPrice);
+                        model.addAttribute("paymentTime", formattedPaymentTime);
+                        model.addAttribute("transactionId", transactionId);
+                        return "payment/ordersuccess2";
+                    }
+
+                    if ("0".equals(campaign.getStatus())) {
+                        Long campaignId = campaign.getId();
+                        campaign = fundraisingCampaignRepo.findById(campaignId).orElse(null);
+                        if (campaign != null) {
+                            double amountRaised = campaign.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
+                            campaign.setAmountRaised(amountRaised);
+                            fundraisingCampaignRepo.save(campaign);
+                        }
                     }
                 }
 
@@ -95,16 +108,20 @@ public class Payment_controller {
                         .orElse(null);
 
                 // Nếu không tìm thấy, tìm bài viết mặc định QC000
-                if (artical == null) {
-                    artical = articalRepo.findByCode("QC000").stream()
-                            .findFirst()
-                            .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy bài viết với mã bạn đã cung cấp"));
+                if (artical == null || "1".equals(artical.getStatus())) {
+                    updateDefaultArticle(totalPrice);
+                    model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của tổ chức. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
+                    model.addAttribute("orderId", orderInfo);
+                    model.addAttribute("totalPrice", totalPrice);
+                    model.addAttribute("paymentTime", formattedPaymentTime);
+                    model.addAttribute("transactionId", transactionId);
+                    return "payment/ordersuccess2";
+                } else {
+                    // Cộng dồn số tiền vào bài viết tìm được
+                    double amountRaisedArtical = artical.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
+                    artical.setAmountRaised(amountRaisedArtical);
+                    articalRepo.save(artical);
                 }
-
-                // Cộng dồn số tiền vào bài viết tìm được (hoặc bài viết QC000)
-                double amountRaisedArtical = artical.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
-                artical.setAmountRaised(amountRaisedArtical);
-                articalRepo.save(artical);
             }
 
             // Truyền thông tin đã định dạng vào model để hiển thị
@@ -121,4 +138,14 @@ public class Payment_controller {
             return "payment/orderfail";
         }
     }
+
+    private void updateDefaultArticle(String totalPrice) {
+        Artical_model defaultArtical = articalRepo.findByCode("QC000").stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(""));
+        double amountRaisedArtical = defaultArtical.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
+        defaultArtical.setAmountRaised(amountRaisedArtical);
+        articalRepo.save(defaultArtical);
+    }
+
 }

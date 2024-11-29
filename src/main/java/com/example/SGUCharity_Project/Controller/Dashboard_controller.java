@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import jakarta.servlet.http.HttpSession;
@@ -161,21 +162,137 @@ public class Dashboard_controller {
             @RequestParam("inputtitle") String inputtitle,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
-            @RequestParam("goalAmount") double goalAmount,
+            @RequestParam("goalAmount") String goalAmount,
             @RequestParam("content1") String content1,
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
             @RequestParam("imgContent2") String imgContent2,
             HttpSession session,
-            @RequestParam("code") String code) {
+            @RequestParam("code") String code,
+            Model model) {
 
+        // Kiểm tra dữ liệu đầu vào
+        if (inputimg.isBlank() || inputtitle.isBlank() || startDate.isBlank() || endDate.isBlank() ||
+                goalAmount.isBlank() || content1.isBlank() || content2.isBlank() || content3.isBlank() ||
+                imgContent.isBlank() || imgContent2.isBlank() || code.isBlank()) {
+            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin.");
+            // Giữ lại các giá trị đã nhập
+            model.addAttribute("inputtitle", inputtitle);
+            model.addAttribute("inputimg", inputimg);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("content1", content1);
+            model.addAttribute("content2", content2);
+            model.addAttribute("content3", content3);
+            model.addAttribute("imgContent", imgContent);
+            model.addAttribute("imgContent2", imgContent2);
+            model.addAttribute("code", code);
+            return "page_admin/CRUD_ProgramManagement/insertProgram";
+        }
+
+        // Kiểm tra tính hợp lệ của ngày
+        LocalDate start, end;
+        try {
+            start = LocalDate.parse(startDate);
+            end = LocalDate.parse(endDate);
+            if (start.isAfter(end)) {
+                model.addAttribute("error", "Ngày bắt đầu không thể sau ngày kết thúc.");
+                // Giữ lại các giá trị đã nhập
+                model.addAttribute("inputimg", inputimg);
+                model.addAttribute("inputtitle", inputtitle);
+                model.addAttribute("startDate", startDate);
+                model.addAttribute("endDate", endDate);
+                model.addAttribute("goalAmount", goalAmount);
+                model.addAttribute("content1", content1);
+                model.addAttribute("content2", content2);
+                model.addAttribute("content3", content3);
+                model.addAttribute("imgContent", imgContent);
+                model.addAttribute("imgContent2", imgContent2);
+                model.addAttribute("code", code);
+                return "page_admin/CRUD_ProgramManagement/insertProgram";
+            }
+        } catch (DateTimeParseException e) {
+            model.addAttribute("error", "Ngày không hợp lệ. Định dạng phải là yyyy-MM-dd.");
+            // Giữ lại các giá trị đã nhập
+            model.addAttribute("inputimg", inputimg);
+            model.addAttribute("inputtitle", inputtitle);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("content1", content1);
+            model.addAttribute("content2", content2);
+            model.addAttribute("content3", content3);
+            model.addAttribute("imgContent", imgContent);
+            model.addAttribute("imgContent2", imgContent2);
+            model.addAttribute("code", code);
+            return "page_admin/CRUD_ProgramManagement/insertProgram";
+        }
+
+        // Kiểm tra tính hợp lệ của số tiền
+        double goal;
+        try {
+            goal = Double.parseDouble(goalAmount);
+            if (goal <= 0) {
+                model.addAttribute("error", "Số tiền phải lớn hơn 0.");
+                // Giữ lại các giá trị đã nhập
+                model.addAttribute("inputimg", inputimg);
+                model.addAttribute("inputtitle", inputtitle);
+                model.addAttribute("startDate", startDate);
+                model.addAttribute("endDate", endDate);
+                model.addAttribute("goalAmount", goalAmount);
+                model.addAttribute("content1", content1);
+                model.addAttribute("content2", content2);
+                model.addAttribute("content3", content3);
+                model.addAttribute("imgContent", imgContent);
+                model.addAttribute("imgContent2", imgContent2);
+                model.addAttribute("code", code);
+                return "page_admin/CRUD_ProgramManagement/insertProgram";
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Số tiền không hợp lệ.");
+            // Giữ lại các giá trị đã nhập
+            model.addAttribute("inputimg", inputimg);
+            model.addAttribute("inputtitle", inputtitle);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("content1", content1);
+            model.addAttribute("content2", content2);
+            model.addAttribute("content3", content3);
+            model.addAttribute("imgContent", imgContent);
+            model.addAttribute("imgContent2", imgContent2);
+            model.addAttribute("code", code);
+            return "page_admin/CRUD_ProgramManagement/insertProgram";
+        }
+
+        // Kiểm tra mã code đã tồn tại
+        boolean codeExists = !charitycontentRepo.findByCode(code).isEmpty();
+        if (codeExists) {
+            model.addAttribute("error", "Mã chương trình đã tồn tại, vui lòng nhập mã khác.");
+            // Giữ lại các giá trị đã nhập
+            model.addAttribute("inputimg", inputimg);
+            model.addAttribute("inputtitle", inputtitle);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("content1", content1);
+            model.addAttribute("content2", content2);
+            model.addAttribute("content3", content3);
+            model.addAttribute("imgContent", imgContent);
+            model.addAttribute("imgContent2", imgContent2);
+            model.addAttribute("code", code);
+            return "page_admin/CRUD_ProgramManagement/insertProgram";
+        }
+
+        // Tạo và lưu Artical_model
         Artical_model artical = new Artical_model();
         artical.setImg(inputimg);
         artical.setTitle(inputtitle);
-        artical.setStartDate(LocalDate.parse(startDate));
-        artical.setEndDate(LocalDate.parse(endDate));
-        artical.setGoalAmount(goalAmount);
+        artical.setStartDate(start);
+        artical.setEndDate(end);
+        artical.setGoalAmount(goal);
         artical.setAmountRaised(0); // Initialize với 0
         artical.setCode(code);
         artical.setStatus("Active");
@@ -183,6 +300,7 @@ public class Dashboard_controller {
 
         Artical_model savedArtical = charitycontentRepo.save(artical);
 
+        // Tạo và lưu Articaldetail_model
         Articaldetail_model articalDetail = new Articaldetail_model();
         articalDetail.setContent_1(content1);
         articalDetail.setContent_2(content2);
@@ -195,23 +313,24 @@ public class Dashboard_controller {
 
         // Lấy username từ session
         String username = (String) session.getAttribute("username");
+
         // Tạo log cho hoạt động
         Activity_model activityModel = new Activity_model();
-        activityModel.setUsername(username);
+        activityModel.setUsername(username != null ? username : "Unknown");
         activityModel.setActivity("Thêm");
         activityModel.setDetail_activity("Thêm một chương trình mới");
         activityModel.setDatetime(LocalDateTime.now());
+
         // Lưu log hoạt động
         activityRepo.save(activityModel);
 
         return "redirect:/dashboard_programmanagement";
     }
 
-
-
     @GetMapping("programmanagement/{id_update}")
     public String programmanagement_update(@PathVariable("id_update") Long id, Model model) {
-        Artical_model articalModel = charitycontentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID" + id));
+        Artical_model articalModel = charitycontentRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID " + id));
         Articaldetail_model articaldetailModels = articalDetailRepo.findFirstByArtical_Id(id);
         model.addAttribute("articalModel", articalModel);
         model.addAttribute("articaldetailModels", articaldetailModels);
@@ -219,58 +338,110 @@ public class Dashboard_controller {
         return "page_admin/CRUD_ProgramManagement/updateProgram";
     }
 
-
-
     @PostMapping("programmanagement/{id_update}")
     public String handle_programmanagement_update(
             @PathVariable("id_update") Long id,
-            @RequestParam("img") String inputimg,  // Match form field name
+            @RequestParam("img") String inputimg,
             @RequestParam("title") String inputtitle,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
-            @RequestParam("goalAmount") double goalAmount,
+            @RequestParam("goalAmount") String goalAmount,
             @RequestParam("content1") String content1,
             @RequestParam("content2") String content2,
             @RequestParam("content3") String content3,
             @RequestParam("imgContent") String imgContent,
             @RequestParam("imgContent2") String imgContent2,
-            HttpSession session, @RequestParam("code") String code) {
+            HttpSession session, @RequestParam("code") String code,
+            Model model) {
 
+        // Lấy bài viết hiện tại
         Artical_model artical = charitycontentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + id));
+        Articaldetail_model articalDetail = articalDetailRepo.findFirstByArtical_Id(id);
 
+        // Kiểm tra dữ liệu đầu vào
+        if (inputimg.isBlank() || inputtitle.isBlank() || startDate.isBlank() || endDate.isBlank() ||
+                goalAmount.isBlank() || content1.isBlank() || content2.isBlank() || content3.isBlank() ||
+                imgContent.isBlank() || imgContent2.isBlank() || code.isBlank()) {
+            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin.");
+            model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+            model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+            return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+        }
+
+        // Kiểm tra tính hợp lệ của ngày
+        LocalDate start, end;
+        try {
+            start = LocalDate.parse(startDate);
+            end = LocalDate.parse(endDate);
+            if (start.isAfter(end)) {
+                model.addAttribute("error", "Ngày bắt đầu không thể sau ngày kết thúc.");
+                model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+                model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+                return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+            }
+        } catch (DateTimeParseException e) {
+            model.addAttribute("error", "Ngày không hợp lệ. Định dạng phải là yyyy-MM-dd.");
+            model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+            model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+            return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+        }
+
+        // Kiểm tra tính hợp lệ của số tiền
+        double goal;
+        try {
+            goal = Double.parseDouble(goalAmount);
+            if (goal <= 0) {
+                model.addAttribute("error", "Số tiền phải lớn hơn 0.");
+                model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+                model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+                return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Số tiền không hợp lệ.");
+            model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+            model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+            return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+        }
+
+        // Kiểm tra mã code không bị trùng (không tính bài viết hiện tại)
+        boolean codeExists = charitycontentRepo.findByCode(code).stream()
+                .anyMatch(existingArtical -> !existingArtical.getId().equals(id));
+        if (codeExists) {
+            model.addAttribute("error", "Mã bài viết đã tồn tại, vui lòng nhập mã khác.");
+            model.addAttribute("articalModel", artical); // Giữ lại dữ liệu bài viết hiện tại
+            model.addAttribute("articaldetailModels", articalDetail); // Giữ lại dữ liệu chi tiết bài viết hiện tại
+            return "page_admin/CRUD_ProgramManagement/updateProgram"; // Trả về trang chỉnh sửa
+        }
+
+        // Cập nhật thông tin bài viết
         artical.setImg(inputimg);
         artical.setTitle(inputtitle);
-        artical.setStartDate(LocalDate.parse(startDate));
-        artical.setEndDate(LocalDate.parse(endDate));
-        artical.setGoalAmount(goalAmount);
+        artical.setStartDate(start);
+        artical.setEndDate(end);
+        artical.setGoalAmount(goal);
         artical.setCode(code);
-
         charitycontentRepo.save(artical);
 
-        Articaldetail_model articalDetail = articalDetailRepo.findFirstByArtical_Id(id);
+        // Cập nhật thông tin chi tiết bài viết
         articalDetail.setContent_1(content1);
         articalDetail.setContent_2(content2);
         articalDetail.setContent_3(content3);
         articalDetail.setImg_content(imgContent);
         articalDetail.setImg_content2(imgContent2);
-
         articalDetailRepo.save(articalDetail);
 
-        // Lấy username từ session
+        // Ghi log hoạt động
         String username = (String) session.getAttribute("username");
-        // Tạo log cho hoạt động
         Activity_model activityModel = new Activity_model();
-        activityModel.setUsername(username);
+        activityModel.setUsername(username != null ? username : "Unknown");
         activityModel.setActivity("Sửa");
         activityModel.setDetail_activity("Sửa bài viết chương trình với ID: " + id);
         activityModel.setDatetime(LocalDateTime.now());
-        // Lưu log hoạt động
         activityRepo.save(activityModel);
 
         return "redirect:/dashboard_programmanagement";
     }
-
 
 
     @PostMapping("/updateStatus")
@@ -711,39 +882,126 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
                                  @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate,
                                  @RequestParam("goalAmount") String goalAmount,
+                                 @RequestParam("code") String code,
+                                 @RequestParam("detailUrl") String detailUrl,
                                  HttpSession session,
-                                 @RequestParam("goalAmount") String code,
-                                 @RequestParam("detailUrl") String detailUrl) {
+                                 Model model) {
+
+        // Kiểm tra dữ liệu đầu vào
+        if (title.isBlank() || imgUrl.isBlank() || startDate.isBlank() || endDate.isBlank() ||
+                goalAmount.isBlank() || code.isBlank() || detailUrl.isBlank()) {
+            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin.");
+            model.addAttribute("title", title);
+            model.addAttribute("imgUrl", imgUrl);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("code", code);
+            model.addAttribute("detailUrl", detailUrl);
+            return "page_admin/CRUD_CampaignManagement/insertCampaign";
+        }
+
+        // Kiểm tra tính hợp lệ của ngày
+        LocalDate start, end;
+        try {
+            start = LocalDate.parse(startDate);
+            end = LocalDate.parse(endDate);
+            if (start.isAfter(end)) {
+                model.addAttribute("error", "Ngày bắt đầu không thể sau ngày kết thúc.");
+                model.addAttribute("title", title);
+                model.addAttribute("imgUrl", imgUrl);
+                model.addAttribute("startDate", startDate);
+                model.addAttribute("endDate", endDate);
+                model.addAttribute("goalAmount", goalAmount);
+                model.addAttribute("code", code);
+                model.addAttribute("detailUrl", detailUrl);
+                return "page_admin/CRUD_CampaignManagement/insertCampaign";
+            }
+        } catch (DateTimeParseException e) {
+            model.addAttribute("error", "Ngày không hợp lệ. Định dạng phải là yyyy-MM-dd.");
+            model.addAttribute("title", title);
+            model.addAttribute("imgUrl", imgUrl);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("code", code);
+            model.addAttribute("detailUrl", detailUrl);
+            return "page_admin/CRUD_CampaignManagement/insertCampaign";
+        }
+
+        // Kiểm tra tính hợp lệ của số tiền
+        double goal;
+        try {
+            goal = Double.parseDouble(goalAmount);
+            if (goal <= 0) {
+                model.addAttribute("error", "Số tiền phải lớn hơn 0.");
+                model.addAttribute("title", title);
+                model.addAttribute("imgUrl", imgUrl);
+                model.addAttribute("startDate", startDate);
+                model.addAttribute("endDate", endDate);
+                model.addAttribute("goalAmount", goalAmount);
+                model.addAttribute("code", code);
+                model.addAttribute("detailUrl", detailUrl);
+                return "page_admin/CRUD_CampaignManagement/insertCampaign";
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Số tiền không hợp lệ.");
+            model.addAttribute("title", title);
+            model.addAttribute("imgUrl", imgUrl);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("code", code);
+            model.addAttribute("detailUrl", detailUrl);
+            return "page_admin/CRUD_CampaignManagement/insertCampaign";
+        }
+
+        // Kiểm tra mã code đã tồn tại
+        boolean codeExists = !fundraisingCampaignRepo.findByCode(code).isEmpty();
+        if (codeExists) {
+            model.addAttribute("error", "Mã chiến dịch đã tồn tại, vui lòng nhập mã khác.");
+            model.addAttribute("title", title);
+            model.addAttribute("imgUrl", imgUrl);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("goalAmount", goalAmount);
+            model.addAttribute("code", code);
+            model.addAttribute("detailUrl", detailUrl);
+            return "page_admin/CRUD_CampaignManagement/insertCampaign";
+        }
 
         // Tạo một đối tượng mới và thiết lập các thuộc tính
         FundraisingCampaign_model fundraisingCampaignModel = new FundraisingCampaign_model();
         fundraisingCampaignModel.setTitle(title);
         fundraisingCampaignModel.setImgUrl(imgUrl);
-        fundraisingCampaignModel.setStartDate(LocalDate.parse(startDate));
-        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate));
+        fundraisingCampaignModel.setStartDate(start);
+        fundraisingCampaignModel.setEndDate(end);
         fundraisingCampaignModel.setAmountRaised(0);
-        fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
+        fundraisingCampaignModel.setGoalAmount(goal);
         fundraisingCampaignModel.setCode(code);
         fundraisingCampaignModel.setStatus("Đang vận động");
         fundraisingCampaignModel.setDetailUrl(detailUrl);
         fundraisingCampaignModel.setCategory("Bệnh hiểm nghèo");
 
-        // Lưu vào database mà không thay đổi ID
+        // Lưu vào database
         fundraisingCampaignRepo.save(fundraisingCampaignModel);
 
         // Lấy username từ session
         String username = (String) session.getAttribute("username");
+
         // Tạo log cho hoạt động
         Activity_model activityModel = new Activity_model();
-        activityModel.setUsername(username);
+        activityModel.setUsername(username != null ? username : "Unknown");
         activityModel.setActivity("Thêm");
         activityModel.setDetail_activity("Thêm một chiến dịch mới");
         activityModel.setDatetime(LocalDateTime.now());
+
         // Lưu log hoạt động
         activityRepo.save(activityModel);
 
-        return "redirect:/dashboard_campaignmanagement";
+        return "redirect:/dashboard_campaignmanagement"; // Điều hướng về trang quản lý chiến dịch
     }
+
 
     @GetMapping("campaignmanagement/{id_update}")
     public String campaignmanagement_update(@PathVariable("id_update") Long id, Model model) {
@@ -754,43 +1012,96 @@ public String campaignmanagement(@RequestParam(value = "searchTerm", required = 
     }
 
     @PostMapping("campaignmanagement/{id_update}")
-    public String handle_campaignmanagement_update(@RequestParam("title") String title,
-                                                   @RequestParam("imgUrl") String imgUrl,
-                                                   @RequestParam("startDate") String startDate, // Correct name for startDate
-                                                   @RequestParam("endDate") String endDate, // Correct name for endDate
-                                                   @RequestParam("goalAmount") String goalAmount,
-                                                   @RequestParam("code") String code,
-                                                   @RequestParam("detailUrl") String detailUrl, // detailUrl is a request parameter, not a path variable
-                                                   @PathVariable("id_update") Long id,
-                                                   HttpSession session) {
-        FundraisingCampaign_model fundraisingCampaignModel = fundraisingCampaignRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID " + id));
+    public String handleCampaignManagementUpdate(@RequestParam("title") String title,
+                                                 @RequestParam("imgUrl") String imgUrl,
+                                                 @RequestParam("startDate") String startDate,
+                                                 @RequestParam("endDate") String endDate,
+                                                 @RequestParam("goalAmount") String goalAmount,
+                                                 @RequestParam("code") String code,
+                                                 @RequestParam("detailUrl") String detailUrl,
+                                                 @PathVariable("id_update") Long id,
+                                                 HttpSession session,
+                                                 Model model) {
+        // Lấy chiến dịch hiện tại
+        FundraisingCampaign_model campaign = fundraisingCampaignRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Chiến dịch không tồn tại với ID: " + id));
 
-        // Update fields
-        fundraisingCampaignModel.setTitle(title);
-        fundraisingCampaignModel.setImgUrl(imgUrl);
-        fundraisingCampaignModel.setStartDate(LocalDate.parse(startDate)); // Set startDate
-        fundraisingCampaignModel.setEndDate(LocalDate.parse(endDate)); // Set endDate
-        fundraisingCampaignModel.setGoalAmount(Double.parseDouble(goalAmount));
-        fundraisingCampaignModel.setDetailUrl(detailUrl);
-        fundraisingCampaignModel.setCode(code);
+        // Kiểm tra dữ liệu đầu vào
+        if (title.isBlank() || imgUrl.isBlank() || startDate.isBlank() || endDate.isBlank() ||
+                goalAmount.isBlank() || code.isBlank() || detailUrl.isBlank()) {
+            model.addAttribute("error", "Vui lòng nhập đầy đủ thông tin.");
+            model.addAttribute("fundraisingCampaignModel", campaign);
+            return "page_admin/CRUD_CampaignManagement/updateCampaign";
+        }
 
-        // Save updated campaign
-        fundraisingCampaignRepo.save(fundraisingCampaignModel);
+        // Kiểm tra tính hợp lệ của ngày
+        LocalDate start, end;
+        try {
+            start = LocalDate.parse(startDate);
+            end = LocalDate.parse(endDate);
+            if (start.isAfter(end)) {
+                model.addAttribute("error", "Ngày bắt đầu không thể sau ngày kết thúc.");
+                model.addAttribute("fundraisingCampaignModel", campaign);
+                return "page_admin/CRUD_CampaignManagement/updateCampaign";
+            }
+        } catch (DateTimeParseException e) {
+            model.addAttribute("error", "Ngày không hợp lệ. Định dạng phải là yyyy-MM-dd.");
+            model.addAttribute("fundraisingCampaignModel", campaign);
+            return "page_admin/CRUD_CampaignManagement/updateCampaign";
+        }
+
+        // Kiểm tra tính hợp lệ của số tiền
+        double goal;
+        try {
+            goal = Double.parseDouble(goalAmount);
+            if (goal <= 0) {
+                model.addAttribute("error", "Số tiền phải lớn hơn 0.");
+                model.addAttribute("fundraisingCampaignModel", campaign);
+                return "page_admin/CRUD_CampaignManagement/updateCampaign";
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Số tiền không hợp lệ.");
+            model.addAttribute("fundraisingCampaignModel", campaign);
+            return "page_admin/CRUD_CampaignManagement/updateCampaign";
+        }
+
+        // Kiểm tra mã code trùng lặp (ngoại trừ ID hiện tại)
+        boolean codeExists = fundraisingCampaignRepo.findByCode(code).stream()
+                .anyMatch(c -> !c.getId().equals(id));
+        if (codeExists) {
+            model.addAttribute("error", "Mã chiến dịch đã tồn tại, vui lòng nhập mã khác.");
+            model.addAttribute("fundraisingCampaignModel", campaign);
+            return "page_admin/CRUD_CampaignManagement/updateCampaign";
+        }
+
+        // Cập nhật các thuộc tính của chiến dịch
+        campaign.setTitle(title);
+        campaign.setImgUrl(imgUrl);
+        campaign.setStartDate(start);
+        campaign.setEndDate(end);
+        campaign.setGoalAmount(goal);
+        campaign.setDetailUrl(detailUrl);
+        campaign.setCode(code);
+
+        // Lưu chiến dịch đã cập nhật
+        fundraisingCampaignRepo.save(campaign);
 
         // Lấy username từ session
         String username = (String) session.getAttribute("username");
-        // Tạo log cho hoạt động
-        Activity_model activityModel = new Activity_model();
-        activityModel.setUsername(username);
-        activityModel.setActivity("Sửa");
-        activityModel.setDetail_activity("Xóa bài viết chiến dịch với ID: " + id);
-        activityModel.setDatetime(LocalDateTime.now());
-        // Lưu log hoạt động
-        activityRepo.save(activityModel);
 
-        return "redirect:/dashboard_campaignmanagement";
+        // Ghi log hoạt động
+        Activity_model activity = new Activity_model();
+        activity.setUsername(username != null ? username : "Unknown");
+        activity.setActivity("Cập nhật");
+        activity.setDetail_activity("Cập nhật chiến dịch với ID: " + id);
+        activity.setDatetime(LocalDateTime.now());
+        activityRepo.save(activity);
+
+        return "redirect:/dashboard_campaignmanagement"; // Redirect tới trang quản lý chiến dịch
     }
+
+
+
 
 
     @PostMapping("campaign/delete/{id_delete}")

@@ -110,7 +110,6 @@
 </head>
 <body>
 <form method="post" th:action="@{'/programmanagement/' + ${articalModel.id}}">
-
     <h1>Phần tổng quát</h1>
     <div class="form-group">
         <label for="inputtitle">Tiêu đề bài viết</label>
@@ -119,28 +118,30 @@
     <div class="form-group">
         <label for="inputimg">Hình ảnh Thumbnail</label>
         <input type="text" name="img" th:value="${articalModel.img}" class="form-control" id="inputimg" placeholder="URL hình ảnh" required/>
-        <h1>Phần chi tiết</h1>
-        <div class="form-group">
-            <label for="content1">Nội dung chi tiết 1</label>
-            <textarea name="content1" th:text="${articaldetailModels.content_1}" rows="4" class="form-control" id="content1" placeholder="Nhập nội dung 1" required ></textarea>
-        </div>
-        <div class="form-group">
-            <label for="content2">Nội dung chi tiết 2</label>
-            <textarea name="content2" th:text="${articaldetailModels.content_2}" rows="4" class="form-control" id="content2" placeholder="Nhập nội dung 2" required ></textarea>
-        </div>
-        <div class="form-group">
-            <label for="content3">Nội dung chi tiết 3</label>
-            <textarea name="content3" th:text="${articaldetailModels.content_3}" rows="4" class="form-control" id="content3" placeholder="Nhập nội dung 3" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="imgContent">Hình ảnh chi tiết</label>
-            <textarea name="imgContent" th:text="${articaldetailModels.img_content}" rows="4" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết 1" required ></textarea>
-        </div>
-        <div class="form-group">
-            <label for="imgContent2">Hình ảnh chi tiết 2</label>
-            <textarea name="imgContent2" th:text="${articaldetailModels.img_content2}" rows="4" class="form-control" id="imgContent2" placeholder="Nhập link hình ảnh chi tiết 2" required></textarea>
-        </div>
     </div>
+
+    <h1>Phần chi tiết</h1>
+    <div class="form-group">
+        <label for="content1">Nội dung chi tiết 1</label>
+        <textarea name="content1" th:text="${articaldetailModels.content_1}" rows="4" class="form-control" id="content1" placeholder="Nhập nội dung 1" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="content2">Nội dung chi tiết 2</label>
+        <textarea name="content2" th:text="${articaldetailModels.content_2}" rows="4" class="form-control" id="content2" placeholder="Nhập nội dung 2" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="content3">Nội dung chi tiết 3</label>
+        <textarea name="content3" th:text="${articaldetailModels.content_3}" rows="4" class="form-control" id="content3" placeholder="Nhập nội dung 3" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="imgContent">Hình ảnh chi tiết</label>
+        <textarea name="imgContent" th:text="${articaldetailModels.img_content}" rows="4" class="form-control" id="imgContent" placeholder="Nhập link hình ảnh chi tiết 1" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="imgContent2">Hình ảnh chi tiết 2</label>
+        <textarea name="imgContent2" th:text="${articaldetailModels.img_content2}" rows="4" class="form-control" id="imgContent2" placeholder="Nhập link hình ảnh chi tiết 2" required></textarea>
+    </div>
+
     <div class="form-group">
         <label for="startDate">Ngày bắt đầu</label>
         <input type="date" name="startDate" th:value="${articalModel.startDate}" class="form-control" id="startDate" required/>
@@ -151,11 +152,14 @@
     </div>
     <div class="form-group">
         <label for="goalAmount">Số tiền mục tiêu</label>
-        <input type="number" name="goalAmount" th:value="${articalModel.goalAmount}" class="form-control" id="goalAmount" placeholder="Nhập số tiền mục tiêu" required />
+        <input type="number" name="goalAmount" th:value="${articalModel.goalAmount}" class="form-control" id="goalAmount" placeholder="Nhập số tiền mục tiêu" required/>
     </div>
     <div class="form-group">
-        <label for="code">Số tiền mục tiêu</label>
-        <input type="text" name="code" th:value="${articalModel.code}" class="form-control" id="code" placeholder="Nhập mã cú pháp" required>
+        <label for="code">Mã cú pháp</label>
+        <input type="text" name="code" th:value="${articalModel.code}" class="form-control" id="code" placeholder="Nhập mã cú pháp" required/>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
     </div>
     <button type="submit" class="btn btn-primary">Cập nhật</button>
 </form>

@@ -112,7 +112,7 @@
     <h1>Phần tổng quát</h1>
     <div class="form-group">
         <label for="title">Tiêu đề chiến dịch</label>
-        <input type="text" name="title" th:value="${fundraisingCampaignModel.title}" class="form-control" id="title" placeholder="Nhập tiêu đề chiến dịch" required/>
+        <input type="text" name="title" th:value="${fundraisingCampaignModel.title}" class="form-control" id="title" placeholder="Nhập tiêu đề chiến dịch" required />
     </div>
     <div class="form-group">
         <label for="imgUrl">Hình ảnh chiến dịch</label>
@@ -120,26 +120,30 @@
     </div>
     <div class="form-group">
         <label for="startDate">Ngày bắt đầu</label>
-        <textarea type="date" name="startDate" th:text="${fundraisingCampaignModel.startDate}" rows="4" class="form-control" id="startDate" placeholder="Nhập ngày kết thúc" required></textarea>
+        <input type="date" name="startDate" th:value="${fundraisingCampaignModel.startDate}" class="form-control" id="startDate" required />
     </div>
     <div class="form-group">
         <label for="endDate">Ngày kết thúc</label>
-        <textarea type="date" name="endDate" th:text="${fundraisingCampaignModel.endDate}" rows="4" class="form-control" id="endDate" placeholder="Nhập ngày kết thúc" required></textarea>
+        <input type="date" name="endDate" th:value="${fundraisingCampaignModel.endDate}" class="form-control" id="endDate" required />
     </div>
     <div class="form-group">
         <label for="goalAmount">Số tiền cần đạt</label>
-        <input type="number" name="goalAmount" th:value="${fundraisingCampaignModel.goalAmount}" class="form-control" id="goalAmount" placeholder="Nhập số tiền cần đạt" required/>
+        <input type="number" name="goalAmount" th:value="${fundraisingCampaignModel.goalAmount}" class="form-control" id="goalAmount" placeholder="Nhập số tiền cần đạt" required />
     </div>
     <div class="form-group">
         <label for="detailUrl">Link chiến dịch</label>
-        <textarea name="detailUrl" th:text="${fundraisingCampaignModel.detailUrl}" rows="4" class="form-control" id="detailUrl" placeholder="Nhập link chiến dịch" required></textarea>
+        <input type="url" name="detailUrl" th:value="${fundraisingCampaignModel.detailUrl}" class="form-control" id="detailUrl" placeholder="Nhập link chiến dịch" required />
     </div>
     <div class="form-group">
         <label for="code">Mã cú pháp</label>
-        <textarea type="text" name="code" th:text="${fundraisingCampaignModel.code}" class="form-control" id="code" placeholder="Nhập mã cú pháp" required></textarea>
+        <input type="text" name="code" th:value="${fundraisingCampaignModel.code}" class="form-control" id="code" placeholder="Nhập mã cú pháp" required />
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
     </div>
     <button type="submit" class="btn btn-primary">Cập nhật</button>
 </form>
+
 </body>
 <!-- MDB -->
 <!-- Include jQuery first -->
