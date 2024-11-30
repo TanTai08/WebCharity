@@ -45,6 +45,7 @@ public class Payment_controller {
         return "redirect:" + vnpayUrl;
     }
 
+
     @GetMapping("/vnpay-payment")
     public String GetMapping(HttpServletRequest request, Model model) {
         int paymentStatus = vnPayService.orderReturn(request);
@@ -79,12 +80,13 @@ public class Payment_controller {
             if (paymentStatus == 1 && orderInfo != null && !orderInfo.trim().isEmpty()) {
                 String lastFiveChars = orderInfo.replaceAll("\\s", "").substring(orderInfo.length() - 5);
 
-                // Cập nhật FundraisingCampaign_model
+                // Tìm kiếm FundraisingCampaign_model
                 FundraisingCampaign_model campaign = fundraisingCampaignRepo.findByCode(lastFiveChars).stream()
                         .findFirst()
                         .orElse(null);
 
                 if (campaign != null) {
+                    System.out.println("Campaign Status: '" + campaign.getStatus() + "'");
                     if ("1".equals(campaign.getStatus())) {
                         updateDefaultArticle(totalPrice);
                         model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng hoặc không tồn tại không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của quỹ từ thiện SGU. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
@@ -93,39 +95,56 @@ public class Payment_controller {
                         model.addAttribute("paymentTime", formattedPaymentTime);
                         model.addAttribute("transactionId", transactionId);
                         return "payment/ordersuccess2";
-                    }
-
-                    if ("0".equals(campaign.getStatus())) {
-                        Long campaignId = campaign.getId();
-                        campaign = fundraisingCampaignRepo.findById(campaignId).orElse(null);
-                        if (campaign != null) {
-                            double amountRaised = campaign.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
-                            campaign.setAmountRaised(amountRaised);
-                            fundraisingCampaignRepo.save(campaign);
-                        }
+                    } else {
+                        // Cộng dồn số tiền vào campaign
+                        double amountRaisedCampaign = campaign.getAmountRaised() + totalAmount;
+                        campaign.setAmountRaised(amountRaisedCampaign);
+                        fundraisingCampaignRepo.save(campaign);
+                        model.addAttribute("message", "Cập nhật vào chiến dịch thành công!");
+                        model.addAttribute("orderId", orderInfo);
+                        model.addAttribute("totalPrice", totalAmount);
+                        model.addAttribute("paymentTime", formattedPaymentTime);
+                        model.addAttribute("transactionId", transactionId);
+                        return "payment/ordersuccess";
                     }
                 }
 
-                // Cập nhật Artical_model
+                // Nếu không tìm thấy campaign hoặc campaign không khả dụng, tìm kiếm Artical_model
                 Artical_model artical = articalRepo.findByCode(lastFiveChars).stream()
                         .findFirst()
                         .orElse(null);
 
-                // Nếu không tìm thấy, tìm bài viết mặc định QC000
-                if (artical == null || "1".equals(artical.getStatus())) {
-                    updateDefaultArticle(totalPrice);
-                    model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng hoặc không tồn tại không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của quỹ từ thiện SGU. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
-                    model.addAttribute("orderId", orderInfo);
-                    model.addAttribute("totalPrice", totalAmount);
-                    model.addAttribute("paymentTime", formattedPaymentTime);
-                    model.addAttribute("transactionId", transactionId);
-                    return "payment/ordersuccess2";
-                } else {
-                    // Cộng dồn số tiền vào bài viết tìm được
-                    double amountRaisedArtical = artical.getAmountRaised() + Double.parseDouble(totalPrice) / 100; // Chia 100 vì vnp_Amount nhân 100
-                    artical.setAmountRaised(amountRaisedArtical);
-                    articalRepo.save(artical);
+                if (artical != null) {
+                    if ("1".equals(artical.getStatus())) {
+                        updateDefaultArticle(totalPrice);
+                        model.addAttribute("message", "Hoàn cảnh bạn muốn quyên góp đã bị đóng hoặc không tồn tại không thể quyên góp được nữa và tiền bạn đóng góp đã được chuyển vào quỹ chung của quỹ từ thiện SGU. Nếu bạn có thắc mắc và muốn giúp đỡ vui lòng liên hệ đến SĐT: 0898502822");
+                        model.addAttribute("orderId", orderInfo);
+                        model.addAttribute("totalPrice", totalAmount);
+                        model.addAttribute("paymentTime", formattedPaymentTime);
+                        model.addAttribute("transactionId", transactionId);
+                        return "payment/ordersuccess2";
+                    } else {
+                        // Cộng dồn số tiền vào artical
+                        double amountRaisedArtical = artical.getAmountRaised() + totalAmount;
+                        artical.setAmountRaised(amountRaisedArtical);
+                        articalRepo.save(artical);
+                        model.addAttribute("message", "Cập nhật vào bài viết thành công!");
+                        model.addAttribute("orderId", orderInfo);
+                        model.addAttribute("totalPrice", totalAmount);
+                        model.addAttribute("paymentTime", formattedPaymentTime);
+                        model.addAttribute("transactionId", transactionId);
+                        return "payment/ordersuccess";
+                    }
                 }
+
+                // Nếu không tìm thấy cả campaign và artical
+                updateDefaultArticle(totalPrice);
+                model.addAttribute("message", "Không tìm thấy hoàn cảnh hoặc chiến dịch phù hợp. Số tiền đã được chuyển vào quỹ chung.");
+                model.addAttribute("orderId", orderInfo);
+                model.addAttribute("totalPrice", totalAmount);
+                model.addAttribute("paymentTime", formattedPaymentTime);
+                model.addAttribute("transactionId", transactionId);
+                return "payment/ordersuccess2";
             }
 
             // Truyền thông tin đã định dạng vào model để hiển thị
