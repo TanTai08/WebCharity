@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -36,6 +37,13 @@ public class Home_controller {
         List<Artical_model> charitycontent = charitycontentRepo.findAll();
         List<Statistical_model> statisticalModels = statisticalRepo.findAll();
         List<Service_model> serviceModels = serviceOperationsRepo.findAll();
+
+        // Format endDate for each article
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (Artical_model article : charitycontent) {
+            article.setFormattedEndDate(article.getEndDate().format(formatter));
+        }
+
 
         // Kiểm tra nếu danh sách không rỗng
         if (!statisticalModels.isEmpty()) {
