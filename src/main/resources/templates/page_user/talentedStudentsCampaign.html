@@ -264,7 +264,7 @@
     <h2 class="font-weight-bold">Chiến dịch Gây Quỹ cho Trẻ Mồ Côi</h2>
     <p class="lead">Chúng tôi đang gây quỹ để hỗ trợ cho các sinh viên giỏi có hoàn cảnh khó khăn. Hãy tham gia và đóng góp để cải thiện cuộc sống cho các em.</p>
     <div class="row">
-      <div class="col-md-4 mb-4" th:each="campaign : ${campaigns}">
+      <div class="col-md-4 mb-4" th:each="campaign : ${campaigns}" th:if="${campaign.status == '0'}">
         <div class="card project shadow h-100" th:data-category="${campaign.category}"
              style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; transition: transform 0.3s;">
 

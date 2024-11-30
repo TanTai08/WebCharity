@@ -9,7 +9,8 @@ import java.util.List;
 public interface Activity_Repo extends JpaRepository<Activity_model, Long> {
     List<Activity_model> findByUsername(String username);
 
-    List<Activity_model> findByDatetimeAfter(LocalDateTime datetime);
+    List<Activity_model> findByDatetimeBetween(LocalDateTime start, LocalDateTime end);
 
-    List<Activity_model> findByUsernameAndDatetimeAfter(String username, LocalDateTime datetime);
+    List<Activity_model> findByUsernameAndDatetimeBetween(String username, LocalDateTime start, LocalDateTime end);
 }
+

@@ -1199,47 +1199,54 @@ public class Dashboard_controller {
 
 
     @GetMapping("dashboard_activity")
-    public String render_activity(@RequestParam(value = "username", required = false) String username,
-                                  @RequestParam(value = "startDate", required = false) String startDate,
-                                  @RequestParam(value = "startTime", required = false) String startTime,
-                                  Model model) {
+    public String render_activity(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate,
+            Model model) {
+
         List<Activity_model> activityModels;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-        // Định dạng lại ngày giờ thành kiểu dễ đọc
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss");
+        LocalDate startLocalDate = null;
+        LocalDate endLocalDate = null;
 
-        // Kiểm tra và xử lý tìm kiếm theo ngày giờ
-        if (startDate != null && !startDate.isEmpty() && startTime != null && !startTime.isEmpty()) {
-            LocalDateTime startDateTime = null;
-            String dateTimeStr = startDate + "T" + startTime;  // Ghép ngày và giờ lại thành chuỗi
-            try {
-                startDateTime = LocalDateTime.parse(dateTimeStr);  // Chuyển thành LocalDateTime
-            } catch (DateTimeParseException e) {
-                // Nếu xảy ra lỗi khi phân tích, có thể hiển thị thông báo lỗi cho người dùng
-                model.addAttribute("error", "Định dạng thời gian không hợp lệ.");
-                return "page_admin/Activity_admin"; // Quay lại trang mà không tìm kiếm
-            }
+        if (startDate != null && !startDate.isEmpty()) {
+            startLocalDate = LocalDate.parse(startDate, dateFormatter);
+        }
+        if (endDate != null && !endDate.isEmpty()) {
+            endLocalDate = LocalDate.parse(endDate, dateFormatter);
+        }
 
-            // Tìm kiếm theo thời gian, có thể có hoặc không có username
-            if (username != null && !username.isEmpty()) {
-                activityModels = activityRepo.findByUsernameAndDatetimeAfter(username, startDateTime);
-            } else {
-                activityModels = activityRepo.findByDatetimeAfter(startDateTime); // Tìm theo thời gian thôi
-            }
+        LocalDateTime startDateTime = (startLocalDate != null) ? startLocalDate.atStartOfDay() : null;
+        LocalDateTime endDateTime = (endLocalDate != null) ? endLocalDate.atTime(23, 59, 59) : null;
+
+        if (username != null && !username.isEmpty() && startDateTime != null && endDateTime != null) {
+            activityModels = activityRepo.findByUsernameAndDatetimeBetween(username, startDateTime, endDateTime);
+        } else if (startDateTime != null && endDateTime != null) {
+            activityModels = activityRepo.findByDatetimeBetween(startDateTime, endDateTime);
+        } else if (username != null && !username.isEmpty()) {
+            activityModels = activityRepo.findByUsername(username);
         } else {
-            // Nếu không có thông tin thời gian, hiển thị tất cả dữ liệu
             activityModels = activityRepo.findAll();
         }
 
-        // Định dạng ngày giờ trước khi truyền vào model để hiển thị
-        activityModels.forEach(activity -> activity.setFormattedDatetime(activity.getDatetime().format(formatter)));
+        // Gán giá trị định dạng ngày giờ vào formattedDatetime
+        activityModels.forEach(activity -> {
+            if (activity.getDatetime() != null) {
+                activity.setFormattedDatetime(activity.getDatetime().format(formatter));
+            }
+        });
 
         model.addAttribute("activityModels", activityModels);
         model.addAttribute("username", username);
         model.addAttribute("startDate", startDate);
-        model.addAttribute("startTime", startTime);
+        model.addAttribute("endDate", endDate);
         return "page_admin/Activity_admin";
     }
+
+
 
 
 

@@ -28,22 +28,25 @@
     <h2 class="text-center mb-4 text-primary">Lịch Sử Hoạt Động</h2>
 
     <!-- Form tìm kiếm -->
-    <form th:action="@{/dashboard_activity}" method="get" class="mb-4">
-        <div class="row">
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="username" placeholder="Tìm kiếm theo tài khoản" th:value="${username}">
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control" name="startDate" th:value="${startDate}">
-            </div>
-            <div class="col-md-3">
-                <input type="time" class="form-control" name="startTime" th:value="${startTime}">
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-            </div>
+    <form method="get" action="/dashboard_activity" class="row g-3 align-items-center" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+        <div style="flex: 1; min-width: 200px;">
+            <label for="username" class="form-label" style="font-weight: bold;">Tài khoản</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tài khoản" th:value="${username}" style="border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+            <label for="startDate" class="form-label" style="font-weight: bold;">Từ ngày</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}" style="border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+            <label for="endDate" class="form-label" style="font-weight: bold;">Đến ngày</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}" style="border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        </div>
+        <div style="flex: 1; min-width: 100px; display: flex; justify-content: center; align-items: flex-end;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 5px; padding: 10px 15px;">Tìm kiếm</button>
         </div>
     </form>
+
+
 
 
     <!-- Thông báo khi không có dữ liệu -->
