@@ -55,11 +55,8 @@ Chọn thư mục WebCharity
 Cấu hình Tomcat và MySQL nếu cần
 
 🗄 Bước 3: Tạo CSDL MySQL
-sql
-Sao chép
-Chỉnh sửa
 CREATE DATABASE webcharity;
--- Import file script.sql nếu có
+-- Import sgucharity.sql 
 ▶️ Bước 4: Chạy ứng dụng
 Chạy trên Tomcat server
 
