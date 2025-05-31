@@ -39,3 +39,28 @@
 
 ```bash
 git clone https://github.com/TanTai08/WebCharity.git
+Hoặc tải về file ZIP:
+
+Truy cập: https://github.com/TanTai08/WebCharity
+
+Nhấn nút Code > Download ZIP
+
+Giải nén và mở trong IDE
+
+🛠 Bước 2: Import project vào IntelliJ hoặc Eclipse
+Chọn Open Project hoặc Import > Existing project
+
+Chọn thư mục WebCharity
+
+Cấu hình Tomcat và MySQL nếu cần
+
+🗄 Bước 3: Tạo CSDL MySQL
+sql
+Sao chép
+Chỉnh sửa
+CREATE DATABASE webcharity;
+-- Import file script.sql nếu có
+▶️ Bước 4: Chạy ứng dụng
+Chạy trên Tomcat server
+
+Truy cập: http://localhost:8080/WebCharity
